@@ -35,10 +35,10 @@ h1, h2, h3, h4, h5, h6, p, ul {
 	font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, sans-serif;
 }
 p {
-	font-family:	Arial,​Liberation Sans,​DejaVu Sans,​sans-serif;
+	font-family: Arial,'Liberation Sans','DejaVu Sans',sans-serif;
 	font-size: 14px;
 	color:	#000000;
-	line-height:	18px;
+	line-height:18px;
 	text-align: left;
 	vertical-align:	baseline;
 }
@@ -74,7 +74,7 @@ div.header_service {
 }
 
 div.header_service ul li a {
-	font-style:bold;
+	font-weight: bold;
 	color:#000;
 	text-decoration: none;
 }
@@ -151,8 +151,9 @@ div.element {
 	background: -o-linear-gradient(top,  #e5e5e5 0%,#ffffff 100%); /* Opera 11.10+ */
 	background: -ms-linear-gradient(top,  #e5e5e5 0%,#ffffff 100%); /* IE10+ */
 	background: linear-gradient(to bottom,  #e5e5e5 0%,#ffffff 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e5e5e5', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+/*	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e5e5e5', endColorstr='#ffffff',GradientType=0 );*/ /* IE 6-9 even uitgeschakeld ivm valide CSS */
 }
+
 .footer_wrapper {
 	border-top:1px solid #444;
 	height:400px;
