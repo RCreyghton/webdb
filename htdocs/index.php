@@ -3,9 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>WebDBOverflow - Registreren</title>
+    <title>WebDBOverflow - Index</title>
     <link rel="stylesheet" href="./assets/css/style.css" type="text/css" />
-    <link rel="stylesheet" href="register-style.css" type="text/css" />
   </head>
   <body>
     <div class="wrapper">
@@ -34,23 +33,13 @@
 
       <div class="content_wrapper wrapped light_grey_gradient"> 
         <div class="content body_centered">
-          <div class="element">
-            <h2 class="formheader">Registratie:</h2>
-            <form name="register" class="registerform" method="post" action="register.php">
-              <fieldset>
-                <legend>Je gegevens:</legend>
-                <label for="firstname">Voornaam</label><input type="text" class="input_name" id="firstname" name="firstname" value="" /> <label for="lastname">Achternaam</label><input type="text" class="input_text" id="lastname" name="lastname" value="" /> <br />
-                <label for="email">E-mail adres</label><input type="text" class="input_else" id="email" name="email" value="" /> <br />
-              </fieldset>
-              <fieldset>
-                <legend>Je account:</legend>
-                <label for="nickname">Nickname</label><input type="text" class="input_else" id="nickname" name="nickname" value="" /> <br />
-                <label for="password">Wachtwoord</label><input type="password" class="input_else" id="password" name="password" value="" /><br />
-                <label for="password2">Nogmaals</label><input type="password" class="input_else" id="password2" name="password2" value="" />
-              </fieldset>
-              <input type="submit" class="submitbutton" value="Registreer!" />
-            </form>
-          </div>
+					<div class="element">
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id sagittis nisl. Nulla elementum ligula ac orci commodo sed congue ipsum dignissim. Donec lacinia, eros a posuere mollis, neque nulla iaculis odio, vitae vulputate diam leo eget neque. Vivamus interdum arcu at velit euismod sit amet viverra augue rhoncus. Mauris vel enim eget lorem ultrices vestibulum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut ut orci vulputate nulla malesuada fermentum sed eget lectus. Vivamus ut odio eu enim fermentum congue.</p>
+						<p>Fusce enim nunc, laoreet a euismod eget, consectetur ac lorem. Maecenas eu augue et mauris porta vestibulum et fermentum quam. Nulla eget lorem purus. Cras at auctor elit. Duis sit amet eros enim. Integer gravida, sem non tempor hendrerit, eros arcu tincidunt sapien, in elementum tortor nibh et massa. Pellentesque vitae eros turpis, at blandit quam. Duis consectetur vulputate arcu eu convallis. Aliquam facilisis faucibus dolor, non aliquam libero ultricies a. Sed lacus risus, tempor quis tempus vitae, egestas at justo. Mauris consectetur leo quis dolor tristique id dapibus dolor tincidunt. Sed lacinia felis et ipsum imperdiet id congue lacus hendrerit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam erat volutpat. Nulla eget quam a elit suscipit volutpat. Praesent et ante et sapien tempor sollicitudin eu sed quam.</p>
+					</div>
+					<div class="element">
+						<p>Donec vel rhoncus nunc. Maecenas tristique consectetur ullamcorper. Vivamus volutpat, urna eget euismod dignissim, metus sem mattis nisl, nec tempor dui diam nec ligula. Curabitur scelerisque velit et turpis vulputate eget feugiat nisi mollis. Curabitur tristique convallis ipsum et consectetur. Etiam tempus, elit non eleifend sollicitudin, erat velit eleifend neque, quis luctus nisi sapien et leo. Fusce ligula metus, hendrerit eu elementum a, bibendum ac eros. Integer imperdiet, dui id hendrerit posuere, risus risus cursus massa, a porttitor dolor quam vel nunc. Sed varius sagittis suscipit. Mauris blandit facilisis mi, ut cursus leo dignissim ut. Ut adipiscing gravida orci. Sed ornare eleifend neque, sit amet mollis turpis dignissim sit amet. Curabitur ullamcorper convallis nisl, in commodo ante mattis quis. Vivamus non orci turpis, sit amet sollicitudin quam. </p>
+					</div>
         </div>
       </div>
 

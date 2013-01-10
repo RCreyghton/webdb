@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>WebDBOverflow - Registreren</title>
+    <title>WebDBOverflow - Login</title>
     <link rel="stylesheet" href="./assets/css/style.css" type="text/css" />
     <link rel="stylesheet" href="register-style.css" type="text/css" />
   </head>
@@ -35,20 +35,15 @@
       <div class="content_wrapper wrapped light_grey_gradient"> 
         <div class="content body_centered">
           <div class="element">
-            <h2 class="formheader">Registratie:</h2>
-            <form name="register" class="registerform" method="post" action="register.php">
+            <h2 class="formheader">Inloggen:</h2>
+            <form name="login" class="loginform" method="post" action="login.php">
               <fieldset>
-                <legend>Je gegevens:</legend>
-                <label for="firstname">Voornaam</label><input type="text" class="input_name" id="firstname" name="firstname" value="" /> <label for="lastname">Achternaam</label><input type="text" class="input_text" id="lastname" name="lastname" value="" /> <br />
-                <label for="email">E-mail adres</label><input type="text" class="input_else" id="email" name="email" value="" /> <br />
-              </fieldset>
-              <fieldset>
-                <legend>Je account:</legend>
+                <legend>Inloggen in je account:</legend>
                 <label for="nickname">Nickname</label><input type="text" class="input_else" id="nickname" name="nickname" value="" /> <br />
                 <label for="password">Wachtwoord</label><input type="password" class="input_else" id="password" name="password" value="" /><br />
                 <label for="password2">Nogmaals</label><input type="password" class="input_else" id="password2" name="password2" value="" />
               </fieldset>
-              <input type="submit" class="submitbutton" value="Registreer!" />
+              <input type="submit" class="submitbutton" value="Login!" />
             </form>
           </div>
         </div>
