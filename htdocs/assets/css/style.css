@@ -110,20 +110,15 @@ ul.menu li {
 	margin-right:20px;
 }
 
-ul.menu li:active a {
-    display: inline-block;
-	margin-right:20px;
-}
-
-a.menulink:link, a.menulink:visited {
-    color: #444;
+ul.menu li a {
+	color: #444;
     font-weight: bold;
-	padding-bottom:4px;
     text-align: center;
     text-decoration: none;
+	padding-bottom:4px;
 }
 
-a.menulink:hover, a.menulink:active {
+ul.menu li a:hover, ul.menu li a:active {
 	border-bottom:4px solid #3CB6EC;
     color: #000;
 }
