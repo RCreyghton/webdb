@@ -7,6 +7,6 @@ Doelstelling: zelfservice klanten, ontlasten helpdesk.
 Inspiratie: stackoverflow.com
 
 Webprogrammeren en Databases project van
-Ahmadi, Shafiq
-Creijghton, Ramon
-van Luijn, Frank
+Shafiq Ahmadi,
+Ramon Creijghton,
+Frank van Luijn.
