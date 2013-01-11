@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+
+  <html>
+      <head>
+          <link href="styles.css" rel="stylesheet"/>
+          <script src="scripts.js"></script>
+          <title>Discussieforum</title>
+    
+
+<h1>
+        
+<I>  
+
+Vragen & Antwoorden 
+
+</I>
+
+</h1>
+      </body>
+<p>
+<br>
+<br>
+<br>
+  </html>
+      <body>
+
+<h2> Top 5 populair: </h2>
+
+<h3>
+
+          <b> Mobile spy algemeen</b>
+          antwoorden
+          <a href="http://www.discussieforum.nl/vraag1">click</a>
+<p>
+
+          <b> Mobile spy Android</b>
+          antwoorden
+          <a href="http://www.discussieforum.nl/vraag2">click</a>
+<p>
+
+          <b> Mobile spy iPhone</b>
+          antwoorden
+          <a href="http://www.discussieforum.nl/vraag3">click</a>
+<p>
+
+          <b> Mobile spy Blackberry</b>
+          antwoorden
+          <a href="http://www.discussieforum.nl/vraag4">click</a>
+<p>
+
+          <b> Mobile spy Samsung</b>
+          antwoorden
+          <a href="http://www.discussieforum.nl/vraag5">click</a>
+<p>
+
+          <b> Mobile spy algemeen</b>
+          antwoorden
+          <a href="http://www.discussieforum.nl/vraag6">click</a>
+<p>
+      </body>
+  </html>
+</h3>
+
+
+Titel
+inhoud
+Tijd aangemaakt
+tijd gewijzigd
+gebruiker
+status
+tags
+ 
+ 
+ 
+<div class='question'>
+ 
+<h3 class='title'>Titel</h3>
+ 
+ 
+ 
+<h3>Titel</h3>
+ 
+ 
+ 
+ 
+</div>
+ 
+
+ 
+ 
+.question {
+ 
+inhoud
+ 
+}
+ 
+.question h3 {
+
+titel
+
+}
+
+<p>
+
+/**
+* login1.php
+*
+* A simple login module.
+*
+* David J. Malan
+* malan@harvard.edu
+*/
+// enable sessions
+session_start();
+// were this not a demo, these would be in some database
+define("USER", "jharvard");
+define("PASS", "crimson");
+// if username and password were submitted, check them
+if (isset($_POST["user"]) && isset($_POST["pass"]))
+{
+// if username and password are valid, log user in
+if ($_POST["user"] == USER && $_POST["pass"] == PASS)
+{
+// remember that user's logged in
+$_SESSION["authenticated"] = true;
+// redirect user to home page, using absolute path, per
+// http://us2.php.net/manual/en/function.header.php
+$host = $_SERVER["HTTP_HOST"];
+$path = rtrim(dirname($_SERVER["PHP_SELF"]), "/\\");
+header("Location: http://$host$path/home.php");
+exit;
+}
+}
+?>
+
+<!DOCTYPE html>
+<html> <head>
+<title>Registration</title> </head>
+<body> <div style="text-align: center">
+<h1>Registration</h1> <form action="register.php" method="get">
+Name: <input name="name" type="text"> <br> Gender: <input name="gender" type="radio" value="M">M <input name="gender" type="radio" value="F">F <br> <select name="state"> <option value="CT">CT</option> <option value="MA">MA</option> </select>
+</form> </div>
+</body> </html>
+
+<!DOCTYPE html>
+<html> <head>
+<title>Registration</title> </head>
+<body> <div style="text-align: center">
+<h1>Registration</h1> <form action="register.php" method="get">
+Name: <input name="name" type="text"> <br> Gender: <input name="gender" type="radio" value="M">M <input name="gender" type="radio" value="F">F <br> <select name="state"> <option value="CT">CT</option> <option value="MA">MA</option> </select>
+</form> </div>
+</body> </html>
+
