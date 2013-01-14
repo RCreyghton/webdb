@@ -1,3 +1,63 @@
+<?php
+
+
+//define access point
+define( "WEBDB_EXEC", true);
+
+/*
+ * PHP will call this class whenever a class is called upon, but not found in the stack
+ * This function will take the classname of the missing class and try to load it.
+ * 
+ * This is a simple autoloader, only files one dir deep will be found!
+ * This is not a recursive function
+ * @todo: make recursive
+ */
+spl_autoload_register(function ( $classpath ) {
+	$parts = explode( "_" , $classpath ); 
+	
+	switch( $parts[0] ) {
+		case "Models":
+			loadClass( "Models/" . $parts[1] );
+			break;		
+		case "Controllers":
+			loadClass( "Controllers/" . $parts[1] );
+			break;
+		case "Views":
+			loadClass( "Views/" . $parts[1] );
+			break;
+		case "Helpers":
+			loadClass( "Helpers/" . $parts[1] );
+			break;
+		default:
+			throw UnexpectedValueException(
+				"The system could not locate the " . 
+				"following class: " . $classpath . 
+				". Make sure the class either " .
+				"resides in Models, Controllers, Views or Helpers " .
+				" subdirectory and the classname start with Model_ for Models etc.."
+			);
+	}
+});
+
+/*
+ * use include, php's autoload will never try to load the same
+ * class twice, as such, include is preferred over include_once (or require_once)
+ * because of speed concerns
+ */
+function loadClass( $classpath ) {
+	if( is_file( "./" . $classpath . ".php" ) ) {
+		include "./" . $classpath . ".php";
+	} else {
+		throw RuntimeException( "Could not locate classfile: ./" . $classpath . ".php" );
+	}
+}
+
+
+$b = new Models_Base();
+
+$b->test();
+die();
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" 
 "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
