@@ -1,2 +1,6 @@
 /nbproject/private/
 /nbproject/
+cronpull.log
+cronpull.sh
+logs/invar
+/htdocs/.htaccess

@@ -94,7 +94,7 @@ function loadClass( $classpath ) {
       <div class="content_wrapper wrapped light_grey_gradient"> 
         <div class="content body_centered">
 <?php
-    print "          <div class=\"element\">\n            <p>Get-variabele gevonden: var=". $_GET['var'] . "</p>\n          </div>\n";
+    print "          <div class=\"element\">\n            <p>Get-variabele gevonden: q=". $_GET['q'] . "</p>\n          </div>\n";
 ?>
           <div class="element">
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id sagittis nisl. Nulla elementum ligula ac orci commodo sed congue ipsum dignissim. Donec lacinia, eros a posuere mollis, neque nulla iaculis odio, vitae vulputate diam leo eget neque. Vivamus interdum arcu at velit euismod sit amet viverra augue rhoncus. Mauris vel enim eget lorem ultrices vestibulum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut ut orci vulputate nulla malesuada fermentum sed eget lectus. Vivamus ut odio eu enim fermentum congue.</p>
