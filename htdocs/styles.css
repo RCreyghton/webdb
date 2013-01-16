@@ -1,5 +1,65 @@
-body{
-	background:grey;
-	color: #98E5F5;
+
+
+.inhoud 
+{ 
+border:0px solid red ;
+position:relative;
+width: px;
+top:0px;
+left:0px;
+
 }
+
+.titel{ border:0px solid red ;
+position:relative;
+width: px;
+top:0px;
+left:0px;
+}
+
+
+
+.tijd aangemaakt{ border:2px solid red;
+position:relative;
+width: px;
+top:0px;
+left:0px;
+}
+
+.tijd gewijzigd { border:2px solid red;
+position:relative;
+width: px;
+top:0px;
+left:0px;
+}
+
+.tekst
+{ border:0px solid red;
+position:relative;
+width: px;
+top:0px;
+left:0px;
+}
+
+.gebruiker{ border:2px solid red;
+position:relative;
+width: px;
+top:0px;
+left:100px;
+}
+
+.status{ border:2px solid red;
+position:relative;
+width: px;
+top:0px;
+left:400px;
+}
+
+.tags{ border:2px solid red;
+position:relative;
+width: px;
+top:0px;
+left:0px;
+}
+
 
