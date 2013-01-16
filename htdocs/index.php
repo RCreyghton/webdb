@@ -97,13 +97,21 @@
 									//throw RuntimeException( "Could not locate classfile: " . $classpath );
 								}
 							}
-
+							/*
+							 * Testen van de code
+							 */
 							$c = new Models_Category();
 							$c->name = "testnaam";
 							$c->description = "testdescript";
 							$c->status = 4;
 
 							$c->save();
+							$c->id = 1;
+							echo "<br />";
+							$c->save();
+							/*
+							 * Einde van testcode
+							 */
 							?></p>
 					</div>
 					<div class="element">
