@@ -33,9 +33,10 @@ abstract class Models_Base {
 		//get the field list
 		$fieldsstring = implode("`, `", $fields );
 		
-		//iterate over object to get corresponding values
+        //iterate over object to get corresponding values
+        //voor test-doeneinde mysql_rea_escape_string verwijderd
 		foreach( $fields as $field ) {
-			$values[] = "'" . mysql_real_escape_string( $this->$field ) . "'";
+			$values[] = "'" . $this->$field . "'";
 		}
 		
 		//

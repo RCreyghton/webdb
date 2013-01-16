@@ -17,22 +17,24 @@ define( "WEBDB_EXEC", true);
  * This is a simple autoloader, only files one dir deep will be found!
  * This is not a recursive function
  * @todo: make recursive
+ *
+ * RCreyghton: mapnamen zonder hoofdletter, want zo lijken ze door Git te komen.
  */
 spl_autoload_register(function ( $classpath ) {
 	$parts = explode( "_" , $classpath ); 
 	
 	switch( $parts[0] ) {
 		case "Models":
-			loadClass( "Models/" . $parts[1] );
+			loadClass( "models/" . $parts[1] );
 			break;		
 		case "Controllers":
-			loadClass( "Controllers/" . $parts[1] );
+			loadClass( "controllers/" . $parts[1] );
 			break;
 		case "Views":
-			loadClass( "Views/" . $parts[1] );
+			loadClass( "views/" . $parts[1] );
 			break;
 		case "Helpers":
-			loadClass( "Helpers/" . $parts[1] );
+			loadClass( "helpers/" . $parts[1] );
 			break;
 		default:
 			throw UnexpectedValueException(
@@ -51,13 +53,15 @@ spl_autoload_register(function ( $classpath ) {
  * because of speed concerns
  */
 function loadClass( $classpath ) {
-	if( is_file( "./" . $classpath . ".php" ) ) {
-		include "./" . $classpath . ".php";
-	} else {
-		throw RuntimeException( "Could not locate classfile: ./" . $classpath . ".php" );
+    $classpath = "./" . $classpath . ".php";
+    if( is_file( $classpath ) ) {
+		include $classpath;
+    } else {
+        echo "Could not locate classfile: ". $classpath;
+        //RCreyghton: uitgecomment: Runtimeexception lijkt niet te bestaan...
+		//throw RuntimeException( "Could not locate classfile: " . $classpath );
 	}
 }
-
 
 
 
@@ -78,7 +82,8 @@ $c->save();
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>WebDBOverflow - Index</title>
-    <link rel="stylesheet" href="./assets/css/style.css" type="text/css" />
+    <base href="/webdb13AD3/" target="_blank"> 
+    <link rel="stylesheet" href="assets/css/style.css" type="text/css" />
   </head>
   <body>
     <div class="wrapper">
