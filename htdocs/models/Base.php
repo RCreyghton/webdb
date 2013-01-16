@@ -10,23 +10,50 @@ if( ! defined("WEBDB_EXEC") ) die("No direct access!");
  * as save, fetchById and fetchByQuery.
  */
 
-class Models_Base {
+abstract class Models_Base {
 	
-	public function __construct() {
-		$db = new Helpers_Db();
-		//echo "wiiiiiii";
+	/*
+	 * Each child class must return an array including it's fields
+	 * Each field need also be present in the corresponding database
+	 */
+	abstract function declareFields();
+	
+	public function save() {
+		if( isset( $this->id ) ) {
+			$this->update();
+		} else {
+			$this->insert();
+		}
 	}
-
-
-    /**
-     * Executes a SQL-query via a Helpers_Db-object
-     *
-     * Fetch by Query, suggereert dat alle Models-classes een sql-query kunnen uitvoeren via Helpers_DB, maar ik dacht dat de queries in Helpers_Db gemaakt zouden worden? En dat die Helpers_Db dan op basis van een argument zou beslissen wat voor query hij ging maken? Lijkt me ingewikkeld, dus ja: ik probeer hier nu een fetchByQuery te maken.
-     *
-     * @author RCreyghton
-     * @param A valid SQL query
-     * @returns An array of <Models>-objects?
-     */
+	
+	private function insert() {
+		$fields		= $this->declareFields();
+		$values		= array();
+		
+		//get the field list
+		$fieldsstring = implode("`, `", $fields );
+		
+		//iterate over object to get corresponding values
+		foreach( $fields as $field ) {
+			$values[] = "'" . mysql_real_escape_string( $this->$field ) . "'";
+		}
+		
+		//
+		
+		//build the query
+		$query = "INSERT INTO `" . $this::TABLENAME . "` ( `" . $fieldsstring . "` ) VALUES (" . implode(", ", $values ). ");";
+		echo $query;
+	}
+	
+	public function getSelect( $fields = "*" ) {
+		return "SELECT " . $fields . " FROM `" . $this::TABLENAME . "` ";
+	}
+	
+	/**
+	 * 
+	 * @param string $sql
+	 * @return array[Object]
+	 */
     public function fetchByQuery($sql='') {
         return $this->db->query($sql);
     }
@@ -35,7 +62,9 @@ class Models_Base {
     /**
      * FetchById gets a full record of the table corresponding with a <Models>-object and returns them
      *
-     * Ik snap eerlijk gezegd het nut hier niet van... aangezien we een relationele database hebben elk <Models>-object meer nodig heeft dan alleen zijn eigen DB-record willen we uitegebreidere queries... Of laten we dat de classes onderling uitzoeken... dat zou zonde zijn van de kracht van SQL?
+     * Ik snap eerlijk gezegd het nut hier niet van... aangezien we een relationele database hebben elk <Models>-object 
+	 * meer nodig heeft dan alleen zijn eigen DB-record willen we uitegebreidere queries... 
+	 * Of laten we dat de classes onderling uitzoeken... dat zou zonde zijn van de kracht van SQL?
      *
      * @author RCreyghton
      */
