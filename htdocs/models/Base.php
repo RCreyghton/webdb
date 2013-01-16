@@ -85,11 +85,11 @@ abstract class Models_Base {
 		private function rowToObject($sqlresult){
 			//Hoe gaan we bepalen wat voor'n object we eigenlijk willen? Dat kan indirect adv
 			//de database-output... maar willen we dat?
-			$modeltype = "Category"
-			$model = new Models_$modeltype;
+//			$modeltype = "Category"
+//			$model = new Models_$modeltype;
 			if ($fieldValuesArray = $sqlresult->fetch_assoc()) {
 				foreach ($fieldValuesArray as $field => $value) {
-					$model->$field = $value;
+//					$model->$field = $value;
 					
 				}
 			}
