@@ -4,6 +4,12 @@
 //define access point
 define( "WEBDB_EXEC", true);
 
+
+
+
+
+
+
 /*
  * PHP will call this class whenever a class is called upon, but not found in the stack
  * This function will take the classname of the missing class and try to load it.
@@ -53,6 +59,14 @@ function loadClass( $classpath ) {
 }
 
 
+
+
+$c = new Models_Category();
+$c->name = "testnaam";
+$c->description = "testdescript";
+$c->status = 4;
+
+$c->save();
 
 
 
