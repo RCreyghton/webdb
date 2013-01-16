@@ -51,27 +51,49 @@ abstract class Models_Base {
 	}
 	
 	/**
+	 * fetchByQuery kan 1 _of_ meer objecten terugkrijgen, dus een array, want heel algemeen
+	 * RCreyghton: Maakt de DBH die array die objecten zelf aan? Ah, we gaan rowToObject(..) gebruiken
 	 * 
-	 * @param string $sql
+	 * @param string $query
 	 * @return array[Object]
 	 */
-    public function fetchByQuery($sql='') {
-        return $this->db->query($sql);
+    public function fetchByQuery($query='') {
+        return $this->db->run($query);
     }
 
 
-    /**
-     * FetchById gets a full record of the table corresponding with a <Models>-object and returns them
-     *
-     * Ik snap eerlijk gezegd het nut hier niet van... aangezien we een relationele database hebben elk <Models>-object 
-	 * meer nodig heeft dan alleen zijn eigen DB-record willen we uitegebreidere queries... 
-	 * Of laten we dat de classes onderling uitzoeken... dat zou zonde zijn van de kracht van SQL?
-     *
-     * @author RCreyghton
-     */
+		/**
+		 * FetchById gets a full record of the table corresponding with a <Models>-object and returns them
+		 * 
+		 * @author Ramon Creyghton <r.creyghton@gmail.com>
+		 * @param int $model_id
+		 * @return Object	zou enkel new <model> object moeten returnen?
+		 */
     public function fetchById($model_id) {
         //De boel hieronder moet afhankelijk van de huidige object-naam. En SQL-injection safe bovendien...
-        //return $this->fechtByQuery('SELECT * FROM $modelname? WHERE $modelname?_id=?');
-        //
+        $resultarray = $this->fetchByQuery(getSelect() . " WHERE id=" . $model_id);
+        return $resultarray[0];
     }
+		
+		/**
+		 * Moet een child-object van deze base klasse returnen, op basis van de eerste
+		 * rij van een mysqli result.
+		 * 
+		 * @param mysqli_result $sqlresult
+		 * @return Object A childe object of this Base class
+		 */
+		private function rowToObject($sqlresult){
+			//Hoe gaan we bepalen wat voor'n object we eigenlijk willen? Dat kan indirect adv
+			//de database-output... maar willen we dat?
+			$modeltype = "Category"
+			$model = new Models_$modeltype;
+			if ($fieldValuesArray = $sqlresult->fetch_assoc()) {
+				foreach ($fieldValuesArray as $field => $value) {
+					$model->$field = $value;
+					
+				}
+			}
+    }
+
+		
 }
