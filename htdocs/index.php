@@ -107,8 +107,7 @@
 							try {
 								$c->save();
 							} catch (Exception $exc) {
-								echo "<br />Exception bij save() 1:<br />";
-								echo $exc->getTraceAsString();
+								echo "<br />Exception bij save() 1: " . $exc->getMessage() . "<br />Trace: " . $exc->getTraceAsString();
 							}
 
 							
@@ -118,8 +117,7 @@
 							try {
 								$c->save();
 							} catch (Exception $exc) {
-								echo "<br />Exception bij save() 2:<br />";
-								echo $exc->getTraceAsString();
+								echo "<br />Exception bij save() 2: " . $exc->getMessage() . "<br />Trace: " . $exc->getTraceAsString();
 							}
 							/*
 							 * Einde van testcode
