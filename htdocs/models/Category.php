@@ -43,7 +43,7 @@ class Models_Category extends Models_Base {
     /**
      * gets an array of Thread-objects in this category
      *
-     * @returns array[Objects]
+     * @returns array[Objects] array aan Category-objecten.
 		 * @todo SQL injection check
 		 * @todo in welke vorm willen we dit precies hebben?
 		 * @todo getSelect en fetchByQuery, van welk object spreken we die aan?

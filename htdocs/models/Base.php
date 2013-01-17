@@ -133,13 +133,15 @@ abstract class Models_Base {
 	
 	
   /**
-	 * Exists the object in the database???
+	 * Exists a record with the given ID in the database???
 	 * Ramon: ik begrijp niet precies wanneer dit nuttig is?
 	 * 
 	 * @return boolean true if this object has a corresponding database record?
 	 * @todo everything
 	 */
-	public function exists() {
+	public static function exists() {
+		//get_called_class();
+		//SQL exists ding in fetchByQuery gooien.
 		return true;
 	}
 
@@ -166,7 +168,14 @@ abstract class Models_Base {
 	 * @return array[Object] rechstreeks het mysqli-geval, of een bewerkte rij(en) eruit?
 	 */
     public function fetchByQuery($query='') {
-        return $this->Db->run($query);
+        $result = $this->Db->run($query);
+				if (! $result) {
+					
+				}
+				//voor elk element in result array en maakt een assoc_array? die door rowToObject dan naar gewenste
+				//object geparsed wordt.
+				//Lege array als result leeg is.
+				//Exception als error in result, want dat is nog nauwelijks afgevangen.
     }
 
 
@@ -191,6 +200,7 @@ abstract class Models_Base {
 		 * @param mysqli_result $sqlresult
 		 * @return Object A child object of this Base class
 		 * @author Ramon Creyghton <r.creyghton@gmail.com>
+		 * @todo geen sqlresult maar assoc_array als param
 		 */
 		private static function rowToObject($sqlresult){
 			//met get_callec_class() weten we ook in deze static methode wat voor'n
