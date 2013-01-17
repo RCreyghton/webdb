@@ -153,8 +153,8 @@ abstract class Models_Base {
 	 * @return String First part of a SQL-query of the form SELECT ... FROM ...
 	 * @todo Werkt alleen met child-objecten die inderdaad een TABLENAME hebben. Mag dit ding dan wel hier in base zo staan?
 	 */
-	public function getSelect( $fields = "*" ) {
-		return "SELECT " . $fields . " FROM `" . $this::TABLENAME . "` ";
+	public static function getSelect( $fields = "*" ) {
+		return "SELECT " . $fields . " FROM `" . get_called_class()->TABLENAME . "` ";
 	}
 	
 	
@@ -189,20 +189,23 @@ abstract class Models_Base {
 		 * rij van een mysqli result.
 		 * 
 		 * @param mysqli_result $sqlresult
-		 * @return Object A childe object of this Base class
+		 * @return Object A child object of this Base class
 		 * @author Ramon Creyghton <r.creyghton@gmail.com>
 		 */
-		private function rowToObject($sqlresult){
-			//Hoe gaan we bepalen wat voor'n object we eigenlijk willen? Dat kan indirect adv
-			//de database-output... maar willen we dat?
-//			$modeltype = "Category"
-//			$model = new Models_$modeltype;
+		private static function rowToObject($sqlresult){
+			//met get_callec_class() weten we ook in deze static methode wat voor'n
+			//object we eigenlijk willen maken.
+			$modeltype = get_called_class();
+			$model = new $modeltype;
+			$fieldsToFill = $model->declareFields();
+			//We nemen nu de eerste rij ALS die er is met fetch_assoc();
 			if ($fieldValuesArray = $sqlresult->fetch_assoc()) {
-				foreach ($fieldValuesArray as $field => $value) {
-//					$model->$field = $value;
-					
+				//Elke element in deze assoc_array in het object plakken
+				foreach ($fieldsToFill as $field) {
+					$model->$field = $fieldValuesArray[$field];
 				}
 			}
+			return $model;
     }
 		
 }
