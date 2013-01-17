@@ -10,19 +10,13 @@
 
 include_once 'DbError.php';
 
-//Move this to a save outside directory??
-define('DBSERVER', 'webdb.science.uva.nl');
-define('DBNAME', 'webdb13AD3');
-define('DBUSER', 'webdb13AD3');
-define('DBPASS', 'justafio');
-
 class Helpers_Db {
 
-	private $dbserver = DBSERVER; //(string) server name
-	private $dbname = DBNAME;   //(string) database name
-	private $dbuser = DBUSER;   //(string) database user having writing rights
-	private $dbpass = DBPASS;   //(string) database password for writing user
-	private static $instance = NULL;  //(Object-referene) to this object if there's a connection already
+	private $dbserver			= 'localhost'; //(string) server name
+	private $dbname				= 'webdb13AD3';   //(string) database name
+	private $dbuser				= 'webdb13AD3';   //(string) database user having writing rights
+	private $dbpass				= 'justafio';   //(string) database password for writing user
+	private static $instance	= NULL;  //(Object-referene) to this object if there's a connection already
 	private $mysqli;
 
 	/**
@@ -83,7 +77,7 @@ class Helpers_Db {
 	 * @author RCreyghton
 	 */
 	public function __destruct() {
-		$this->mysqli->close();
+		@$this->mysqli->close();
 	}
 
 	/* Riped from webdb Voorbeeldcode.
