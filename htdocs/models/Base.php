@@ -166,7 +166,7 @@ abstract class Models_Base {
 	 * @return array[Object] rechstreeks het mysqli-geval, of een bewerkte rij(en) eruit?
 	 */
     public function fetchByQuery($query='') {
-        return $this->db->run($query);
+        return $this->Db->run($query);
     }
 
 
