@@ -107,11 +107,29 @@ class Helpers_Db {
 	public static function run($query) {
 		return self::getInstance()->mysqli->query($query);
 	}
-
+	
+	
+	/**
+	 * Returns a errormessage of the mysqli-object of the current Db Instance.
+	 * 
+	 * @author Frank van Luijn <frank@accode.nl>
+	 * @return String	Error message: (id) error
+	 * @return boolean	false if no error was found
+	 */
 	public static function getError() {
 		$no = self::getInstance()->mysqli->errno;
 		$me = self::getInstance()->mysqli->err;
 		return $no != 0 ? "({$no}) {$me}" : false;
+	}
+	
+	
+	/**
+	 * Gets the id for a newly inserted record.
+	 * 
+	 * @return int	The primary index created by MySQL auto_increment, or 0.
+	 */
+	public static function getId() {
+		return self::getInstance()->mysqli->insert_id;
 	}
 
 }

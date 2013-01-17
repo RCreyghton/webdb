@@ -54,8 +54,7 @@ abstract class Models_Base {
 	 * 
 	 * @uses declareFields() To determine wich fields and values thera are to be saved
 	 * @author Frank van Luijn <frank@accode.nl>
-	 * @todo Implementeren van succes-return
-	 * @todo query uitvoeren
+	 * @todo Exception handling
 	 * @todo door de insert wordt de id geset door MySQL (auto_increment). Willen we die gelijk teruguitlezen en in het object opslaan?
 	 */
 	private function insert() {
@@ -80,7 +79,10 @@ abstract class Models_Base {
 		if( ! $result ) {
 			//Exception Handling nog even uitgezet.
 			echo "<br />Error: " . Helpers_Db::getError();
+		} else {
+			$this->id = Helpers_Db::getId();
 		}
+		//this returns true if no errors were found.
 		return $result;
 	}
 	
@@ -95,8 +97,7 @@ abstract class Models_Base {
 	 * @uses catFieldValue To concatenate field and value in the fields-array.
 	 * @author Ramon Creyghton <r.creyghton@gmail.com>
 	 * @return boolean true if inserted succesfully
-	 * @todo Implementeren van succes-return
-	 * @todo query uitvoeren
+	 * @todo Exception handling
 	 */
 	private function update() {
 		$fields	= $this->declareFields();
