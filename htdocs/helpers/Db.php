@@ -18,13 +18,11 @@ define('DBPASS', 'justafio');
 
 class Helpers_Db {
 
-	private $dbserver	= DBSERVER; //(string) server name
-	private $dbname		= DBNAME;   //(string) database name
-	private $dbuser		= DBUSER;   //(string) database user having writing rights
-	private $dbpass		= DBPASS;   //(string) database password for writing user
-	
-	private $dbh		= NULL;	 //(Object-referene) to this object if there's a connection already
-	
+	private $dbserver = DBSERVER; //(string) server name
+	private $dbname = DBNAME;   //(string) database name
+	private $dbuser = DBUSER;   //(string) database user having writing rights
+	private $dbpass = DBPASS;   //(string) database password for writing user
+	private $instance = NULL;  //(Object-referene) to this object if there's a connection already
 	private $mysqli;
 
 	/**
@@ -35,8 +33,11 @@ class Helpers_Db {
 	 * @return Object	Db-Object reference to a instatiation of this class with working mysqil conneciton
 	 * @todo	Check whether the dbh and dbh->mysqli is indeed a fully working connection
 	 */
-	private static function getHandler() {
-		return $this->dbh ? $this->dbh : new self();
+	private static function getInstance() {
+		if (is_null(self::$instance)) {
+			self::$instance = new self();
+		}
+		return self::$instance;
 	}
 
 	/**
@@ -46,10 +47,10 @@ class Helpers_Db {
 	 *
 	 * @author RCreyghton
 	 */
-	public function __construct() {
+	private function __construct() {
 		$this->dbh = $this;
-		
-		if ( ! $this->connect() ) {
+
+		if (!$this->connect()) {
 			$this->dbh = NULL;
 			throw new Exception("Could not connect to database.");
 		}
@@ -64,13 +65,13 @@ class Helpers_Db {
 	 */
 	public function connect() {
 		$this->mysqli = new mysqli(
-				$this->dbserver, 
-				$this->dbuser, 
-				$this->dbpass, 
-				$this->dbname
+						$this->dbserver,
+						$this->dbuser,
+						$this->dbpass,
+						$this->dbname
 		);
-		
-		if ( mysqli_connect_errno() ) {
+
+		if (mysqli_connect_errno()) {
 			err_die("Connect error: " . mysqli_connect_error());
 		}
 		return TRUE;
@@ -109,13 +110,14 @@ class Helpers_Db {
 	 * @return mysqli-result-object
 	 * @author Ramon Creyghton <r.creyghton@gmail.com>
 	 */
-	public static function run( $query ) {
-		return self::getHandler()->mysqli->query($query);
+	public static function run($query) {
+		return self::getInstance()->mysqli->query($query);
 	}
-	
+
 	public static function getError() {
-		$no = self::getHandler()->mysqli->errno;
-		$me = self::getHandler()->mysqli->err;
+		$no = self::getInstance()->mysqli->errno;
+		$me = self::getInstance()->mysqli->err;
 		return $no != 0 ? "({$no}) {$me}" : false;
 	}
+
 }
