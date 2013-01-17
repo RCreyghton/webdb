@@ -22,7 +22,7 @@ class Helpers_Db {
 	private $dbname = DBNAME;   //(string) database name
 	private $dbuser = DBUSER;   //(string) database user having writing rights
 	private $dbpass = DBPASS;   //(string) database password for writing user
-	private $instance = NULL;  //(Object-referene) to this object if there's a connection already
+	private static $instance = NULL;  //(Object-referene) to this object if there's a connection already
 	private $mysqli;
 
 	/**
