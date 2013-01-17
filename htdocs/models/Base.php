@@ -78,7 +78,8 @@ abstract class Models_Base {
 		$result = Helpers_Db::run( $query );
 		
 		if( ! $result ) {
-			throw new Exception( Helpers_Db::getError());
+			//Exception Handling nog even uitgezet.
+			//throw new Exception( Helpers_Db::getError());
 		}
 		return $result;
 	}
@@ -112,7 +113,8 @@ abstract class Models_Base {
 		$result = Helpers_Db::run( $query );
 		
 		if( ! $result ) {
-			throw new Exception( Helpers_Db::getError());
+			//Exception Handling nog even uitgezet.
+			//throw new Exception( Helpers_Db::getError());
 		}
 		return $result;
 	}
