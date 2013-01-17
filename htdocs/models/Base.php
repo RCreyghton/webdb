@@ -76,9 +76,8 @@ abstract class Models_Base {
 		
 		$result = Helpers_Db::run( $query );
 		
-		if( ! $result ) {
-			//Exception Handling nog even uitgezet.
-			echo "<br />Error: " . Helpers_Db::getError();
+		if(! $result) {
+			throw new Exception(Helpers_Db::getError());
 		} else {
 			$this->id = Helpers_Db::getId();
 		}
@@ -113,9 +112,8 @@ abstract class Models_Base {
 		
 		$result = Helpers_Db::run( $query );
 		
-		if( ! $result ) {
-			//Exception Handling nog even uitgezet.
-			echo "<br />Error: " . Helpers_Db::getError();
+		if(! $result) {
+			throw new Exception(Helpers_Db::getError());
 		}
 		return $result;
 	}
@@ -157,7 +155,6 @@ abstract class Models_Base {
 		return true;
 	}
 
-
 	
 	/**
 	 * getSelect returns the first part of a SQL query that makes a SELECT from the 
@@ -173,61 +170,60 @@ abstract class Models_Base {
 	
 	
 	/**
+	 * FetchById gets a full record of the table corresponding with a {model}-object and returns them
+	 * 
+	 * @author Ramon Creyghton <r.creyghton@gmail.com>
+	 * @param int $model_id
+	 * @return Object	zou enkel new {model}-object moeten returnen?
+	 */
+	public function fetchById($model_id) {
+		//De boel hieronder moet afhankelijk van de huidige object-naam. En SQL-injection safe bovendien...
+		$resultarray = $this->fetchByQuery(getSelect() . " WHERE id=" . $model_id);
+		return $resultarray[0];
+	}
+	
+	
+	/**
 	 * fetchByQuery kan 1 _of_ meer objecten terugkrijgen, dus een array, want heel algemeen
-	 * RCreyghton: Maakt de DBH die array die objecten zelf aan? Ah, we gaan rowToObject(..) gebruiken
 	 * 
 	 * @param String $query
 	 * @return array[Object] rechstreeks het mysqli-geval, of een bewerkte rij(en) eruit?
+	 * @author Ramon Creyghton <r.creyghton@gmail.com>
 	 */
-    public function fetchByQuery($query='') {
-        $result = $this->Db->run($query);
-				if (! $result) {
-					
-				}
-				//voor elk element in result array en maakt een assoc_array? die door rowToObject dan naar gewenste
-				//object geparsed wordt.
-				//Lege array als result leeg is.
-				//Exception als error in result, want dat is nog nauwelijks afgevangen.
+	public function fetchByQuery($query) {
+		$result = Helpers_Db::run( $query );
+		if(! $result) {
+			throw new Exception(Helpers_Db::getError());
+		}
+		
+		//Converting each row in the result to an {models}-object and add it to a array.
+		$objectsarray = array();
+		while ($row = $result->fetch_assoc()) {
+			$objectsarray[] = rowToObject($row);
     }
+		return $objectsarray;
+	}
 
 
-		/**
-		 * FetchById gets a full record of the table corresponding with a {model}-object and returns them
-		 * 
-		 * @author Ramon Creyghton <r.creyghton@gmail.com>
-		 * @param int $model_id
-		 * @return Object	zou enkel new {model}-object moeten returnen?
-		 */
-    public function fetchById($model_id) {
-        //De boel hieronder moet afhankelijk van de huidige object-naam. En SQL-injection safe bovendien...
-        $resultarray = $this->fetchByQuery(getSelect() . " WHERE id=" . $model_id);
-        return $resultarray[0];
-    }
-		
-		
-		/**
-		 * Moet een child-object van deze base klasse returnen, op basis van de eerste
-		 * rij van een mysqli result.
-		 * 
-		 * @param mysqli_result $sqlresult
-		 * @return Object A child object of this Base class
-		 * @author Ramon Creyghton <r.creyghton@gmail.com>
-		 * @todo geen sqlresult maar assoc_array als param
-		 */
-		private static function rowToObject($sqlresult){
-			//met get_callec_class() weten we ook in deze static methode wat voor'n
-			//object we eigenlijk willen maken.
-			$modeltype = get_called_class();
-			$model = new $modeltype;
-			$fieldsToFill = $model->declareFields();
-			//We nemen nu de eerste rij ALS die er is met fetch_assoc();
-			if ($fieldValuesArray = $sqlresult->fetch_assoc()) {
-				//Elke element in deze assoc_array in het object plakken
-				foreach ($fieldsToFill as $field) {
-					$model->$field = $fieldValuesArray[$field];
-				}
-			}
-			return $model;
-    }
+	/**
+	 * Moet een child-object van deze base klasse returnen, op basis van de eerste
+	 * rij van een mysqli result.
+	 * 
+	 * @param assoc_array[Strings] $sqlrow
+	 * @return Object A child object of this Base class
+	 * @author Ramon Creyghton <r.creyghton@gmail.com>
+	 */
+	private static function rowToObject($sqlrow){
+		//met get_callec_class() weten we ook in deze static methode wat voor'n
+		//object we eigenlijk willen maken.
+		$modeltype = get_called_class();
+		$model = new $modeltype;
+		$fieldsToFill = $model->declareFields();
+		//Elke element in deze assoc_array in het object plakken
+		foreach ($fieldsToFill as $field) {
+			$model->$field = $sqlrow[$field];
+		}
+		return $model;
+	}
 		
 }

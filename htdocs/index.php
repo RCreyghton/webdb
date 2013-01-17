@@ -104,12 +104,23 @@
 							$c->name = "nogeencategory";
 							$c->description = "testdescript";
 							$c->status = 3;
+							try {
+								$c->save();
+							} catch (Exception $exc) {
+								echo "<br />Exception bij save() 1:<br />";
+								echo $exc->getTraceAsString();
+							}
 
-							$c->save();
+							
 							$c->id = 2;
 							$c->name = "veranderde_category";
 							echo "<br />";
-							$c->save();
+							try {
+								$c->save();
+							} catch (Exception $exc) {
+								echo "<br />Exception bij save() 2:<br />";
+								echo $exc->getTraceAsString();
+							}
 							/*
 							 * Einde van testcode
 							 */
