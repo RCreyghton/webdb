@@ -174,11 +174,12 @@ abstract class Models_Base {
 	 * 
 	 * @author Ramon Creyghton <r.creyghton@gmail.com>
 	 * @param int $model_id
-	 * @return Object	zou enkel new {model}-object moeten returnen?
+	 * @return Object	Van type {model}-child.
+	 * @todo	Net als bij getSelect controleren of get_called_class()-> wel werkt...
 	 */
-	public function fetchById($model_id) {
-		//De boel hieronder moet afhankelijk van de huidige object-naam. En SQL-injection safe bovendien...
-		$resultarray = $this->fetchByQuery(getSelect() . " WHERE id=" . $model_id);
+	public static function fetchById($model_id) {
+		//make quary based on the called class.
+		$resultarray = get_called_class()->fetchByQuery(getSelect() . " WHERE id=" . $model_id);
 		return $resultarray[0];
 	}
 	
@@ -190,7 +191,7 @@ abstract class Models_Base {
 	 * @return array[Object] rechstreeks het mysqli-geval, of een bewerkte rij(en) eruit?
 	 * @author Ramon Creyghton <r.creyghton@gmail.com>
 	 */
-	public function fetchByQuery($query) {
+	public static function fetchByQuery($query) {
 		$result = Helpers_Db::run( $query );
 		if(! $result) {
 			throw new Exception(Helpers_Db::getError());
