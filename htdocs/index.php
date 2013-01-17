@@ -101,12 +101,13 @@
 							 * Testen van de code
 							 */
 							$c = new Models_Category();
-							$c->name = "testnaam";
+							$c->name = "nogeencategory";
 							$c->description = "testdescript";
-							$c->status = 4;
+							$c->status = 3;
 
 							$c->save();
-							$c->id = 1;
+							$c->id = 2;
+							$c->name = "veranderde_category";
 							echo "<br />";
 							$c->save();
 							/*
