@@ -75,8 +75,12 @@ abstract class Models_Base {
 		$query = "INSERT INTO `" . $this::TABLENAME . "` ( `" . $fieldsstring . "` ) VALUES (" . implode(", ", $values ). ");";
 		echo $query;
 		
-		//TODO uitvoeren en succescheck
-		return true;
+		$result = Helpers_Db::run( $query );
+		
+		if( ! $result ) {
+			throw new Exception( Helpers_Db::getError());
+		}
+		return $result;
 	}
 	
 	
@@ -104,8 +108,13 @@ abstract class Models_Base {
 		//build the query
 		$query = "UPDATE `" . $this::TABLENAME . "` SET " . $setString . " WHERE id=" . $this->id . ";";
 		echo $query;
-		//TODO uitvoeren en succescheck
-		return true;
+		
+		$result = Helpers_Db::run( $query );
+		
+		if( ! $result ) {
+			throw new Exception( Helpers_Db::getError());
+		}
+		return $result;
 	}
 	
 	/**
