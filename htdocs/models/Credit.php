@@ -18,7 +18,7 @@ class Models_Credit extends Models_Base {
 	const TABLENAME = "credits";
 
 	public $id;
-	public $ipaddress;
+	public $user_id;
 	public $value;			//gewone users mogen allen +1 en -1 doen. Admins ook hogere waardes? (DB veld: int(4))
 	public $reply_id;
 
@@ -32,7 +32,7 @@ class Models_Credit extends Models_Base {
 	 */
 	public function declareFields() {
 		$fields = array(
-				"ipaddress",
+				"user_id",
 				"value",
 				"reply_id"
 		);
@@ -42,13 +42,28 @@ class Models_Credit extends Models_Base {
 	
 	/**
 	 * Determines whether the calling user is allowed to add a credit to the curren Reply.
-	 * How to do this?
+	 * How to do this? Ah, with Dependency Injection!
+	 * Altijd nieuw credit object aanmaken en in DB checken of dat dan mag of niet?
+	 * Of de controller met behulp van deze functie laten bepalen of er uberhaupt een nieuwe credit mag komen?
 	 * 
-	 * @todo Everything in  here
+	 * 
+	 * @param Models_User $callingUser
+	 * @param Models_Reply $checkReply
+	 * @param int $changeAsked
+	 * @return Models_Credit|boolean	Either the existing Credit-Object if you'r allowed to change it in this way; or a boolean indicating (true) you're allowed to make a new Credit-object of (false) you are denied to update your credit.
+	 * @author Ramon Creyghton <r.creyghton@gmail.com>
 	 */
-	public function isAllowed() {
-		
+	public static function howToCredit($callingUser, $checkReply, $changeAsked) {
+		$oldCredit = $checkReply->getYourCredit($callingUser);
+		if ( ! $oldCredit) {
+		//If there is no Credit already, you're allowed to make a new one
+			return true;
+		} else {
+		//You cannot alter your credit in the same way again (avoiding endless ++ of --), but otherwise it's fine: here's your Credit-object.
+			return ($oldCredit->value != $changeAsked) ? $oldCredit : false;
+		}
 	}
+	
 }
 
 ?>

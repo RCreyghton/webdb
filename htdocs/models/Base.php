@@ -54,8 +54,8 @@ abstract class Models_Base {
 	 * 
 	 * @uses declareFields() To determine wich fields and values thera are to be saved
 	 * @author Frank van Luijn <frank@accode.nl>
-	 * @todo Exception handling
-	 * @todo door de insert wordt de id geset door MySQL (auto_increment). Willen we die gelijk teruguitlezen en in het object opslaan?
+	 * @todo echo uitzetten.
+	 * @todo testen id teruguitlezen uit db auto_increment
 	 */
 	private function insert() {
 		$fields		= $this->declareFields();
@@ -96,7 +96,7 @@ abstract class Models_Base {
 	 * @uses catFieldValue To concatenate field and value in the fields-array.
 	 * @author Ramon Creyghton <r.creyghton@gmail.com>
 	 * @return boolean true if inserted succesfully
-	 * @todo Exception handling
+	 * @todo echo uitzetten
 	 */
 	private function update() {
 		$fields	= $this->declareFields();
@@ -138,7 +138,13 @@ abstract class Models_Base {
 	 * @todo dependencies!
 	 */
 	public function delete() {
-		return true;
+		$query = "DELETE FROM `" . $this::TABLENAME . "` WHERE id=" . $this->id . " LIMIT 1;";
+		echo $query;
+		$result = Helpers_Db::run( $query );
+		if(! $result) {
+			throw new Exception(Helpers_Db::getError());
+		}
+		return $result;
 	}
 	
 	
@@ -183,6 +189,28 @@ abstract class Models_Base {
 		return $resultarray[0];
 	}
 	
+
+	/**
+	 * Assamles an array of {models}-objects from the result returned by the given SQL query (SELECT).
+	 * 
+	 * @param string $query
+	 * @return Models_Base[] rechstreeks het mysqli-geval, of een bewerkte rij(en) eruit?
+	 * @author Ramon Creyghton <r.creyghton@gmail.com>
+	 */
+	public static function fetchByQuery($query) {
+		$result = Helpers_Db::run($query);
+		if(! $result) {
+			throw new Exception(Helpers_Db::getError());
+		}
+		
+		//Converting each row as the object (type accordig to called class) and add to array.
+		$objectsarray = array();
+		while ($model = $result->fetch_object(get_called_class())) {
+			$objectsarray[] = $model;
+    }
+		return $objectsarray;
+	}
+	
 	
 	/**
 	 * fetchByQuery kan 1 _of_ meer objecten terugkrijgen, dus een array, want heel algemeen
@@ -191,7 +219,7 @@ abstract class Models_Base {
 	 * @return array[Object] rechstreeks het mysqli-geval, of een bewerkte rij(en) eruit?
 	 * @author Ramon Creyghton <r.creyghton@gmail.com>
 	 */
-	public static function fetchByQuery($query) {
+	public static function fetchByQueryOld($query) {
 		$result = Helpers_Db::run( $query );
 		if(! $result) {
 			throw new Exception(Helpers_Db::getError());
@@ -213,6 +241,7 @@ abstract class Models_Base {
 	 * @param assoc_array[Strings] $sqlrow
 	 * @return Object A child object of this Base class
 	 * @author Ramon Creyghton <r.creyghton@gmail.com>
+	 * @todo Deze functie slaat alle id's over, omdat die niet in declareFields zitten. We kunnen denk ik beter gebruik maken van de mysqi method $result->fetch_object en deze rowToObject weggooien.
 	 */
 	private static function rowToObject($sqlrow){
 		//met get_callec_class() weten we ook in deze static methode wat voor'n

@@ -63,7 +63,7 @@ class Models_Reply extends Models_Base {
 	 * @author Ramon Creyghton <r.creyghton@gmail.com>
 	 */
 	public function getCredits() {
-		$query = Models_Credit::getSelect() . " WHERE reply_id = `" . $this->id . "`";
+		$query = Models_Credit::getSelect() . " WHERE reply_id=" . $this->id . ";";
 		return Models_Credit::fetchByQuery($query);
 	}
 	
@@ -85,6 +85,23 @@ class Models_Reply extends Models_Base {
 			$nettCredits += $credit->value;
 		}
 		return $nettCredits;
+	}
+	
+	
+	/**
+	 * gets an existing Credit-object for this Reply for the calling Session
+	 * @todo Or per User id?
+	 * 
+	 * @param Models_User $callingUser Reference to the Session Object that wants to get its credit for this reply
+	 * @return Models_Credit a Credit-objects
+	 * @uses Models_Base::fetchByQuery()	
+   * @uses Models_Base::getSelect()	
+	 * @author Ramon Creyghton <r.creyghton@gmail.com>
+	 */
+	public function getYourCredit($callingUser) {
+		$query = Models_Credit::getSelect() . " WHERE reply_id=" . $this->id . " AND user_id=" . $callingUser->id . ";";
+		$creditsArray = Models_Credit::fetchByQuery($query);
+		return (empty($creditsArray)) ? false : $creditsArray[1];
 	}
 }
 

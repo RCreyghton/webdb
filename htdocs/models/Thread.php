@@ -69,7 +69,7 @@ class Models_Thread extends Models_Base {
 	 * @author Ramon Creyghton <r.creyghton@gmail.com>
 	 */
 	public function getReplies() {
-		$query = Models_Reply::getSelect() . " WHERE thread_id = `" . $this->id . "`";
+		$query = Models_Reply::getSelect() . " WHERE thread_id=" . $this->id . ";";
 		return Models_Reply::fetchByQuery($query);
 	}
 	
@@ -82,10 +82,10 @@ class Models_Thread extends Models_Base {
 	 * @todo SQL injection check, dwz: checken of inderdaad alle Object-velden safe zijn.
 	 * @author Ramon Creyghton <r.creyghton@gmail.com>
 	 */
-	public function getAnser() {
+	public function getAnswer() {
 		if ($this->answer_id == NULL)
 			return false;
-		$query = Models_Reply::getSelect() . " WHERE id = `" . $this->answer_id . "`";
+		$query = Models_Reply::getSelect() . " WHERE id=" . $this->answer_id . ";";
 		$repliesArray = Models_Reply::fetchByQuery($query);
 		return (empty($repliesArray)) ? false : $repliesArray[1] ;
 	}
