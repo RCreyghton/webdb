@@ -10,6 +10,12 @@
 
 include_once 'DbError.php';
 
+/**
+ * Handler class for the database. Contains a bunch of static helper methods.
+ * Implements the Singleton pattern
+ * 
+ * @todo Controleren of die Singleton wel het beste is...
+ */
 class Helpers_Db {
 
 	private $dbserver			= 'localhost'; //(string) server name
@@ -118,7 +124,7 @@ class Helpers_Db {
 	 */
 	public static function getError() {
 		$no = self::getInstance()->mysqli->errno;
-		$me = self::getInstance()->mysqli->err;
+		$me = self::getInstance()->mysqli->error;
 		return $no != 0 ? "({$no}) {$me}" : false;
 	}
 	

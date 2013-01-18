@@ -90,7 +90,7 @@ class Models_Reply extends Models_Base {
 	
 	/**
 	 * gets an existing Credit-object for this Reply for the calling Session
-	 * @todo Or per User id?
+	 * @todo Or toch per Ipadress? Heb nu gekozen voor loggen van alle gebruikers als User (met role Anonymous oid), zodat we hier user_id kunnen gebruiken.
 	 * 
 	 * @param Models_User $callingUser Reference to the Session Object that wants to get its credit for this reply
 	 * @return Models_Credit a Credit-objects

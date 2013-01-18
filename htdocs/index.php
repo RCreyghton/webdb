@@ -54,7 +54,10 @@
 							 *
 							 * RCreyghton: mapnamen zonder hoofdletter, want zo lijken ze door Git te komen.
 							 */
-							spl_autoload_register(function ( $classpath ) {
+							spl_autoload_register('customAutoloader');
+											
+							//anonymous functie uit elkaar getrokken tbv van PhpDoc, dat daar niet mee om kon gaan.				
+						  private function customAutoloader ( $classpath ) {
 								$parts = explode("_", $classpath);
 
 								switch ($parts[0]) {
@@ -79,7 +82,7 @@
 														" subdirectory and the classname start with Model_ for Models etc.."
 										);
 								}
-							});
+							}
 
 							/*
 							 * use include, php's autoload will never try to load the same
