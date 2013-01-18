@@ -8,7 +8,7 @@ if (!defined("WEBDB_EXEC"))
 	die("No direct access!");
 
 /**
- * Category-class with fiels en methods to make and display Credits
+ * Credit-class with fiels en methods to make and display Credits and to determine credit-possibilities
  * 
  * @author Frank van Luijn <frank@accode.nl>
  * @author Ramon Creyghton <r.creyghton@gmail.com>
@@ -21,7 +21,8 @@ class Models_Credit extends Models_Base {
 	public $user_id;
 	public $value;			//gewone users mogen allen +1 en -1 doen. Admins ook hogere waardes? (DB veld: int(4))
 	public $reply_id;
-
+	
+	
 	/**
 	 * Names of the relevant fields of this object, the must correspond with the
 	 * column-names of the associated table in the database.

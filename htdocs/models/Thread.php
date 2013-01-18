@@ -8,7 +8,7 @@ if (!defined("WEBDB_EXEC"))
 	die("No direct access!");
 
 /**
- * Category-class with fiels en methods to make and display Threads
+ * Thread-class with fiels en methods to make and display Threads and get its Replies.
  * Is able to get the Replies associated with this thread.
  * 
  * @author Frank van Luijn <frank@accode.nl>

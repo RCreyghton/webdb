@@ -8,7 +8,7 @@ if (!defined("WEBDB_EXEC"))
 	die("No direct access!");
 
 /**
- * Category-class with fiels en methods to make and display Replies
+ * Reply-class with fiels en methods to make and display Replies and its Credits
  * 
  * @author Frank van Luijn <frank@accode.nl>
  * @author Ramon Creyghton <r.creyghton@gmail.com>

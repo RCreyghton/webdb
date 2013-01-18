@@ -46,13 +46,10 @@ class Models_Category extends Models_Base {
 		 * @return Models_Thread[] array of Thread-objects.
 		 * @uses Models_Base::fetchByQuery()	
 		 * @uses Models_Base::getSelect()	
-		 * @todo SQL injection check
-		 * @todo in welke vorm willen we dit precies hebben?
-		 * @todo getSelect en fetchByQuery, van welk object spreken we die aan?
-		 * @todo misschien hier al wat voorwerk doen in de vorm van een met JOINS uitgebreide query tbv de category-view?
+		 * @todo checking whether is Models_Trhead::... actually works.
 		 */
     public function getThreads() {
-        $query = Models_Thread::getSelect() . " WHERE category_id = `" . $this->id . "`";
+        $query = Models_Thread::getSelect() . " WHERE category_id=" . $this->id . ";";
         return Models_Thread::fetchByQuery($query);
     }
     
