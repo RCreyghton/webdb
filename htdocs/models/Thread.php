@@ -40,7 +40,7 @@ class Models_Thread extends Models_Base {
 	 * 
 	 * @author Frank van Luijn <frank@accode.nl>
 	 * @author Ramon Cregython <r.creyghton@gmail.com>
-	 * @return array[Strings] The names of all relevant fields exept id in this object
+	 * @return string[] The names of all relevant fields exept id in this object
 	 */
 	public function declareFields() {
 		$fields = array(

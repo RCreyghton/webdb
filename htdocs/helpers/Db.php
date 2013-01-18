@@ -24,7 +24,8 @@ class Helpers_Db {
 	 * Determines whether there's already a mysqli-connection, 
 	 * 
 	 * @author Ramon Creyghton <r.creyghton@gmail.com>
-	 * @return Object	Db-Object reference to a instatiation of this class with working mysqil conneciton
+	 * @author Frank van Luijn <frank@accode.nl>
+	 * @return Helpers_Db	Db-Object reference to a instatiation of this class with working mysqil conneciton
 	 * @todo	Check whether the dbh and dbh->mysqli is indeed a fully working connection
 	 */
 	private static function getInstance() {
@@ -55,7 +56,7 @@ class Helpers_Db {
 	 *
 	 * Long discription to do
 	 *
-	 * @author RCreyghton
+	 * @author Ramon Creyghton <r.creyghton@gmail.com>
 	 */
 	public function connect() {
 		$this->mysqli = new mysqli(
@@ -101,7 +102,7 @@ class Helpers_Db {
 	 * This method seems rather unsafe for sql-injection!
 	 * 
 	 * @param String $query a valid sql-query
-	 * @return mysqli-result-object
+	 * @return mysqli_result
 	 * @author Ramon Creyghton <r.creyghton@gmail.com>
 	 */
 	public static function run($query) {
@@ -113,8 +114,7 @@ class Helpers_Db {
 	 * Returns a errormessage of the mysqli-object of the current Db Instance.
 	 * 
 	 * @author Frank van Luijn <frank@accode.nl>
-	 * @return String	Error message: (id) error
-	 * @return boolean	false if no error was found
+	 * @return string|boolean	Error message: (id) error OR false
 	 */
 	public static function getError() {
 		$no = self::getInstance()->mysqli->errno;
