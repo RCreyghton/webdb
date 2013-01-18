@@ -8,7 +8,7 @@ if (!defined("WEBDB_EXEC"))
 	die("No direct access!");
 
 /**
- * Category-class with fiels en methods to make and display Threads
+ * Category-class with fiels en methods to make and display Replies
  * 
  * @author Frank van Luijn <frank@accode.nl>
  * @author Ramon Creyghton <r.creyghton@gmail.com>
@@ -50,7 +50,42 @@ class Models_Reply extends Models_Base {
 		);
 		return $fields;
 	}
-
+	
+	
+	/**
+	 * gets an array of Credit-objects for this Reply
+	 *
+	 * @return Models_Credit[] array of Credit-objects
+	 * @uses Models_Base::fetchByQuery()	
+   * @uses Models_Base::getSelect()	
+	 * @todo SQL injection check, dwz: checken of inderdaad alle Object-velden safe zijn.
+	 * @todo Werkelijk Credit-objects maken... is dat niet heel kostbaar? Misschien eerder ergens array van platte credits opslaan in Reply-object?
+	 * @author Ramon Creyghton <r.creyghton@gmail.com>
+	 */
+	public function getCredits() {
+		$query = Models_Credit::getSelect() . " WHERE reply_id = `" . $this->id . "`";
+		return Models_Credit::fetchByQuery($query);
+	}
+	
+	
+	/**
+	 * Recalculates the current nett credit-value for this Reply-object.
+	 * 
+	 * To be called from a Controller-class that, for example, has just added a credit to this Reply
+	 * This method does not store the new netCredits value in this Reply's $credits field, but simply returns it for the Controller to handle.
+	 * 
+	 * @uses Models_Reply::getCredits() Fetching an array of all Credits-objects for this Reply.
+	 * @return int	Nett value of credits for this post.
+	 * @author Ramon Creyghton <r.creyghton@gmail.com>
+	 */
+	public function calcNettCredits() {
+		$creditsArray = $this->getCredits();
+		$nettCredits = 0;
+		foreach ($creditsArray as $credit) {
+			$nettCredits += $credit->value;
+		}
+		return $nettCredits;
+	}
 }
 
 ?>

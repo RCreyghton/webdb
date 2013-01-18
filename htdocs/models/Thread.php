@@ -9,6 +9,7 @@ if (!defined("WEBDB_EXEC"))
 
 /**
  * Category-class with fiels en methods to make and display Threads
+ * Is able to get the Replies associated with this thread.
  * 
  * @author Frank van Luijn <frank@accode.nl>
  * @author Ramon Creyghton <r.creyghton@gmail.com>
@@ -31,7 +32,8 @@ class Models_Thread extends Models_Base {
 										//3 hidden $ close; dus nog niet niet verwijderd.
 	public $answer_id;
 	public $views;
-
+	
+	
 	/**
 	 * Names of the relevant fields of this object, the must correspond with the
 	 * column-names of the associated table in the database.
@@ -54,7 +56,39 @@ class Models_Thread extends Models_Base {
 		);
 		return $fields;
 	}
-
+	
+	
+	/**
+	 * gets an array of Reply-objects under this Thread.
+	 *
+	 * @return Models_Reply[] array of Reply-objects
+	 * @uses Models_Base::fetchByQuery()	
+   * @uses Models_Base::getSelect()	
+	 * @todo SQL injection check, dwz: checken of inderdaad alle Object-velden safe zijn.
+	 * @todo The Reply that is selected as the Answer to this Thread is still somewhere amidst these Replies. Exclude it from here?
+	 * @author Ramon Creyghton <r.creyghton@gmail.com>
+	 */
+	public function getReplies() {
+		$query = Models_Reply::getSelect() . " WHERE thread_id = `" . $this->id . "`";
+		return Models_Reply::fetchByQuery($query);
+	}
+	
+	/**
+	 * gets the Reply that is selected as the Answer to this Thread, or false.
+	 * 
+	 * @return Models_Reply|boolean Description The selected Reply-object or false.
+	 * @uses Models_Base::fetchByQuery()	
+   * @uses Models_Base::getSelect()	
+	 * @todo SQL injection check, dwz: checken of inderdaad alle Object-velden safe zijn.
+	 * @author Ramon Creyghton <r.creyghton@gmail.com>
+	 */
+	public function getAnser() {
+		if ($this->answer_id == NULL)
+			return false;
+		$query = Models_Reply::getSelect() . " WHERE id = `" . $this->answer_id . "`";
+		$repliesArray = Models_Reply::fetchByQuery($query);
+		return (empty($repliesArray)) ? false : $repliesArray[1] ;
+	}
 }
 
 ?>

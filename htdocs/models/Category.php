@@ -28,7 +28,7 @@ class Models_Category extends Models_Base {
 		 * column-names of the associated table in the database.
 		 * 
 		 * @author Frank van Luijn <frank@accode.nl>
-		 * @return array[Strings] The names of all relevant fields exept id in this object
+		 * @return string[] The names of all relevant fields exept id in this object
 		 */
     public function declareFields() {
         $fields = array(
@@ -40,30 +40,22 @@ class Models_Category extends Models_Base {
     }
     
     
-    /**
-     * gets an array of Thread-objects in this category
-     *
-     * @returns array[Objects] array aan Category-objecten.
+		/**
+		 * gets an array of Thread-objects in this category
+		 *
+		 * @return Models_Thread[] array of Thread-objects.
+		 * @uses Models_Base::fetchByQuery()	
+		 * @uses Models_Base::getSelect()	
 		 * @todo SQL injection check
 		 * @todo in welke vorm willen we dit precies hebben?
 		 * @todo getSelect en fetchByQuery, van welk object spreken we die aan?
 		 * @todo misschien hier al wat voorwerk doen in de vorm van een met JOINS uitgebreide query tbv de category-view?
-     */
+		 */
     public function getThreads() {
         $query = Models_Thread::getSelect() . " WHERE category_id = `" . $this->id . "`";
-        //SQL injection controleren!!
         return Models_Thread::fetchByQuery($query);
     }
     
-    
-    /**
-     * gets an array of Reply-objects in this category
-     *
-     * @returns array[Objects] 
-     */
-    public function getReplies() {
-        
-    }
 }
 
 ?>
