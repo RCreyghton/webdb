@@ -57,7 +57,7 @@
 							spl_autoload_register('customAutoloader');
 											
 							//anonymous functie uit elkaar getrokken tbv van PhpDoc, dat daar niet mee om kon gaan.				
-						  private function customAutoloader ( $classpath ) {
+						  function customAutoloader ( $classpath ) {
 								$parts = explode("_", $classpath);
 
 								switch ($parts[0]) {
@@ -107,12 +107,12 @@
 							$c->name = "nogeencategory";
 							$c->description = "testdescript";
 							$c->status = 3;
+							
 							try {
 								$c->save();
 							} catch (Exception $exc) {
 								echo "<br />Exception bij save() 1: " . $exc->getMessage() . "<br />Trace: " . $exc->getTraceAsString();
 							}
-
 							
 							$c->id = 2;
 							$c->name = "veranderde_category";
@@ -122,6 +122,14 @@
 							} catch (Exception $exc) {
 								echo "<br />Exception bij save() 2: " . $exc->getMessage() . "<br />Trace: " . $exc->getTraceAsString();
 							}
+							
+							try{
+								$threadArray = $c->getForeignModels("Models_Thread");
+							} catch (Exception $exc){
+								echo "<br />Exception bij getForeignModels(\"Models_Thread\")" . $exc->getMessage() . "<br />Trace: " . $exc->getTraceAsString();
+							}
+							var_dump($threadArray);
+							
 							/*
 							 * Einde van testcode
 							 */

@@ -275,7 +275,8 @@ abstract class Models_Base {
 		if (!array_key_exists(static::FOREIGNPREFIX . "_id", get_class_vars($modelType)))
 			return false;
 		$query = $modelType::getSelect() . " WHERE " . static::FOREIGNPREFIX . "_id=" . $this->id . ";";
-    return $modelType::fetchByQuery($query);
+    echo $query;
+		return $modelType::fetchByQuery($query);
 	}
 		
 }
