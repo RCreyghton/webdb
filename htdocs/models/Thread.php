@@ -17,7 +17,7 @@ if (!defined("WEBDB_EXEC"))
 class Models_Thread extends Models_Base {
 
 	const TABLENAME = "threads";
-
+	const FOREIGNPREFIX = "thread";
 	public $id;
 	public $user_id;
 	public $category_id;

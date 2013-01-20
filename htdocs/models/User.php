@@ -18,6 +18,7 @@ class Models_Users extends Models_Base {
 		 * @var string Name of the DB-table corresponding with this class.
 		 */
     const TABLENAME = "users";
+		const FOREIGNPREFIX = "user";
 		/**
 		 * @var int	Unique ID of this User-object, auto_incremented in the DB.
 		 */

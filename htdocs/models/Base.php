@@ -16,6 +16,8 @@ if( ! defined("WEBDB_EXEC") ) die("No direct access!");
  * @author Frank van Luijn <frank@accode.nl>
  * @author Ramon Creyghton <r.creyghton@gmail.com>
  * @author Shafiq Ahmadi <s.ah@live.nl>
+ * @todo	Maybe drop the declareFields()-method altogher, since it is implemented not-static in the Childs: inefficient. Use get_class_vars() instead?.
+ * @todo	Check whether get_called_class() en static:: references indeed work as intended.
  */
 abstract class Models_Base {
 	
@@ -71,7 +73,7 @@ abstract class Models_Base {
 		}
 		
 		//build the query
-		$query = "INSERT INTO `" . $this::TABLENAME . "` ( `" . $fieldsstring . "` ) VALUES (" . implode(", ", $values ). ");";
+		$query = "INSERT INTO `" . static::TABLENAME . "` ( `" . $fieldsstring . "` ) VALUES (" . implode(", ", $values ). ");";
 		echo $query;
 		
 		$result = Helpers_Db::run( $query );
@@ -107,7 +109,7 @@ abstract class Models_Base {
 		$setString = implode(", ", $fields);
 		
 		//build the query
-		$query = "UPDATE `" . $this::TABLENAME . "` SET " . $setString . " WHERE id=" . $this->id . ";";
+		$query = "UPDATE `" . static::TABLENAME . "` SET " . $setString . " WHERE id=" . $this->id . ";";
 		echo $query;
 		
 		$result = Helpers_Db::run( $query );
@@ -138,7 +140,7 @@ abstract class Models_Base {
 	 * @todo dependencies!
 	 */
 	public function delete() {
-		$query = "DELETE FROM `" . $this::TABLENAME . "` WHERE id=" . $this->id . " LIMIT 1;";
+		$query = "DELETE FROM `" . static::TABLENAME . "` WHERE id=" . $this->id . " LIMIT 1;";
 		echo $query;
 		$result = Helpers_Db::run( $query );
 		if(! $result) {
@@ -171,7 +173,7 @@ abstract class Models_Base {
 	 * @todo Werkt alleen met child-objecten die inderdaad een TABLENAME hebben. Mag dit ding dan wel hier in base zo staan?
 	 */
 	public static function getSelect( $fields = "*" ) {
-		return "SELECT " . $fields . " FROM `" . get_called_class()->TABLENAME . "` ";
+		return "SELECT " . $fields . " FROM `" . static::TABLENAME . "` ";
 	}
 	
 	
@@ -185,7 +187,7 @@ abstract class Models_Base {
 	 */
 	public static function fetchById($model_id) {
 		//make quary based on the called class.
-		$resultarray = get_called_class()->fetchByQuery(getSelect() . " WHERE id=" . $model_id);
+		$resultarray = static::fetchByQuery(getSelect() . " WHERE id=" . $model_id);
 		return $resultarray[0];
 	}
 	
@@ -254,6 +256,26 @@ abstract class Models_Base {
 			$model->$field = $sqlrow[$field];
 		}
 		return $model;
+	}
+	
+	
+	/**
+	 * Fetches all records in DB that have n:1 relation (param $modelType : $this) with this {models}-object.
+	 * 
+	 * Does not use the $modelType's declareFields()-method, for these are not static, and therefore not callebale without an instance. Uses get_class_vars instead.
+	 * 
+	 * @uses Models_Base::fetchByQuery()	
+   * @uses Models_Base::getSelect()	
+	 * @param string	Classname of the type of {modeosl}-object asked for.
+	 * @return Models_Base[]|boolean	An array of {models}-objects of the type specified by $modelType, OR false if no such DB-relation is found.
+	 * @author Ramon Creyghton <r.creyghton@gmail.com>
+	 * @todo	Testing
+	 */
+	public function getForeignModels($modelType){
+		if (!array_key_exists(static::FOREIGNPREFIX . "_id", get_class_vars($modelType)))
+			return false;
+		$query = $modelType::getSelect() . " WHERE " . static::FOREIGNPREFIX . "_id=" . $this->id . ";";
+    return $modelType::fetchByQuery($query);
 	}
 		
 }

@@ -16,7 +16,7 @@ if (!defined("WEBDB_EXEC"))
 class Models_Reply extends Models_Base {
 
 	const TABLENAME = "replies";
-
+	const FOREIGNPREFIX = "reply";
 	public $id;
 	public $user_id;
 	public $thread_id;

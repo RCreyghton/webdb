@@ -16,7 +16,7 @@ if (!defined("WEBDB_EXEC"))
 class Models_Credit extends Models_Base {
 
 	const TABLENAME = "credits";
-
+	const FOREIGNPREFIX = "credit";
 	public $id;
 	public $user_id;
 	public $value;			//gewone users mogen allen +1 en -1 doen. Admins ook hogere waardes? (DB veld: int(4))

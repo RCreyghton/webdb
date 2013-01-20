@@ -17,6 +17,7 @@ if( ! defined("WEBDB_EXEC") ) die("No direct access!");
  */
 class Models_Category extends Models_Base {
     const TABLENAME = "categories";
+		const FOREIGNPREFIX = "category";
     public $id;
     public $name;
     public $description;
