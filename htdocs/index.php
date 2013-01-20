@@ -123,12 +123,35 @@
 								echo "<br />Exception bij save() 2: " . $exc->getMessage() . "<br />Trace: " . $exc->getTraceAsString();
 							}
 							
+							echo "<br />";
 							try{
 								$threadArray = $c->getForeignModels("Models_Thread");
+								var_dump($threadArray);
+								echo "<br />";
 							} catch (Exception $exc){
-								echo "<br />Exception bij getForeignModels(\"Models_Thread\")" . $exc->getMessage() . "<br />Trace: " . $exc->getTraceAsString();
+								echo "<br />Exception bij getForeignModels(\"Models_Thread\")" . $exc->getMessage() . "<br />Trace: " . $exc->getTraceAsString() . "<br />";
 							}
-							var_dump($threadArray);
+							
+
+							echo "<br />";
+							$r = new Models_Reply();
+							$r->thread_id = 2;
+							$r->title = "Testreply";
+							$r->user_id = 1;
+							$r->content="Inhoud van reply door Ramon op Frank...";
+							try {
+								$r->save();
+							} catch (Exception $exc) {
+								echo "<br />Exception bij save() 3: " . $exc->getMessage() . "<br />Trace: " . $exc->getTraceAsString();
+							}
+							echo "<br />";
+							try{
+								$replyArray = $r->getForeignModels("Models_Reply");
+								var_dump($replyArray);
+								echo "<br />";
+							} catch (Exception $exc){
+								echo "<br />Exception bij getForeignModels(\"Models_Reply\")" . $exc->getMessage() . "<br />Trace: " . $exc->getTraceAsString() . "<br />";
+							}
 							
 							/*
 							 * Einde van testcode
