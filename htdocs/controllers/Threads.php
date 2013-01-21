@@ -1,8 +1,9 @@
 <?php
 
 
-class Controller_Threads extends Controller_Base {
+class Controllers_Threads extends Controllers_Base {
 	
+	//TODO checken!
 	public function listing () {
 		
 		//params $_GET['start'];
@@ -18,6 +19,14 @@ class Controller_Threads extends Controller_Base {
 		$view->start = $start;
 		$view->end = $end;
 		$view->render();
+	}
+	
+	//public function categorythreads()
+	//public function userthreads()
+	
+	public function unanswered() {
+	    $view = new Views_Threads_Unanswered();
+	    parent::display($view);
 	}
 	
 	//new
