@@ -74,11 +74,10 @@ abstract class Models_Base {
 		
 		//build the query
 		$query = "INSERT INTO `" . static::TABLENAME . "` ( `" . $fieldsstring . "` ) VALUES (" . implode(", ", $values ). ");";
-		echo $query;
-		
+				
 		$result = Helpers_Db::run( $query );
 		
-		if(! $result) {
+		if( $result !== true ) {
 			throw new Exception(Helpers_Db::getError());
 		} else {
 			$this->id = Helpers_Db::getId();
