@@ -126,8 +126,7 @@
 							echo "<br />";
 							try{
 								$threadArray = $c->getForeignModels("Models_Thread");
-								var_dump($threadArray);
-								echo "<br />";
+								echo "<br />" . var_dump($threadArray). "<br />";
 							} catch (Exception $exc){
 								echo "<br />Exception bij getForeignModels(\"Models_Thread\")" . $exc->getMessage() . "<br />Trace: " . $exc->getTraceAsString() . "<br />";
 							}
@@ -146,9 +145,8 @@
 							}
 							echo "<br />";
 							try{
-								$replyArray = $r->getForeignModels("Models_Reply");
-								var_dump($replyArray);
-								echo "<br />";
+								$replyArray = $threadArray[1]->getForeignModels("Models_Reply");
+								echo "<br />" . var_dump($replyArray). "<br />";
 							} catch (Exception $exc){
 								echo "<br />Exception bij getForeignModels(\"Models_Reply\")" . $exc->getMessage() . "<br />Trace: " . $exc->getTraceAsString() . "<br />";
 							}
