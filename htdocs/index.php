@@ -12,6 +12,7 @@ spl_autoload_register('autoloader');
 
 //parse the URL
 //our basic url layout will be: /controllername/task
+//TODO check whether q exists or catch this at htaccess
 $parts = array_filter( explode( "/" , $_GET['q'] ) );
 if ( empty( $parts ) ) {
 	//this will be the homepage
@@ -19,7 +20,7 @@ if ( empty( $parts ) ) {
 	$task		= ""; //empty by default,  controller->execute must be able to handle this?
 } else {
 	$controller = ucfirst(strtolower( $parts[ 0 ] ));
-	$task		= ( sizeof( $parts ) >= 1 ) ? strtolower( $parts[ 1 ] ) : "";
+	$task		= ( sizeof( $parts ) > 1 ) ? strtolower( $parts[ 1 ] ) : "";
 }
 
 if( is_file("./controllers/{$controller}.php") ) {
@@ -43,19 +44,23 @@ if( is_file("./controllers/{$controller}.php") ) {
 function autoloader( $classpath ) {
 	
 	$allowedTypes = array(
-		'Models',
-		'Controllers',
-		'Helpers',
-		'Views'
+		'models',
+		'controllers',
+		'helpers',
+		'views'
 	);
 	
-	$parts = explode("_", $classpath);
+	$parts = explode("_", strtolower($classpath));
 	if( ! in_array( $parts[0], $allowedTypes ) ) {
-		throw new Exception( "Improper type: " . $parts[0] );
+		throw new Exception( "Improper type: " . ucfirst($parts[0]) );
 	}
 	
 	//convert to path
-	$path = str_replace( "_", DS, $classpath ) . ".php";
+	
+	//TODO handling extra or trailing slashes!!!
+	//tried to fix broken filenames (lowercase etc) on unix.
+	$parts[count($parts) - 1] = ucfirst( $parts[count($parts) - 1] );
+	$path = implode( DS, $parts ) . ".php";
 	
 	if (is_file( $path )) {
 		include $path;
