@@ -102,9 +102,13 @@ abstract class Models_Base {
 	private function update() {
 		$fields	= $this->declareFields();
 		
-		//met array_walk en catFieldValue elk element uit fields van zijn value
-		//voorzien volgens field='value'
-		array_walk($fields, array($this, 'catFieldValue'));
+		//use arraywalk and an anonymous function to concat the fields
+		//into a usable update query
+		$concat = function (&$field, $key) {
+			$field = $field . "='" . $this->$field . "'";
+		};
+		array_walk($fields, array($this, $concat));
+				
 		$setString = implode(", ", $fields);
 		
 		//build the query
@@ -113,23 +117,11 @@ abstract class Models_Base {
 		
 		$result = Helpers_Db::run( $query );
 		
-		if(! $result) {
+		if( ! $result ) {
 			throw new Exception(Helpers_Db::getError());
 		}
 		return $result;
-	}
-	
-	/**
-	 * Concatenates field with its corresponding value in this object to the form
-	 * {field}='{value}'
-	 * 
-	 * @param string $field that wil be alterd
-	 * @param mixed $key not in use
-	 */
-	private function catFieldValue(&$field, $key) {
-		$field = $field . "='" . $this->$field . "'";
-	}
-	
+	}	
 	
 	/**
 	 * Deletes 
