@@ -180,57 +180,32 @@ echo $query;
 	 */
 	public static function fetchByQuery($query) {
 		$result = Helpers_Db::run($query);
-		if (!$result) {
-			throw new Exception(Helpers_Db::getError());
+		if ( ! $result ) {
+			throw new Exception( Helpers_Db::getError() );
 		}
 
-		//Converting each row as the object (type accordig to called class) and add to array.
+		//Converting each row as the object (type according to called class) and add to array.
 		$objectsarray = array();
-		while ($model = $result->fetch_object(get_called_class())) {
-			$objectsarray[] = $model;
+		while ( $model = $result->fetch_object() ) {
+			$objectsarray[] = self::rowToObject( $model );
 		}
 		return $objectsarray;
 	}
 
 	/**
-	 * fetchByQuery kan 1 _of_ meer objecten terugkrijgen, dus een array, want heel algemeen
-	 * 
-	 * @param String $query
-	 * @return array[Object] rechstreeks het mysqli-geval, of een bewerkte rij(en) eruit?
-	 * @author Ramon Creyghton <r.creyghton@gmail.com>
-	 */
-	public static function fetchByQueryOld($query) {
-		$result = Helpers_Db::run($query);
-		if (!$result) {
-			throw new Exception(Helpers_Db::getError());
-		}
-
-		//Converting each row in the result to an {models}-object and add it to a array.
-		$objectsarray = array();
-		while ($row = $result->fetch_assoc()) {
-			$objectsarray[] = rowToObject($row);
-		}
-		return $objectsarray;
-	}
-
-	/**
-	 * Moet een child-object van deze base klasse returnen, op basis van de eerste
-	 * rij van een mysqli result.
+	 * converts a stdClass to an object of the current type
 	 * 
 	 * @param assoc_array[Strings] $sqlrow
 	 * @return Object A child object of this Base class
 	 * @author Ramon Creyghton <r.creyghton@gmail.com>
 	 * @todo Deze functie slaat alle id's over, omdat die niet in declareFields zitten. We kunnen denk ik beter gebruik maken van de mysqi method $result->fetch_object en deze rowToObject weggooien.
 	 */
-	private static function rowToObject($sqlrow) {
-		//met get_callec_class() weten we ook in deze static methode wat voor'n
-		//object we eigenlijk willen maken.
-		$modeltype = get_called_class();
-		$model = new $modeltype;
-		$fieldsToFill = $model->declareFields();
+	private static function rowToObject( $object ) {
+		$model = new self();
+		$fields = $model->declareFields();
 		//Elke element in deze assoc_array in het object plakken
-		foreach ($fieldsToFill as $field) {
-			$model->$field = $sqlrow[$field];
+		foreach ($fields as $field) {
+			$model->$field = $object->$field;
 		}
 		return $model;
 	}
@@ -247,12 +222,10 @@ echo $query;
 	 * @author Ramon Creyghton <r.creyghton@gmail.com>
 	 * @todo	Testing
 	 */
-	public function getForeignModels($modelType) {
-		if (!array_key_exists(static::FOREIGNPREFIX . "_id", get_class_vars($modelType)))
-			return false;
-		$query = $modelType::getSelect() . " WHERE " . static::FOREIGNPREFIX . "_id=" . $this->id . ";";
-		echo $query;
-		return $modelType::fetchByQuery($query);
+	public function getForeignModels( $connectedModel ) {
+		$prefix = strtolower( end( explode("_", $connectedModel) ) );
+		$query = $connectedModel::getSelect() . " WHERE `{$prefix}_id`='" . $this->id . "';";
+		return $connectedModel::fetchByQuery($query);
 	}
 
 }
