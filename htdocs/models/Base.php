@@ -1,10 +1,11 @@
 <?php
+
 /*
  * All classes and scripts must be loaded via index.php, where WEBDB_EXEC is set,
  * and stop executing immediatly if otherwise.
  */
-if( ! defined("WEBDB_EXEC") ) die("No direct access!");
-
+if (!defined("WEBDB_EXEC"))
+	die("No direct access!");
 
 /**
  * Base class
@@ -20,15 +21,13 @@ if( ! defined("WEBDB_EXEC") ) die("No direct access!");
  * @todo	Check whether get_called_class() en static:: references indeed work as intended.
  */
 abstract class Models_Base {
-	
-	
 	/*
 	 * Each child class must return an array including it's fields
 	 * Each field need also be present in the corresponding database
 	 */
+
 	abstract function declareFields();
-	
-	
+
 	/**
 	 * saves a model-object to the database
 	 * 
@@ -40,14 +39,13 @@ abstract class Models_Base {
 	 * @return boolean true if saved succesfully
 	 */
 	public function save() {
-		if( isset( $this->id ) ) {
+		if (isset($this->id)) {
 			return($this->update());
 		} else {
 			return($this->insert());
 		}
 	}
-	
-	
+
 	/**
 	 * inserts the data of the current ($this) object to the database as a new record
 	 * 
@@ -60,24 +58,24 @@ abstract class Models_Base {
 	 * @todo testen id teruguitlezen uit db auto_increment
 	 */
 	private function insert() {
-		$fields		= $this->declareFields();
-		$values		= array();
-		
+		$fields = $this->declareFields();
+		$values = array();
+
 		//get the field list
-		$fieldsstring = implode("`, `", $fields );
-		
+		$fieldsstring = implode("`, `", $fields);
+
 		//iterate over object to get corresponding values
 		//voor test-doeneinde mysql_rea_escape_string verwijderd
-		foreach( $fields as $field ) {
+		foreach ($fields as $field) {
 			$values[] = "'" . $this->$field . "'";
 		}
-		
+
 		//build the query
-		$query = "INSERT INTO `" . static::TABLENAME . "` ( `" . $fieldsstring . "` ) VALUES (" . implode(", ", $values ). ");";
-				
-		$result = Helpers_Db::run( $query );
-		
-		if( $result !== true ) {
+		$query = "INSERT INTO `" . static::TABLENAME . "` ( `" . $fieldsstring . "` ) VALUES (" . implode(", ", $values) . ");";
+echo $query;
+		$result = Helpers_Db::run($query);
+
+		if ($result !== true) {
 			throw new Exception(Helpers_Db::getError());
 		} else {
 			$this->id = Helpers_Db::getId();
@@ -85,8 +83,7 @@ abstract class Models_Base {
 		//this returns true if no errors were found.
 		return $result;
 	}
-	
-	
+
 	/**
 	 * updates the data of the current ($this) object in the existing corresponding record in the database
 	 * 
@@ -100,29 +97,24 @@ abstract class Models_Base {
 	 * @todo echo uitzetten
 	 */
 	private function update() {
-		$fields	= $this->declareFields();
+		$fields = $this->declareFields();
 		
-		//use arraywalk and an anonymous function to concat the fields
-		//into a usable update query
-		$concat = function (&$field, $key) {
-			$field = $field . "='" . $this->$field . "'";
-		};
-		array_walk($fields, array($this, $concat));
-				
-		$setString = implode(", ", $fields);
-		
+		$concat = array();
+		foreach( $fields as $field ) {
+			$concat[] = "`{$field}`='{$this->$field}'";
+		}
+
 		//build the query
-		$query = "UPDATE `" . static::TABLENAME . "` SET " . $setString . " WHERE id=" . $this->id . ";";
-		echo $query;
-		
-		$result = Helpers_Db::run( $query );
-		
-		if( ! $result ) {
+		$query = "UPDATE `" . static::TABLENAME . "` SET " . implode(", ", $concat) . " WHERE `id`='" . $this->id . "';";
+
+		$result = Helpers_Db::run($query);
+
+		if (!$result) {
 			throw new Exception(Helpers_Db::getError());
 		}
 		return $result;
-	}	
-	
+	}
+
 	/**
 	 * Deletes 
 	 * 
@@ -131,17 +123,16 @@ abstract class Models_Base {
 	 * @todo dependencies!
 	 */
 	public function delete() {
-		$query = "DELETE FROM `" . static::TABLENAME . "` WHERE id=" . $this->id . " LIMIT 1;";
-		echo $query;
-		$result = Helpers_Db::run( $query );
-		if(! $result) {
+		$query = "DELETE FROM `" . static::TABLENAME . "` WHERE `id`='" . $this->id . "';";
+		
+		$result = Helpers_Db::run($query);
+		if ( ! $result ) {
 			throw new Exception(Helpers_Db::getError());
 		}
 		return $result;
 	}
-	
-	
-  /**
+
+	/**
 	 * Exists a record with the given ID in the database???
 	 * Ramon: ik begrijp niet precies wanneer dit nuttig is?
 	 * 
@@ -154,7 +145,6 @@ abstract class Models_Base {
 		return true;
 	}
 
-	
 	/**
 	 * getSelect returns the first part of a SQL query that makes a SELECT from the 
 	 * table associated with the current object
@@ -163,11 +153,10 @@ abstract class Models_Base {
 	 * @return String First part of a SQL-query of the form SELECT ... FROM ...
 	 * @todo Werkt alleen met child-objecten die inderdaad een TABLENAME hebben. Mag dit ding dan wel hier in base zo staan?
 	 */
-	public static function getSelect( $fields = "*" ) {
+	public static function getSelect($fields = "*") {
 		return "SELECT " . $fields . " FROM `" . static::TABLENAME . "` ";
 	}
-	
-	
+
 	/**
 	 * FetchById gets a full record of the table corresponding with a {model}-object and returns them
 	 * 
@@ -181,7 +170,6 @@ abstract class Models_Base {
 		$resultarray = static::fetchByQuery(getSelect() . " WHERE id=" . $model_id);
 		return $resultarray[0];
 	}
-	
 
 	/**
 	 * Assamles an array of {models}-objects from the result returned by the given SQL query (SELECT).
@@ -192,19 +180,18 @@ abstract class Models_Base {
 	 */
 	public static function fetchByQuery($query) {
 		$result = Helpers_Db::run($query);
-		if(! $result) {
+		if (!$result) {
 			throw new Exception(Helpers_Db::getError());
 		}
-		
+
 		//Converting each row as the object (type accordig to called class) and add to array.
 		$objectsarray = array();
 		while ($model = $result->fetch_object(get_called_class())) {
 			$objectsarray[] = $model;
-    }
+		}
 		return $objectsarray;
 	}
-	
-	
+
 	/**
 	 * fetchByQuery kan 1 _of_ meer objecten terugkrijgen, dus een array, want heel algemeen
 	 * 
@@ -213,19 +200,18 @@ abstract class Models_Base {
 	 * @author Ramon Creyghton <r.creyghton@gmail.com>
 	 */
 	public static function fetchByQueryOld($query) {
-		$result = Helpers_Db::run( $query );
-		if(! $result) {
+		$result = Helpers_Db::run($query);
+		if (!$result) {
 			throw new Exception(Helpers_Db::getError());
 		}
-		
+
 		//Converting each row in the result to an {models}-object and add it to a array.
 		$objectsarray = array();
 		while ($row = $result->fetch_assoc()) {
 			$objectsarray[] = rowToObject($row);
-    }
+		}
 		return $objectsarray;
 	}
-
 
 	/**
 	 * Moet een child-object van deze base klasse returnen, op basis van de eerste
@@ -236,7 +222,7 @@ abstract class Models_Base {
 	 * @author Ramon Creyghton <r.creyghton@gmail.com>
 	 * @todo Deze functie slaat alle id's over, omdat die niet in declareFields zitten. We kunnen denk ik beter gebruik maken van de mysqi method $result->fetch_object en deze rowToObject weggooien.
 	 */
-	private static function rowToObject($sqlrow){
+	private static function rowToObject($sqlrow) {
 		//met get_callec_class() weten we ook in deze static methode wat voor'n
 		//object we eigenlijk willen maken.
 		$modeltype = get_called_class();
@@ -248,26 +234,25 @@ abstract class Models_Base {
 		}
 		return $model;
 	}
-	
-	
+
 	/**
 	 * Fetches all records in DB that have n:1 relation (param $modelType : $this) with this {models}-object.
 	 * 
 	 * Does not use the $modelType's declareFields()-method, for these are not static, and therefore not callebale without an instance. Uses get_class_vars instead.
 	 * 
 	 * @uses Models_Base::fetchByQuery()	
-   * @uses Models_Base::getSelect()	
+	 * @uses Models_Base::getSelect()	
 	 * @param string	Classname of the type of {modeosl}-object asked for.
 	 * @return Models_Base[]|boolean	An array of {models}-objects of the type specified by $modelType, OR false if no such DB-relation is found.
 	 * @author Ramon Creyghton <r.creyghton@gmail.com>
 	 * @todo	Testing
 	 */
-	public function getForeignModels($modelType){
+	public function getForeignModels($modelType) {
 		if (!array_key_exists(static::FOREIGNPREFIX . "_id", get_class_vars($modelType)))
 			return false;
 		$query = $modelType::getSelect() . " WHERE " . static::FOREIGNPREFIX . "_id=" . $this->id . ";";
-    echo $query;
+		echo $query;
 		return $modelType::fetchByQuery($query);
 	}
-		
+
 }
