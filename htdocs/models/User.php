@@ -13,12 +13,11 @@ if (!defined("WEBDB_EXEC"))
  * @author Shafiq Ahmadi <s.ah@live.nl>
  * @author Ramon Creyghton <r.creyghton@gmail.com>
  */
-class Models_Users extends Models_Base {
+class Models_User extends Models_Base {
 		/**
 		 * @var string Name of the DB-table corresponding with this class.
 		 */
     const TABLENAME = "users";
-		const FOREIGNPREFIX = "user";
 		/**
 		 * @var int	Unique ID of this User-object, auto_incremented in the DB.
 		 */
@@ -108,7 +107,7 @@ class Models_Users extends Models_Base {
 	 * @author Ramon Creyghton <r.creyghton@gmail.com>
 	 */
 	public function getCredits() {
-		$query = Models_Credit::getSelect(). " FROM credits JOIN replies ON credit.reply_id = reply.id WHERE user_id=" . $this->id . ";";
+		$query = Models_Credit::getSelect(). " JOIN `replies` ON `credits`.reply_id = `replies`.id WHERE `replies`.user_id=" . $this->id . ";";
 		$creditsArray = Models_Credit::fetchByQuery($query);
 		$totalcredits = 0;
 		foreach ($creditsArray as $credit) {

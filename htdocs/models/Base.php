@@ -198,12 +198,12 @@ echo $query;
 	 * @param assoc_array[Strings] $sqlrow
 	 * @return Object A child object of this Base class
 	 * @author Ramon Creyghton <r.creyghton@gmail.com>
-	 * @todo Deze functie slaat alle id's over, omdat die niet in declareFields zitten. We kunnen denk ik beter gebruik maken van de mysqi method $result->fetch_object en deze rowToObject weggooien.
+	 * @todo DONE ? Deze functie slaat alle id's over, omdat die niet in declareFields zitten. We kunnen denk ik beter gebruik maken van de mysqi method $result->fetch_object en deze rowToObject weggooien.
 	 */
 	private static function rowToObject( $object ) {
 		$model = new static();
-        $fields = $model->declareFields();
-        $fields[] = 'id';
+		$fields = $model->declareFields();
+		$fields[] = 'id';
 		//Elke element in deze assoc_array in het object plakken
 		foreach ($fields as $field) {
 			$model->$field = $object->$field;
@@ -221,12 +221,13 @@ echo $query;
 	 * @param string	Classname of the type of {modeosl}-object asked for.
 	 * @return Models_Base[]|boolean	An array of {models}-objects of the type specified by $modelType, OR false if no such DB-relation is found.
 	 * @author Ramon Creyghton <r.creyghton@gmail.com>
+	 * @author Frank van Luijn <frank@accode.nl>
 	 * @todo	Testing
 	 */
 	public function getForeignModels( $connectedModel ) {
 		$prefix = strtolower( end( explode("_", get_class($this)) ) );
-        $query = $connectedModel::getSelect() . " WHERE `{$prefix}_id`='" . $this->id . "';";
-        echo $query;
+		$query = $connectedModel::getSelect() . " WHERE `{$prefix}_id`='" . $this->id . "';";
+		echo $query;
 		return $connectedModel::fetchByQuery($query);
 	}
 

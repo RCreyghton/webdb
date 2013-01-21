@@ -15,15 +15,15 @@ spl_autoload_register('autoloader');
 $parts = array_filter( explode( "/" , $_GET['q'] ) );
 if ( empty( $parts ) ) {
 	//this will be the homepage
-	$controller = "threads";
-	$task		= "unanswered";
+	$controller = "Threads";
+	$task		= ""; //empty by default,  controller->execute must be able to handle this?
 } else {
-	$controller = $parts[ 0 ];
-	$task		= $parts[ 1 ];
+	$controller = ucfirst(strtolower( $parts[ 0 ] ));
+	$task		= ( sizeof( $parts ) >= 1 ) ? strtolower( $parts[ 1 ] ) : "";
 }
 
 if( is_file("./controllers/{$controller}.php") ) {
-	$controller = "Controllers_" . ucfirst( $controller );
+	$controller = "Controllers_" . $controller ;
 	$controller = new $controller();
 	$controller->execute( $task );
 } else {

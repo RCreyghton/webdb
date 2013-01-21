@@ -17,7 +17,6 @@ if (!defined("WEBDB_EXEC"))
 class Models_Thread extends Models_Base {
 
 	const TABLENAME = "threads";
-	const FOREIGNPREFIX = "thread";
 	public $id;
 	public $user_id;
 	public $category_id;
@@ -29,7 +28,7 @@ class Models_Thread extends Models_Base {
 										//0 is hidden & open;
 										//1 is visible & open; waarbij open restricted is indien de category dit bepaalt.
 										//2 is visible & closed; de Thread is door admin beeindigd.
-										//3 hidden $ close; dus nog niet niet verwijderd.
+										//-1 hidden $ close; dus nog niet niet verwijderd.
 	public $answer_id;
 	public $views;
 	

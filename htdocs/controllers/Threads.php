@@ -3,6 +3,8 @@
 
 class Controllers_Threads extends Controllers_Base {
 	
+	const DEFAULTTASK = "unanswered";
+	
 	//TODO checken!
 	public function listing () {
 		
@@ -10,7 +12,7 @@ class Controllers_Threads extends Controllers_Base {
 		$start = parent::getInt("start", 0);
 		$end = $start + 25;
 		
-		$query = Models_Thread::getSelect() . " WHERE `visible` = 1 LIMIT {$start}, {$end}";
+		$query = Models_Thread::getSelect() . " WHERE `status` > 0 LIMIT {$start}, {$end}";
 		
 		$threads = Models_Thread::fetchByQuery( $query );
 		
