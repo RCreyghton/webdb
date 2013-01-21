@@ -22,11 +22,11 @@ if ( empty( $parts ) ) {
 }
 
 if( is_file("./controllers/{$controller}.php") ) {
-	$controller = "Controller_" . ucfirst( $controller );
+	$controller = "Controllers_" . ucfirst( $controller );
 	$controller = new $controller();
 	$controller->execute( $task );
 } else {
-	$controller = Controller_Error();
+	$controller = Controllers_Error();
 	$controller->execute( "notfound" );
 }
 
