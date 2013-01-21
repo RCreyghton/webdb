@@ -202,7 +202,8 @@ echo $query;
 	 */
 	private static function rowToObject( $object ) {
 		$model = new static();
-		$fields = $model->declareFields();
+        $fields = $model->declareFields();
+        $fields[] = 'id';
 		//Elke element in deze assoc_array in het object plakken
 		foreach ($fields as $field) {
 			$model->$field = $object->$field;
@@ -223,8 +224,9 @@ echo $query;
 	 * @todo	Testing
 	 */
 	public function getForeignModels( $connectedModel ) {
-		$prefix = strtolower( end( explode("_", $connectedModel) ) );
-		$query = $connectedModel::getSelect() . " WHERE `{$prefix}_id`='" . $this->id . "';";
+		$prefix = strtolower( end( explode("_", get_class($this)) ) );
+        $query = $connectedModel::getSelect() . " WHERE `{$prefix}_id`='" . $this->id . "';";
+        echo $query;
 		return $connectedModel::fetchByQuery($query);
 	}
 
