@@ -3,7 +3,7 @@
 
 abstract class Controllers_Base {
 	
-    public params = array();    
+    public $params = array();    
 	    
 	
 	/**
@@ -14,7 +14,7 @@ abstract class Controllers_Base {
 	 * @author	Ramon Creyghton <r.creyghton@gmail.com>
 	 */
     public function setParam($key, $value) {
-		$this->params[] = $key => $value;
+		$this->params[$key] = $value;
     }
 	
 	
@@ -25,9 +25,9 @@ abstract class Controllers_Base {
 	 * @return	boolean|mixed	Return value of the method called or false.
 	 * @author	Ramon Creyghton <r.creyghton@gmail.com>
 	 */
-	public function excecute($task) {
+	public function execute($task) {
 		return ( method_exists($this, $task) ) ? 
-			$task() :
+			$this->$task() :
 			false;
 	}
 	
@@ -40,7 +40,7 @@ abstract class Controllers_Base {
 		ob_end_clean();
 		
 		//nu kunnen we de template openen en onze render op de plek van de content injecteren.
-		echo str_replace("<!-- CONTENT -->", $rendered, $this->getTemplate());
+		echo str_replace("<!-- CONTENT -->", $rendered, $view->getTemplate());
 		
 	}
 	
@@ -53,6 +53,7 @@ abstract class Controllers_Base {
 	 * @author  Ramon Creyghton <r.creyghton@gmail.com>
 	 */
 	public function getInt( $getkey ) {
+		/*
 		if ( ( array_key_exists($getkey), $this->params) && ( ! empty($this->params["$getkey"]) ) && ( (int) $this->params["$getkey"] != 0) ) {
 			return (int) $this->params["$getkey"];
 		} else if ( isset($_POST["$getkey"]) && !empty($_POST["$getkey"]) && ( (int) $_POST["$getkey"] != 0) ) {
@@ -62,6 +63,8 @@ abstract class Controllers_Base {
 		} else {
 			return false;
 	    }
+		 * */
+		 
 	}
 	
 	
@@ -73,6 +76,7 @@ abstract class Controllers_Base {
 	 * @author  Ramon Creyghton <r.creyghton@gmail.com>
 	 */
 	public function getString( $getkey ) {
+		/*
 		if ( ( array_key_exists($getkey), $this->params) && ( ! empty($this->params["$getkey"]) ) ) {
 			return $this->params["$getkey"];
 		} else if ( isset($_POST["$getkey"]) && !empty($_POST["$getkey"]) ) {
@@ -81,6 +85,6 @@ abstract class Controllers_Base {
 			return $_GET["$getkey"];
 		} else {
 			return false;
-	    }
+	    }*/
 	}
 }

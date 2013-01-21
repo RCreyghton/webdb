@@ -8,11 +8,12 @@ abstract class Views_Base {
 	abstract public function render();
 	
     public function getTemplate() {
-		$template = file_get_contents(BASE . "assets/template.php");
-		$template = str_replace("<!-- TITLE -->", $this->title, $template);
-		$template = str_replace("<!-- BASEURL -->", getBaseURL(), $template);
-		$template = str_replace("<!-- MENU -->", getMenu(), $template);
-		$template = str_replace("<!-- LOGIN -->", getLogin(), $template);
+		$template = file_get_contents(BASE . "assets/template.html");
+		$template = str_replace("<!-- TITLE -->",	$this->title, $template);
+		$template = str_replace("<!-- BASEURL -->", $this->getBaseURL(), $template);
+		$template = str_replace("<!-- MENU -->",	$this->getMenu(), $template);
+		$template = str_replace("<!-- LOGIN -->",	$this->getLogin(), $template);
+		return $template;
     }
     
     
@@ -41,7 +42,7 @@ LOGIN;
     }
     
     public function getBaseURL() {
-		return "<base href=" . substr($_SERVER["PHP_SELF"], 0, strlen($_SERVER["PHP_SELF"]) - 9) . " target="_blank" />";
+		return "<base href=" . substr($_SERVER["PHP_SELF"], 0, strlen($_SERVER["PHP_SELF"]) - 9) . " target='_blank' />";
 	}
 	
 }
