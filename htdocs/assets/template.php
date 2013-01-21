@@ -8,7 +8,7 @@ if (!defined("WEBDB_EXEC"))
   <head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title>WebDBOverflow - <!-- TITLE --></title>
-		<base href="<?php echo substr($_SERVER["PHP_SELF"], 0, strlen($_SERVER["PHP_SELF"]) - 9) ?>" target="_blank" /> 
+		<!-- BASEURL --> 
 		<link rel="stylesheet" href="assets/css/style.css" type="text/css" />
   </head>
   <body>
