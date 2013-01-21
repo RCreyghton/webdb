@@ -18,23 +18,10 @@ if (!defined("WEBDB_EXEC"))
 					<h1>WebDBOverflow</h1>
 					<div class="header_service">
 						<!-- LOGIN -->
-						<ul>
-							<li>
-								<a href="login.php">Login</a>
-							</li>
-							<li>
-								<a href="register.php">Registreer</a>
-							</li>
-						</ul>
 					</div>
 				</div>
 				<div class="content_open body_centered">
 					<!-- MENU -->
-					<ul class="menu">
-						<li><a href="index.php?forum=1" class="menulink">Forum 1</a></li>
-						<li><a href="index.php?forum=2" class="menulink">Forum 2</a></li>
-						<li><a href="index.php?forum=3" class="menulink">Forum 3</a></li>
-					</ul>
 				</div>
 			</div>
 
