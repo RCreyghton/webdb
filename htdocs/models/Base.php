@@ -201,7 +201,7 @@ echo $query;
 	 * @todo Deze functie slaat alle id's over, omdat die niet in declareFields zitten. We kunnen denk ik beter gebruik maken van de mysqi method $result->fetch_object en deze rowToObject weggooien.
 	 */
 	private static function rowToObject( $object ) {
-		$model = new self();
+		$model = new static();
 		$fields = $model->declareFields();
 		//Elke element in deze assoc_array in het object plakken
 		foreach ($fields as $field) {
