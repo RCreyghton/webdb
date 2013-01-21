@@ -3,6 +3,7 @@
 //define access point
 define("WEBDB_EXEC", true);
 define("DS", "/");
+define("BASE", getcwd() . DS );
 
 /*
  * Register our autoloader
