@@ -5,8 +5,8 @@ class Controllers_Threads extends Controllers_Base {
 	
 	//TODO checken!
 	public function calcPagination ( $where ) {
-		$page = 1; //params $_GET['page'];
-		$pagesize = 25; //$start = parent::getInt("start", 0);
+		$page = $this->getInt("p", 1);
+		$pagesize = $this->getInt("ps", 25);
 		
 		$countquery = Models_Thread::getSelectCount() . $where;
 		$nothreads = Models_Thread::getCount( $countquery ) ;
