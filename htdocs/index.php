@@ -14,14 +14,15 @@ spl_autoload_register('autoloader');
 //our basic url layout will be: /controllername/task
 //TODO check whether q exists or catch this at htaccess
 $q = isset( $_GET['q'] ) ? $_GET['q'] : '';
-$parts = array_filter( explode( "/" , $q ) );
+$parts = array_filter( explode( "/" , strtolower( $q ) ) );
+
 if ( empty( $parts ) ) {
 	//this will be the homepage
 	$controller = "Threads";
 	$task		= "unanswered";
 } else {
-	$controller = ucfirst(strtolower( $parts[ 0 ] ));
-	$task		= ( isset( $parts[1] ) ) ? strtolower( $parts[ 1 ] ) : NULL ;
+	$controller = ucfirst( $parts[ 0 ] );
+	$task		= ( isset( $parts[ 1 ] ) ) ? $parts[ 1 ] : NULL ;
 }
 
 if( is_file("./controllers/{$controller}.php") && ! empty( $task ) ) {
