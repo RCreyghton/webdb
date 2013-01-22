@@ -79,6 +79,12 @@ class Views_User_Registrationform extends Views_Base {
 			'type'			=> 'password'
 		);
 		
+		//load the array up with empty valued for strict
+		foreach( $elements as $e ) {
+			$elements[ $field ] [ 'value' ]			= '';
+			$elements[ $field ] [ 'errormessage' ]	= '';
+		}
+		
 		//map all results onto these elements
 		foreach( $this->formresult as $field => $e ) {
 			if( ! isset( $elements[ $field ]) )
