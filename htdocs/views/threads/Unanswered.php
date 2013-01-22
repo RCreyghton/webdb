@@ -1,11 +1,6 @@
 <?php
 
-class Views_Threads_Unanswered extends Views_Base {
-	
-	public $threads;
-	public $start;
-	public $end;
-	
+class Views_Threads_Unanswered extends Views_Threads_Base {
 	
 	/**
 	 * Renders the contents of this view, by parsing the $threads-array made by Controllers_Threads->unanswered().
@@ -15,16 +10,9 @@ class Views_Threads_Unanswered extends Views_Base {
 	 * @author	Ramon Creyghton <r.creyghton@gmail.com>
 	 */
 	public function render() {
-		echo "<h2>Hello World!</h2>";
-		foreach ($this->threads as $thread) {
-			$user = Models_User::fetchById( $thread->user_id );
-			$noReplies = $thread->getForeignCount( "Models_Reply" );
-			echo "<div class=\"element\"><h3>Thread:</h3><p>";
-			echo var_dump( $thread );
-			echo "</p><h3>Door user:</h3><p>";
-			echo var_dump( $user );
-			echo "</p><h3>Deze thread heeft {$noReplies} replies.</h3></div>";
-		}
+		echo "<h2>Unanswered Threads</h2>";
+		$this->printThreads();
+		$this->printPagination();
 	}
 	
 }

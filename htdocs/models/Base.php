@@ -149,14 +149,24 @@ echo $query;
 	 * getSelect returns the first part of a SQL query that makes a SELECT from the 
 	 * table associated with the current object
 	 * 
-	 * @param String $fields
-	 * @return String First part of a SQL-query of the form SELECT ... FROM ...
-	 * @todo Werkt alleen met child-objecten die inderdaad een TABLENAME hebben. Mag dit ding dan wel hier in base zo staan?
+	 * @param string $fields
+	 * @return string First part of a SQL-query of the form SELECT ... FROM ...
 	 */
 	public static function getSelect($fields = "*") {
 		return "SELECT " . $fields . " FROM `" . static::TABLENAME . "` ";
 	}
-
+	
+	
+	/**
+	 * getSelect returns the first part of a SQL query that makes a SELECT COUNT( * ) from the DB.
+	 * 
+	 * @return string First part of a SQL query.
+	 */
+	public static function getSelectCount() {
+		return "SELECT COUNT( * ) FROM `" . static::TABLENAME . "` ";
+	}
+	
+	
 	/**
 	 * FetchById gets a full record of the table corresponding with a {model}-object and returns them
 	 * 
@@ -239,8 +249,15 @@ echo $query;
 	 */
 	public function getForeignCount( $connectedModel ) {
 		$prefix = strtolower( end( explode("_", get_class($this)) ) );
-		$query = "SELECT COUNT(`{$prefix}_id`) FROM `" . $connectedModel::TABLENAME . "` WHERE `{$prefix}_id`='" . $this->id . "';";
-		//We cannot use fetchByQuery since it parses the mysqli-result as {models}-object, and that's not the idea of this function.
+		$query = $connectedModel::getSelectCount() . " WHERE `{$prefix}_id`='" . $this->id . "';";
+		return static::getCount( $query );
+	}
+	
+	
+	/**
+	 *
+	 */
+	public static function getCount( $query ) {
 		$result = Helpers_Db::run($query);
 		if ( ! $result ) {
 			throw new Exception( Helpers_Db::getError() );
