@@ -1,6 +1,6 @@
 <?php
 
-class Views_Threads_Base extends Views_Base {
+abstract class Views_Threads_Base extends Views_Base {
 	
 	public $threads;
 	public $page;
@@ -16,7 +16,7 @@ class Views_Threads_Base extends Views_Base {
 	 * @uses	Models_Base->getForeignCount()
 	 * @author	Ramon Creyghton <r.creyghton@gmail.com>
 	 */
-	private function printThreads() {
+	public function printThreads() {
 		foreach ($this->threads as $thread) {
 			$user = Models_User::fetchById( $thread->user_id );
 			$noReplies = $thread->getForeignCount( "Models_Reply" );
@@ -28,7 +28,7 @@ class Views_Threads_Base extends Views_Base {
 		}
 	}
 	
-	private function printPagination() {
+	public function printPagination() {
 		echo "<div class=\"pagination\">";
 		for ($i = 1; $i <= $this->nopages; $i++) {
 			if ($i == $this->page)
