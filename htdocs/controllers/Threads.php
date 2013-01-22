@@ -3,7 +3,6 @@
 
 class Controllers_Threads extends Controllers_Base {
 	
-	const DEFAULTTASK = "unanswered";
 	public $start;
 	public $end;
 	
@@ -28,10 +27,10 @@ class Controllers_Threads extends Controllers_Base {
 	
 	public function unanswered() {
 	    $this->view = new Views_Threads_Unanswered();
-			$this->getLimits();
-			$query = Models_Thread::getSelect() . " WHERE ((`status` > 0) AND (`answer_id` IS NULL)) ORDER BY `ts_created` ASC LIMIT {$this->start}, {$this->end}";
-			$this->setupView( $query );
-	    parent::display($this->view);
+		$this->getLimits();
+		$query = Models_Thread::getSelect() . " WHERE ((`status` > 0) AND (`answer_id` IS NULL)) ORDER BY `ts_created` ASC LIMIT {$this->start}, {$this->end}";
+		$this->setupView( $query );
+	    $this->display();
 	}
 	
 	//public function categorythreads()

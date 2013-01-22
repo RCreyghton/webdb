@@ -163,10 +163,9 @@ echo $query;
 	 * @author Ramon Creyghton <r.creyghton@gmail.com>
 	 * @param int $model_id
 	 * @return Object	Van type {model}-child.
-	 * @todo	Net als bij getSelect controleren of get_called_class()-> wel werkt...
 	 */
 	public static function fetchById($model_id) {
-		//make quary based on the called class.
+		//make quary based on the called class, that we can find using SLB: static::
 		$resultarray = static::fetchByQuery(static::getSelect() . " WHERE id=" . $model_id);
 		return $resultarray[0];
 	}

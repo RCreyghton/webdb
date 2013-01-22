@@ -3,7 +3,8 @@
 
 abstract class Controllers_Base {
 	
-    public $params = array();    
+    public $params = array();
+    public $view;
 	    
 	
 	/**
@@ -24,6 +25,7 @@ abstract class Controllers_Base {
 	 * @param	string	$task	Name of the method asked to execute.
 	 * @return	boolean|mixed	Return value of the method called or false.
 	 * @author	Ramon Creyghton <r.creyghton@gmail.com>
+	 * @todo	What if return false.. error handling where?
 	 */
 	public function execute($task) {
 		if ( $task == NULL )
@@ -34,10 +36,10 @@ abstract class Controllers_Base {
 	}
 	
 	
-	public static function display(Views_Base $view) {
+	public function display() {
 		//eerst de content renderen en in buffer opslaan.
 		ob_start();
-		$view->render();
+		$this->view->render();
 		$rendered = ob_get_contents();
 		ob_end_clean();
 		
