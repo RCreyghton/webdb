@@ -16,7 +16,6 @@ class Views_User_Registrationform extends Views_Base {
 			echo "<tr>";
 			
 			echo "<td>";
-			var_dump($e);
 			echo $e['description'];
 			echo "</td>";
 			
