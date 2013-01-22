@@ -18,10 +18,10 @@ $parts = array_filter( explode( "/" , $q ) );
 if ( empty( $parts ) ) {
 	//this will be the homepage
 	$controller = "Threads";
-	$task		= "topunanswered";
+	$task		= "unanswered";
 } else {
 	$controller = ucfirst(strtolower( $parts[ 0 ] ));
-	$task		= strtolower( $parts[ 1 ] );
+	$task		= ( isset( $parts[1] ) ) ? strtolower( $parts[ 1 ] ) : NULL ;
 }
 
 if( is_file("./controllers/{$controller}.php") && ! empty( $task ) ) {
@@ -29,7 +29,7 @@ if( is_file("./controllers/{$controller}.php") && ! empty( $task ) ) {
 	$controller = new $controller();
 	$controller->execute( $task );
 } else {
-	$controller = Controllers_Error();
+	$controller = new Controllers_Error();
 	$controller->execute( "notfound" );
 }
 

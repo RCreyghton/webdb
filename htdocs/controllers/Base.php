@@ -30,9 +30,10 @@ abstract class Controllers_Base {
 	public function execute($task) {
 		if ( $task == NULL )
 			$task = static::DEFAULTTASK;
-		return ( method_exists($this, $task) ) ? 
-			$this->$task() :
-			false;
+        if ( ! method_exists($this, $task) ) {
+            throw new Exception("Task not found");
+        } 
+		return $this->$task(); 
 	}
 	
 	
@@ -44,7 +45,7 @@ abstract class Controllers_Base {
 		ob_end_clean();
 		
 		//nu kunnen we de template openen en onze render op de plek van de content injecteren.
-		echo str_replace("<!-- CONTENT -->", $rendered, $view->getTemplate());
+		echo str_replace("<!-- CONTENT -->", $rendered, $this->view->getTemplate());
 		
 	}
 	
