@@ -8,7 +8,7 @@ class Views_User_Registrationform extends Views_Base {
 	public $formresult = array();
 	
 	public function render() {
-		echo "<form method='POST' action='" . parent::getURL("users", "register") . "' >";
+		echo "<form method='post' action='" . parent::getURL("users", "register") . "' >";
 		echo "<table>";
 	
 		$elements = $this->getElements();
@@ -16,6 +16,7 @@ class Views_User_Registrationform extends Views_Base {
 			echo "<tr>";
 			
 			echo "<td>";
+			var_dump($e);
 			echo $e['description'];
 			echo "</td>";
 			
@@ -79,13 +80,22 @@ class Views_User_Registrationform extends Views_Base {
 			'type'			=> 'password'
 		);
 		
+		//load the array up with empty valued for strict
+		foreach( $elements as &$e ) {
+			$e [ 'value' ]			= '';
+			$e [ 'errormessage' ]	= '';
+		}
+		
 		//map all results onto these elements
 		foreach( $this->formresult as $field => $e ) {
 			if( ! isset( $elements[ $field ]) )
 				continue;
 			
-			$elements[ $field ] [ 'value' ]			= $e ['value'];
-			$elements[ $field ] [ 'errormessage' ]	= $e ['errormessage'];	
+			if( isset( $e ['value'] ) )
+				$elements[ $field ] [ 'value' ]			= $e ['value'];
+			
+			if( isset( $e ['errormessage'] ) )
+				$elements[ $field ] [ 'errormessage' ]	= $e ['errormessage'];	
 		}
 		return $elements;
 	}
