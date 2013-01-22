@@ -79,7 +79,7 @@ class Models_User extends Models_Base {
 			"email",
 			"ts_registered",
 			"role",
-			"fistname",
+			"firstname",
 			"lastname"
 		);
 		return $fields;
