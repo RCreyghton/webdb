@@ -81,8 +81,8 @@ class Views_User_Registrationform extends Views_Base {
 		
 		//load the array up with empty valued for strict
 		foreach( $elements as $e ) {
-			$elements[ $field ] [ 'value' ]			= '';
-			$elements[ $field ] [ 'errormessage' ]	= '';
+			$e [ 'value' ]			= '';
+			$e [ $field ] [ 'errormessage' ]	= '';
 		}
 		
 		//map all results onto these elements
@@ -90,8 +90,11 @@ class Views_User_Registrationform extends Views_Base {
 			if( ! isset( $elements[ $field ]) )
 				continue;
 			
-			$elements[ $field ] [ 'value' ]			= $e ['value'];
-			$elements[ $field ] [ 'errormessage' ]	= $e ['errormessage'];	
+			if( isset( $e ['value'] ) )
+				$elements[ $field ] [ 'value' ]			= $e ['value'];
+			
+			if( isset( $e ['errormessage'] ) )
+				$elements[ $field ] [ 'errormessage' ]	= $e ['errormessage'];	
 		}
 		return $elements;
 	}
