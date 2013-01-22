@@ -49,10 +49,10 @@ class Helpers_Db {
 	 * @author RCreyghton
 	 */
 	private function __construct() {
-		$this->dbh = $this;
+		$this->instance = $this;
 
 		if (!$this->connect()) {
-			$this->dbh = NULL;
+			$this->instance = NULL;
 			throw new Exception("Could not connect to database.");
 		}
 	}
@@ -87,11 +87,9 @@ class Helpers_Db {
 		@$this->mysqli->close();
 	}
 
-	public function escape( $string ) {
+	public static function escape( $string ) {
 		//make sure we've connected to the db
-		self::getInstance();
-		
-		return mysqli::real_escape_string( $string );
+		return self::getInstance()->mysqli->real_escape_string( $string );
 	}
 	
 	/* Riped from webdb Voorbeeldcode.
