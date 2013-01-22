@@ -5,6 +5,8 @@ class Views_Threads_Base extends Views_Base {
 	public $threads;
 	public $page;
 	public $pagesize;
+	public $nopages;
+	public $nothreads;
 	
 	
 	/**
@@ -28,7 +30,13 @@ class Views_Threads_Base extends Views_Base {
 	
 	private function printPagination() {
 		echo "<div class=\"pagination\">";
-		if count($threads) >
+		for ($i = 1; $i <= $this->nopages; $i++) {
+			if ($i == $this->page)
+				echo "<em>$i</em>";
+			else
+				echo "<a href=\"" . getUrl("threads","unanswered") . "\">$i</a>";
+		}
+		echo "</div>";
 	}
 	
 }
