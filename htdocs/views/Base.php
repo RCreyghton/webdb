@@ -16,7 +16,10 @@ abstract class Views_Base {
 		return $template;
     }
     
-    
+    public function getURL( $controller, $user ) {
+		return "./" . $controller . "/" . $user;
+	}
+	
     public function getMenu() {
     	return <<<MENU
 					<ul class="menu">
