@@ -19,6 +19,8 @@ class Models_User extends Models_Base {
 	 */
 
 	const TABLENAME = "users";
+	const ROLE_USER = 0;
+	const ROLE_ADMIN = 1;
 
 	/**
 	 * Unique ID of this User-object, auto_incremented in the DB.

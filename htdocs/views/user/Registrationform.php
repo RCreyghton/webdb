@@ -8,7 +8,7 @@ class Views_User_Registrationform extends Views_Base {
 	public $formresult = array();
 	
 	public function render() {
-		echo "<form method='POST' action='./' >";
+		echo "<form method='POST' action='" . parent::getURL("users", "register") . "' >";
 		echo "<table>";
 	
 		$elements = $this->getElements();
@@ -24,7 +24,7 @@ class Views_User_Registrationform extends Views_Base {
 					type='"  . $e['type']   . "' 
 					name='"  . $field		. "' 
 					value='" . $e['value']  . "'
-					class='" . $e['status'] . "'
+					class='" . ( empty( $e['errormessage'] ) ? "":"inputerror") . "'
 			/>";
 			echo !empty( $e['errormessage'] ) ? 
 				"<span class='errormessage'>" . $e['errormessage'] . "</span>"
@@ -68,7 +68,7 @@ class Views_User_Registrationform extends Views_Base {
 		);
 		
 		//password
-		$elements ['pass'] = array(
+		$elements ['pass1'] = array(
 			'description'	=> 'Wachtwoord',
 			'type'			=> 'password'
 		);
@@ -85,7 +85,6 @@ class Views_User_Registrationform extends Views_Base {
 				continue;
 			
 			$elements[ $field ] [ 'value' ]			= $e ['value'];
-			$elements[ $field ] [ 'status' ]		= $e ['status'];
 			$elements[ $field ] [ 'errormessage' ]	= $e ['errormessage'];	
 		}
 		return $elements;
