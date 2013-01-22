@@ -82,7 +82,7 @@ class Views_User_Registrationform extends Views_Base {
 		//load the array up with empty valued for strict
 		foreach( $elements as $e ) {
 			$e [ 'value' ]			= '';
-			$e [ $field ] [ 'errormessage' ]	= '';
+			$e [ 'errormessage' ]	= '';
 		}
 		
 		//map all results onto these elements
