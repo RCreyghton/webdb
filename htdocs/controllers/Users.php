@@ -110,7 +110,7 @@ class Controllers_Users extends Controllers_Base {
 		$u->save();
 		
 		if( isset( $u->id ) ) {
-			//send a welcome-mail tot he user here
+			Helpers_User::sendWelcome( $u );
 			return true;
 		} else {
 			return false;
