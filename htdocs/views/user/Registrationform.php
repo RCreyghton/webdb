@@ -16,6 +16,7 @@ class Views_User_Registrationform extends Views_Base {
 			echo "<tr>";
 			
 			echo "<td>";
+			var_dump($e);
 			echo $e['description'];
 			echo "</td>";
 			
@@ -80,7 +81,7 @@ class Views_User_Registrationform extends Views_Base {
 		);
 		
 		//load the array up with empty valued for strict
-		foreach( $elements as $e ) {
+		foreach( $elements as &$e ) {
 			$e [ 'value' ]			= '';
 			$e [ 'errormessage' ]	= '';
 		}
