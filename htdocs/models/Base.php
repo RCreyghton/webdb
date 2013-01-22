@@ -233,7 +233,6 @@ echo $query;
 	/**
 	 * Gets the number of records in DB that have n:1 relation (param $modelType : $this) with this {models}-object.
 	 * 
-	 * @uses Models_Base::fetchByQuery()
 	 * @param string	Classname of the type of {models}-object asked for.
 	 * @return integer|boolean	An integer indicating the number of foreign models, OR false if no such DB-relation is found.
 	 * @author Ramon Creyghton <r.creyghton@gmail.com>
@@ -242,8 +241,13 @@ echo $query;
 	public function getForeignCount( $connectedModel ) {
 		$prefix = strtolower( end( explode("_", get_class($this)) ) );
 		$query = "SELECT COUNT(`{$prefix}_id`) FROM `" . $connectedModel::TABLENAME . "` WHERE `{$prefix}_id`='" . $this->id . "';";
-		echo $query;
-		return $connectedModel::fetchByQuery($query);
+		//We cannot use fetchByQuery since it parses the mysqli-result as {models}-object, and that's not the idea of this function.
+		$result = Helpers_Db::run($query);
+		if ( ! $result ) {
+			throw new Exception( Helpers_Db::getError() );
+		}
+		$row = $result->fetch_row();
+		return $row[0];
 	}
 
 }
