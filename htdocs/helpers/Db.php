@@ -87,6 +87,13 @@ class Helpers_Db {
 		@$this->mysqli->close();
 	}
 
+	public function escape( $string ) {
+		//make sure we've connected to the db
+		self::getInstance();
+		
+		return mysqli::real_escape_string( $string );
+	}
+	
 	/* Riped from webdb Voorbeeldcode.
 	  Return a prepared statement (safe version)
 	  On error, the script dies with a standard debug-message
