@@ -1,6 +1,6 @@
 <?php
 
-class Views_Threads_Unanswered extends Views_Base {
+class Views_Errors_Notfound extends Views_Base {
 	
 	
 	/**
