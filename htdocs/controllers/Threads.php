@@ -30,7 +30,6 @@ class Controllers_Threads extends Controllers_Base {
 	    $this->view = new Views_Threads_Unanswered();
 			$this->getLimits();
 			$query = Models_Thread::getSelect() . " WHERE ((`status` > 0) AND (`answer_id` IS NULL)) ORDER BY `ts_created` ASC LIMIT {$this->start}, {$this->end}";
-			echo $query;
 			$this->setupView( $query );
 	    parent::display($this->view);
 	}
