@@ -26,7 +26,7 @@ abstract class Controllers_Base {
 	 * @author	Ramon Creyghton <r.creyghton@gmail.com>
 	 */
 	public function execute($task) {
-		if ( $task == "" )
+		if ( $task == NULL )
 			$task = static::DEFAULTTASK;
 		return ( method_exists($this, $task) ) ? 
 			$this->$task() :

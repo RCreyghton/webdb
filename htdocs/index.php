@@ -17,7 +17,7 @@ $parts = array_filter( explode( "/" , $_GET['q'] ) );
 if ( empty( $parts ) ) {
 	//this will be the homepage
 	$controller = "Threads";
-	$task		= ""; //empty by default,  controller->execute must be able to handle this?
+	$task		= NULL; //empty by default,  controller->execute must be able to handle this?
 } else {
 	$controller = ucfirst(strtolower( $parts[ 0 ] ));
 	$task		= ( sizeof( $parts ) > 1 ) ? strtolower( $parts[ 1 ] ) : "";
