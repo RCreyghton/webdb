@@ -8,6 +8,7 @@ class Views_User_Registrationform extends Views_Base {
 	public $formresult = array();
 	
 	public function render() {
+		$this->title = "Registreren";
 		echo "<form method='post' action='" . parent::getURL("users", "register") . "' >";
 		echo "<table>";
 	

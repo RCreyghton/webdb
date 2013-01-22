@@ -3,7 +3,7 @@
 if (!defined("WEBDB_EXEC"))
 	die("No direct access!");
 
-class Views_User_Registrationform extends Views_Base {
+class Views_User_Registrationcomplete extends Views_Base {
 	
 	public $formresult = array();
 	
