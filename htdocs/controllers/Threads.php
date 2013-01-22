@@ -30,8 +30,11 @@ class Controllers_Threads extends Controllers_Base {
 		
 		$this->view->threads = $threads;
 		//onderstaande automatiseren en in base zetten?
+		
 		$this->view->page = $this->params["page"];
 		$this->view->pagesize = $this->params["pagesize"];
+		$this->view->nopages = $this->params["nopages"];
+		$this->view->nothreads = $this->params["nothreads"];
 	}
 	
 	
