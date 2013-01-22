@@ -93,7 +93,7 @@ class Controllers_Users extends Controllers_Base {
 		//if we didn't, it's now time to create a new user :D
 		
 		//first see if the email-adres exists, if it does, let the user know and return the form
-		$query = Models_User::getSelect() . " WHERE `email`='" . mysql_real_escape_string( $email ) . "';";
+		$query = Models_User::getSelect() . " WHERE `email`='" . Helpers_Db::escape( $email ) . "';";
 		$result = Models_User::fetchByQuery($query);
 		if( !empty( $result ) ) {
 			$formresult ["email"] ["errormessage"] = "Geef een geldig email adres op";
@@ -103,9 +103,9 @@ class Controllers_Users extends Controllers_Base {
 		//now we know that all is well, finally build the user
 		$u = new Models_User();
 		$u->role		= Models_User::ROLE_USER;
-		$u->email		= mysql_real_escape_string( $email );
-		$u->firstname	= mysql_real_escape_string( $firstname );
-		$u->lastname	= mysql_real_escape_string( $lastname );
+		$u->email		= Helpers_Db::escape( $email );
+		$u->firstname	= Helpers_Db::escape( $firstname );
+		$u->lastname	= Helpers_Db::escape( $lastname );
 		$u->pass		= md5( $pass1 );
 		$u->save();
 		
