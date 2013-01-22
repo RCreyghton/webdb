@@ -39,8 +39,8 @@ class Controllers_Threads extends Controllers_Base {
 	    $this->view = new Views_Threads_Unanswered();
 	    $where = " WHERE ((`status` > 0) AND (`answer_id` IS NULL)) ORDER BY `ts_created` ASC";
 		$this->calcPagination( $where );
-		$limit = params["pagesize"];
-		$offset = ( params["page"] - 1 ) * $limit;
+		$limit = $this->params["pagesize"];
+		$offset = ( $this->params["page"] - 1 ) * $limit;
 		$query = Models_Thread::getSelect() . $where . " LIMIT {$offset}, {$limit}";
 		$this->setupView( $query );
 	    $this->display();
