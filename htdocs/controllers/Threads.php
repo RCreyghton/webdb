@@ -3,16 +3,25 @@
 
 class Controllers_Threads extends Controllers_Base {
 	
-	public $start;
-	public $end;
-	
 	//TODO checken!
-	public function getLimits () {
+	public function calsPagination ( $where ) {
+		$page = 1; //params $_GET['page'];
+		$pagesize = 25; //$start = parent::getInt("start", 0);
 		
-		//params $_GET['start'];
-		//$start = parent::getInt("start", 0);
-		$this->start = 0; //tijdelijk omdat getInt nog niet werkt.
-		$this->end = $this->start + 25;
+		$countquery = Models_Threads::getSelectCount() . $where;
+		$nothreads = Models_Threads::getCount( $countquery ) ;
+		
+		$nopages = ceil( $nothreads / $nothreads );
+		
+		//Als een te hoge pagina is opgevraagd, geven we de laatste pagina weer.
+		if ( $page > $nopages )
+			$page = $nopages;
+		
+		$this->setParam("page", $page);
+		$this->setParam("pagesize", $pagesize);
+		$this->setParam("nopages", $nopages);
+		$this->setParam("nothreads", $nothreads);
+		
 	}
 	
 	
@@ -20,15 +29,19 @@ class Controllers_Threads extends Controllers_Base {
 		$threads = Models_Thread::fetchByQuery( $query );
 		
 		$this->view->threads = $threads;
-		$this->view->start = $this->start;
-		$this->view->end = $this->end;
+		//onderstaande automatiseren en in base zetten?
+		$this->view->page = $this->params["page"];
+		$this->view->pagesize = $this->params["pagesize"];
 	}
 	
 	
 	public function unanswered() {
 	    $this->view = new Views_Threads_Unanswered();
-		$this->getLimits();
-		$query = Models_Thread::getSelect() . " WHERE ((`status` > 0) AND (`answer_id` IS NULL)) ORDER BY `ts_created` ASC LIMIT {$this->start}, {$this->end}";
+	    $where = " WHERE ((`status` > 0) AND (`answer_id` IS NULL)) ORDER BY `ts_created` ASC";
+		$this->calcPagination( $where );
+		$limit = params["pagesize"];
+		$offset = ( params["page"] - 1 ) * $limit;
+		$query = Models_Thread::getSelect() . $where . " LIMIT {$offset}, {$limit}";
 		$this->setupView( $query );
 	    $this->display();
 	}
