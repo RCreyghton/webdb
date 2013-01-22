@@ -230,5 +230,9 @@ echo $query;
 		echo $query;
 		return $connectedModel::fetchByQuery($query);
 	}
+	
+	//te implementeren:
+	//public function getForeignCount( $connectedModel )
+	//nuttig om bijv. het aantal replies bij een trhead in Listings-view te kunnen weergeven.
 
 }
