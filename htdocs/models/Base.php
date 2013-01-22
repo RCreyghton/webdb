@@ -167,7 +167,7 @@ echo $query;
 	 */
 	public static function fetchById($model_id) {
 		//make quary based on the called class.
-		$resultarray = static::fetchByQuery(getSelect() . " WHERE id=" . $model_id);
+		$resultarray = static::fetchByQuery(static::getSelect() . " WHERE id=" . $model_id);
 		return $resultarray[0];
 	}
 
