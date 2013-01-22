@@ -32,9 +32,9 @@ abstract class Views_Threads_Base extends Views_Base {
 		echo "<div class=\"pagination\">";
 		for ($i = 1; $i <= $this->nopages; $i++) {
 			if ($i == $this->page)
-				echo "<em>$i</em>";
+				echo "<em>{$i}</em>";
 			else
-				echo "<a href=\"" . getUrl("threads","unanswered") . "\">$i</a>";
+				echo "<a href=\"" . getUrl("threads","unanswered") . "?p={$i}&ps={$this->pagesize}\">$i</a>"; //nog hardcoded unanswered url
 		}
 		echo "</div>";
 	}
