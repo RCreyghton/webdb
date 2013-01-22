@@ -13,17 +13,18 @@ spl_autoload_register('autoloader');
 //parse the URL
 //our basic url layout will be: /controllername/task
 //TODO check whether q exists or catch this at htaccess
-$parts = array_filter( explode( "/" , $_GET['q'] ) );
+$q = isset( $_GET['q'] ) ? $_GET['q'] : '';
+$parts = array_filter( explode( "/" , $q ) );
 if ( empty( $parts ) ) {
 	//this will be the homepage
 	$controller = "Threads";
-	$task		= NULL; //empty by default,  controller->execute must be able to handle this?
+	$task		= "topunanswered";
 } else {
 	$controller = ucfirst(strtolower( $parts[ 0 ] ));
-	$task		= ( sizeof( $parts ) > 1 ) ? strtolower( $parts[ 1 ] ) : "";
+	$task		= strtolower( $parts[ 1 ] );
 }
 
-if( is_file("./controllers/{$controller}.php") ) {
+if( is_file("./controllers/{$controller}.php") && ! empty( $task ) ) {
 	$controller = "Controllers_" . $controller ;
 	$controller = new $controller();
 	$controller->execute( $task );
@@ -51,17 +52,19 @@ function autoloader( $classpath ) {
 	);
 	
 	$parts = explode("_", strtolower($classpath));
+	
+	//check if classpath is allowed
 	if( ! in_array( $parts[0], $allowedTypes ) ) {
 		throw new Exception( "Improper type: " . ucfirst($parts[0]) );
 	}
 	
 	//convert to path
+	$path = implode( DS , array_map( function ( $part ) use ( $parts ) { 
+		return end( $parts ) == $part ? ucfirst( $part ) : $part;
+    } , $parts ));
 	
-	//TODO handling extra or trailing slashes!!!
-	//tried to fix broken filenames (lowercase etc) on unix.
-	$parts[count($parts) - 1] = ucfirst( $parts[count($parts) - 1] );
-	$path = implode( DS, $parts ) . ".php";
-	
+	$path .= ".php";
+		
 	if (is_file( $path )) {
 		include $path;
 	} else {
