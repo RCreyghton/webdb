@@ -1,5 +1,7 @@
 <?php
 
+if (!defined("WEBDB_EXEC"))
+	die("No direct access!");
 
 abstract class Controllers_Base {
 	
@@ -51,25 +53,28 @@ abstract class Controllers_Base {
 	
 	
 	/**
-	 * Checks the (1) the params-array (2) the $_POST variables and (3) the $_GET variables for a key named $getkey _with an integer value_ and returns it.
-	 *
-	 * @param   string  $getkey	The name of the paramter to look for in the
-	 * @return  int|boolean  Either the integer asked for, or false if the searched arrays did not provide it.
-	 * @author  Ramon Creyghton <r.creyghton@gmail.com>
+	 * Searches own params, post and get in that order for an integer at the given index
+	 * If no matches are found, return a default value if prodived, otherwise NULL
+	 * 
+	 * @param string $key
+	 * @param int $default
+	 * @return int
 	 */
-	public function getInt( $getkey ) {
-		/*
-		if ( ( array_key_exists($getkey), $this->params) && ( ! empty($this->params["$getkey"]) ) && ( (int) $this->params["$getkey"] != 0) ) {
-			return (int) $this->params["$getkey"];
-		} else if ( isset($_POST["$getkey"]) && !empty($_POST["$getkey"]) && ( (int) $_POST["$getkey"] != 0) ) {
-			return (int) $_POST["$getkey"];
-		} else if ( isset($_GET["$getkey"]) && !empty($_GET["$getkey"]) && ( (int) $_GET["$getkey"] != 0) ) {
-			return (int) $_GET["$getkey"];
-		} else {
-			return false;
-	    }
-		 * */
-		 
+	public function getInt( $key, $default = NULL ) {
+		//first check own params
+		if( isset( $this->params[ $key ] ) && is_numeric( $this->params[ $key ] ) )
+			return intval ( $this->params[ $key ] );
+		
+		//then check post
+		if( isset( $_POST[ $key ] ) && is_numeric( $_POST[ $key ] ) )
+			return intval ( $_POST[ $key ] );
+		
+		//then check get
+		if( isset( $_GET[ $key ] ) && is_numeric( $_GET[ $key ] ) )
+			return intval ( $_GET[ $key ] );
+		
+		//return default, if default was not passed it will be NULL
+		return $default;		 
 	}
 	
 	
@@ -80,16 +85,20 @@ abstract class Controllers_Base {
 	 * @return  string|boolean  Either the string asked for, or false if the searched arrays did not provide it.
 	 * @author  Ramon Creyghton <r.creyghton@gmail.com>
 	 */
-	public function getString( $getkey ) {
-		/*
-		if ( ( array_key_exists($getkey), $this->params) && ( ! empty($this->params["$getkey"]) ) ) {
-			return $this->params["$getkey"];
-		} else if ( isset($_POST["$getkey"]) && !empty($_POST["$getkey"]) ) {
-			return $_POST["$getkey"];
-		} else if ( isset($_GET["$getkey"]) && !empty($_GET["$getkey"]) ) {
-			return $_GET["$getkey"];
-		} else {
-			return false;
-	    }*/
+	public function getString( $key, $default = NULL ) {
+		//first check own params
+		if( isset( $this->params[ $key ] ) && is_string( $this->params[ $key ] ) )
+			return "{$this->params[ $key ]}";
+		
+		//then check post
+		if( isset( $_POST[ $key ] ) && is_string( $_POST[ $key ] ) )
+			return "{$_POST[ $key ]}";
+		
+		//then check get
+		if( isset( $_GET[ $key ] ) && is_string( $_GET[ $key ] ) )
+			return "{$_GET[ $key ]}";
+		
+		//return default, if default was not passed it will be NULL
+		return $default;		 
 	}
 }
