@@ -213,26 +213,37 @@ echo $query;
 
 	/**
 	 * Fetches all records in DB that have n:1 relation (param $modelType : $this) with this {models}-object.
-	 * 
-	 * Does not use the $modelType's declareFields()-method, for these are not static, and therefore not callebale without an instance. Uses get_class_vars instead.
+	 *
+	 * Assumes that such an relation exists. Returns the return of fetchByQuery anyway.
 	 * 
 	 * @uses Models_Base::fetchByQuery()	
 	 * @uses Models_Base::getSelect()	
-	 * @param string	Classname of the type of {modeosl}-object asked for.
+	 * @param string	Classname of the type of {models}-object asked for.
 	 * @return Models_Base[]|boolean	An array of {models}-objects of the type specified by $modelType, OR false if no such DB-relation is found.
 	 * @author Ramon Creyghton <r.creyghton@gmail.com>
 	 * @author Frank van Luijn <frank@accode.nl>
-	 * @todo	Testing
 	 */
 	public function getForeignModels( $connectedModel ) {
 		$prefix = strtolower( end( explode("_", get_class($this)) ) );
 		$query = $connectedModel::getSelect() . " WHERE `{$prefix}_id`='" . $this->id . "';";
-		echo $query;
 		return $connectedModel::fetchByQuery($query);
 	}
 	
-	//te implementeren:
-	//public function getForeignCount( $connectedModel )
-	//nuttig om bijv. het aantal replies bij een trhead in Listings-view te kunnen weergeven.
+	
+	/**
+	 * Gets the number of records in DB that have n:1 relation (param $modelType : $this) with this {models}-object.
+	 * 
+	 * @uses Models_Base::fetchByQuery()
+	 * @param string	Classname of the type of {models}-object asked for.
+	 * @return integer|boolean	An integer indicating the number of foreign models, OR false if no such DB-relation is found.
+	 * @author Ramon Creyghton <r.creyghton@gmail.com>
+	 * @author Frank van Luijn <frank@accode.nl>
+	 */
+	public function getForeignCount( $connectedModel ) {
+		$prefix = strtolower( end( explode("_", get_class($this)) ) );
+		$query = "SELECT COUNT(`{$prefix}_id`) FROM `" . $connectedModel::TABLENAME . "` WHERE `{$prefix}_id`='" . $this->id . "';";
+		echo $query;
+		return $connectedModel::fetchByQuery($query);
+	}
 
 }
