@@ -14,35 +14,54 @@ if (!defined("WEBDB_EXEC"))
  * @author Ramon Creyghton <r.creyghton@gmail.com>
  */
 class Models_User extends Models_Base {
-		/**
-		 * @var string Name of the DB-table corresponding with this class.
-		 */
-    const TABLENAME = "users";
-		/**
-		 * @var int	Unique ID of this User-object, auto_incremented in the DB.
-		 */
-    public $id;
-		/**#$+
-		 * @var string 
-		 */
-    public $nick;
-    public $pass;
-    public $emails;
-    public $ts_registered;
-		/**#@-*/
-		/**
-		 * @var int 0: anonymous; 1 user; 2 admin;
-		 */
-    public $role;
-		/**#@+
-		 * @var string
-		 */
-    public $firstname;
-    public $lastname;
-		public $ipaddress;
-    /**#@-*/
+	/**
+	 * @var string Name of the DB-table corresponding with this class.
+	 */
 
-		
+	const TABLENAME = "users";
+
+	/**
+	 * Unique ID of this User-object, auto_incremented in the DB.
+	 * @var int
+	 */
+	public $id;
+	
+	/**
+	 * MD5-hash of the password the user registered with
+	 * @var string
+	 */
+	public $pass;
+	
+	/**
+	 * Email address of the user, must be unique within the system
+	 * @var string
+	 */
+	public $email;
+	
+	/**
+	 * timestamp of when the user was registered
+	 * @var int
+	 */
+	public $ts_registered;
+	
+	/**
+	 * Role of the user
+	 * @var int [0: registered user, 1: admin]
+	 */
+	public $role;
+	
+	/**
+	 * first name of the user
+	 * @var string
+	 */
+	public $firstname;
+	
+	/**
+	 * last name of the user
+	 * @var string
+	 */
+	public $lastname;
+	
 	/**
 	 * Names of the relevant fields of this object, the must correspond with the
 	 * column-names of the associated table in the database.
@@ -51,22 +70,19 @@ class Models_User extends Models_Base {
 	 * @author Shafiq Ahmadi <s.ah@live.nl>
 	 * @return string[] Array with the names of all relevant fields exept id in this object
 	 */
-    public function declareFields() {
-        $fields = array(
-            "id",
-            "nick",
-            "pass",
-            "email",
-            "ts_registered",
-            "role",
-            "fistname",
-            "lastname",
-						"ipaddress"
-        );
-        return $fields;
-    }
-   
-	
+	public function declareFields() {
+		$fields = array(
+			"id",
+			"pass",
+			"email",
+			"ts_registered",
+			"role",
+			"fistname",
+			"lastname"
+		);
+		return $fields;
+	}
+
 	/**
 	 * gets an array of Thread-objects by from this user from the DB.
 	 *
@@ -79,35 +95,33 @@ class Models_User extends Models_Base {
 		$query = Models_Thread::getSelect() . " WHERE user_id=" . $this->id . ";";
 		return Models_Thread::fetchByQuery($query);
 	}
-	
-	
+
 	/**
 	 * gets an array of Reply-objects by this user from the DB.
 	 *
 	 * @return Models_Reply[] array of Reply-objects
 	 * @uses Models_Base::fetchByQuery()	
-   * @uses Models_Base::getSelect()
+	 * @uses Models_Base::getSelect()
 	 * @author Shafiq Ahmadi <s.ah@live.nl>
 	 */
 	public function getReplies() {
 		$query = Models_Reply::getSelect() . " WHERE user_id=" . $this->id . ";";
 		return Models_Reply::fetchByQuery($query);
 	}
-	
-	
+
 	/**
 	 * gets an array of Credit-objects, that this user got for his Replies.
 	 *
 	 * @return Models_Credit[] array of Credit-objects
 	 * @uses Models_Base::fetchByQuery()	
-   * @uses Models_Base::getSelect()
+	 * @uses Models_Base::getSelect()
 	 * @todo SQL-query controleren!!!
 	 * @todo Zoiets als getCreditCount maken, waarin we een user z'n netto waarde bepalen?
 	 * @todo Dit is dubbelop met Models_Reply->calcNettCredits. Beter een static methode maken in Models_Credit en die dan her en der callen?
 	 * @author Ramon Creyghton <r.creyghton@gmail.com>
 	 */
 	public function getCredits() {
-		$query = Models_Credit::getSelect(). " JOIN `replies` ON `credits`.reply_id = `replies`.id WHERE `replies`.user_id=" . $this->id . ";";
+		$query = Models_Credit::getSelect() . " JOIN `replies` ON `credits`.reply_id = `replies`.id WHERE `replies`.user_id=" . $this->id . ";";
 		$creditsArray = Models_Credit::fetchByQuery($query);
 		$totalcredits = 0;
 		foreach ($creditsArray as $credit) {
@@ -115,6 +129,7 @@ class Models_User extends Models_Base {
 		}
 		return $totalcredits;
 	}
-	
-}	
+
+}
+
 ?>

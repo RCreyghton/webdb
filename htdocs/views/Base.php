@@ -16,7 +16,10 @@ abstract class Views_Base {
 		return $template;
     }
     
-    
+    public function getURL( $controller, $user ) {
+		return "./" . $controller . "/" . $user;
+	}
+	
     public function getMenu() {
     	return <<<MENU
 					<ul class="menu">
@@ -42,7 +45,7 @@ LOGIN;
     }
     
     public function getBaseURL() {
-		return "<base href=" . substr($_SERVER["PHP_SELF"], 0, strlen($_SERVER["PHP_SELF"]) - 9) . " target='_blank' />";
+		return "<base href=" . substr($_SERVER["PHP_SELF"], 0, strlen($_SERVER["PHP_SELF"]) - 9) . " />";
 	}
 	
 }
