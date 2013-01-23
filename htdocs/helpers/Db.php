@@ -1,14 +1,7 @@
 <?php
 
-/*
- * DB handler
- * Handles most basic queries.
- *
- * ASSUMES WebDB Kaper's
- * fatalerror.inc.php as DbError.php
- */
-
-include_once 'DbError.php';
+if (!defined("WEBDB_EXEC"))
+	die("No direct access!");
 
 /**
  * Handler class for the database. Contains a bunch of static helper methods.
