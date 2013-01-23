@@ -47,7 +47,7 @@ LOGIN;
     }
     
     public function getBaseURL() {
-		return "<base href=\"" . substr($_SERVER["PHP_SELF"], 0, strlen($_SERVER["PHP_SELF"]) - 9) . "\" target=\"_self\" />";
+		return "<base href=\"" . substr($_SERVER["PHP_SELF"], 0, strlen($_SERVER["PHP_SELF"]) - 9) . "\" />";
 	}
 	
 }

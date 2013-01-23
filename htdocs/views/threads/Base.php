@@ -23,8 +23,8 @@ abstract class Views_Threads_Base extends Views_Base {
 			$noReplies = $thread->getForeignCount( "Models_Reply" );
 			echo "<div class=\"element\">\n<h3>{$thread->title}</h3>\n";
 			echo "<p><span>Gepost op " . strftime('%A %d %B %Y, %R', $thread->ts_created) . " door {$user->firstname} {$user->lastname}</span><br />\n";
-			echo "in de categorie <em>{$category->name}</em>. Deze thread heeft {$noReplies} replie";
-			echo ($noReplies == 1) ? "" : "s" ;
+			echo "<span>in de categorie <em>{$category->name}</em>. Deze thread heeft {$noReplies} repl";
+			echo ($noReplies == 1) ? "y" : "ies" ;
 			echo ".</span></p>\n<p>";
 			echo ( strlen($thread->content) > 50) ?
 				substr($thread->content, 0, 50) . "..." :
