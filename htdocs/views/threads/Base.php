@@ -22,10 +22,14 @@ abstract class Views_Threads_Base extends Views_Base {
 			$category = Models_Category::fetchById( $thread->category_id );
 			$noReplies = $thread->getForeignCount( "Models_Reply" );
 			echo "<div class=\"element\">\n<h3>{$thread->title}</h3>\n";
-			echo "<p><span>Gepost op " . strftime('%A %d %B %Y, %R', $thread->ts_created) . " door user: {$user->firestname} {$user->lastname}</span><br />\n";
-			echo "in de categorie <em>{$category->name}. Deze thread heeft {$noReplies} replie";
-			echo ($noReplies == 1) ? "s" : "" ;
-			echo ".</span></p>\n<p>{$thread->content}</p>\n</div>\n";
+			echo "<p><span>Gepost op " . strftime('%A %d %B %Y, %R', $thread->ts_created) . " door {$user->firstname} {$user->lastname}</span><br />\n";
+			echo "in de categorie <em>{$category->name}</em>. Deze thread heeft {$noReplies} replie";
+			echo ($noReplies == 1) ? "" : "s" ;
+			echo ".</span></p>\n<p>";
+			echo ( strlen($thread->content) > 50) ?
+				substr($thread->content, 0, 50) . "..." :
+				$thread->content;
+			echo "</p>\n</div>\n";
 		}
 	}
 	
