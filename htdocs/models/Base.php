@@ -54,10 +54,8 @@ abstract class Models_Base {
 	 * 
 	 * @uses declareFields() To determine wich fields and values thera are to be saved
 	 * @author Frank van Luijn <frank@accode.nl>
-	 * @todo echo uitzetten.
-	 * @todo testen id teruguitlezen uit db auto_increment
 	 */
-	private function insert() {
+	protected function insert() {
 		$fields = $this->declareFields();
 		$values = array();
 
@@ -72,7 +70,6 @@ abstract class Models_Base {
 
 		//build the query
 		$query = "INSERT INTO `" . static::TABLENAME . "` ( `" . $fieldsstring . "` ) VALUES (" . implode(", ", $values) . ");";
-echo $query;
 		$result = Helpers_Db::run($query);
 
 		if ($result !== true) {
@@ -94,9 +91,8 @@ echo $query;
 	 * @uses catFieldValue To concatenate field and value in the fields-array.
 	 * @author Ramon Creyghton <r.creyghton@gmail.com>
 	 * @return boolean true if inserted succesfully
-	 * @todo echo uitzetten
 	 */
-	private function update() {
+	protected function update() {
 		$fields = $this->declareFields();
 		
 		$concat = array();

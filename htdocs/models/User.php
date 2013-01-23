@@ -85,30 +85,9 @@ class Models_User extends Models_Base {
 		return $fields;
 	}
 
-	/**
-	 * gets an array of Thread-objects by from this user from the DB.
-	 *
-	 * @return Models_Thread[] array of Thread-objects.
-	 * @uses Models_Base::fetchByQuery()	
-	 * @uses Models_Base::getSelect()
-	 * @author Shafiq Ahmadi <s.ah@live.nl>
-	 */
-	public function getThreads() {
-		$query = Models_Thread::getSelect() . " WHERE user_id=" . $this->id . ";";
-		return Models_Thread::fetchByQuery($query);
-	}
-
-	/**
-	 * gets an array of Reply-objects by this user from the DB.
-	 *
-	 * @return Models_Reply[] array of Reply-objects
-	 * @uses Models_Base::fetchByQuery()	
-	 * @uses Models_Base::getSelect()
-	 * @author Shafiq Ahmadi <s.ah@live.nl>
-	 */
-	public function getReplies() {
-		$query = Models_Reply::getSelect() . " WHERE user_id=" . $this->id . ";";
-		return Models_Reply::fetchByQuery($query);
+	protected function insert() {
+		$this->ts_registered = time();
+		parent::insert();
 	}
 
 	/**
