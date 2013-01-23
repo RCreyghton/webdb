@@ -6,7 +6,6 @@ if (!defined("WEBDB_EXEC"))
 class Controllers_Users extends Controllers_Base {
 	
 	public function register() {
-		
 		//if we have a submitted form, process it
 		if( $this->getString( "register_submit" ) ) {
 			$result = $this->registerUser();

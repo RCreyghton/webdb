@@ -87,7 +87,7 @@ class Views_User_Registrationform extends Views_Base {
 		}
 		
 		//map all results onto these elements
-		foreach( $this->formresult as $field => $e ) {
+		foreach( $this->formresult as $field => &$e ) {
 			if( ! isset( $elements[ $field ]) )
 				continue;
 			
@@ -97,6 +97,7 @@ class Views_User_Registrationform extends Views_Base {
 			if( isset( $e ['errormessage'] ) )
 				$elements[ $field ] [ 'errormessage' ]	= $e ['errormessage'];	
 		}
+		
 		return $elements;
 	}
 }

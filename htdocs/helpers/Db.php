@@ -54,10 +54,10 @@ class Helpers_Db {
 		$this->dbuser = $config->user;
 		$this->dbpass = $config->pass;
 		
-		$this->instance = $this;
+		self::$instance = $this;
 
 		if (!$this->connect()) {
-			$this->instance = NULL;
+			self::$instance = NULL;
 			throw new Exception("Could not connect to database.");
 		}
 	}

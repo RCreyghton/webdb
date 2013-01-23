@@ -62,21 +62,27 @@ abstract class Controllers_Base {
 	 */
 	public function getInt( $key, $default = NULL ) {
 		//first check own params
-		if( isset( $this->params[ $key ] ) && is_numeric( $this->params[ $key ] ) )
+		if( isset( $this->params[ $key ] ) && is_numeric( $this->params[ $key ] ) ) {
 			$rv = intval ( $this->params[ $key ] );
 		
 		//then check post
-		elseif( isset( $_POST[ $key ] ) && is_numeric( $_POST[ $key ] ) )
+		} elseif( isset( $_POST[ $key ] ) && is_numeric( $_POST[ $key ] ) ) {
 			$rv = intval ( $_POST[ $key ] );
 		
 		//then check get
-		elseif( isset( $_GET[ $key ] ) && is_numeric( $_GET[ $key ] ) )
+		} elseif( isset( $_GET[ $key ] ) && is_numeric( $_GET[ $key ] ) ) {
 			$rv = intval ( $_GET[ $key ] );
 		
-		//return default, if default was not passed it will be NULL
-		$rv = $default;
+		//else let it be NULL
+		} else {
+			$rv = NULL;
+		}
 		
-		return Helpers_Db::escape( $rv );	 
+		//return default, if default was not passed it will be NULL
+		$rv = is_null( $rv ) ? $default : $rv;
+		
+		//escape the string and retun it
+		return Helpers_Db::escape( $rv );
 	}
 	
 	
@@ -88,21 +94,28 @@ abstract class Controllers_Base {
 	 * @author  Ramon Creyghton <r.creyghton@gmail.com>
 	 */
 	public function getString( $key, $default = NULL ) {
+		
 		//first check own params
-		if( isset( $this->params[ $key ] ) && is_string( $this->params[ $key ] ) )
+		if( isset( $this->params[ $key ] ) && is_string( $this->params[ $key ] ) ) {
 			$rv = "{$this->params[ $key ]}";
 		
 		//then check post
-		elseif( isset( $_POST[ $key ] ) && is_string( $_POST[ $key ] ) )
+		} elseif( isset( $_POST[ $key ] ) && is_string( $_POST[ $key ] ) ) {
 			$rv = "{$_POST[ $key ]}";
 		
 		//then check get
-		elseif( isset( $_GET[ $key ] ) && is_string( $_GET[ $key ] ) )
+		} elseif( isset( $_GET[ $key ] ) && is_string( $_GET[ $key ] ) ) {
 			$rv = "{$_GET[ $key ]}";
 		
-		//return default, if default was not passed it will be NULL
-		$rv = $default;
+		//else it will be null
+		} else {
+			$rv = NULL;
+		}
 		
+		//return default, if default was not passed it will be NULL
+		$rv = is_null( $rv ) ? $default : $rv;
+		
+		//escape the string and retun it
 		return Helpers_Db::escape( $rv );
 	}
 }
