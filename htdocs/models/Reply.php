@@ -14,19 +14,69 @@ if (!defined("WEBDB_EXEC"))
  * @author Ramon Creyghton <r.creyghton@gmail.com>
  */
 class Models_Reply extends Models_Base {
-
+	
+	/**
+	 * The name of the table in the Database associated with this Model.
+	 */
 	const TABLENAME = "replies";
-	const FOREIGNPREFIX = "reply";
+
+	/**
+	 * Unique id of this reply. Auto incremented by the database. Retrieved at first save using {@link Helpers_Db::getId()}.
+	 * @var int 
+	 */
 	public $id;
+
+	/**
+	 * Relation with the user that posted this reply, see {@link Models_User->$id}.
+	 * @var int 
+	 */
 	public $user_id;
+
+	/**
+	 * Relation with the thread this reply belongs to, see {@link Models_Thread->$id}.
+	 * @var int 
+	 */
 	public $thread_id;
+
+	/**
+	 * Unix Timestamp indicating the creation of this reply.
+	 * @var int 
+	 */
 	public $ts_created;
+
+	/**
+	 * Unix Timestamp indicating the latest update of this reply. Null if never updated.
+	 * @var int|null 
+	 */
 	public $ts_modified;
+
+	/**
+	 * The title of this reply.
+	 * @var string 
+	 */
 	public $title;
+
+	/**
+	 * The actual contents of this reply.
+	 * @var string 
+	 */
 	public $content;
-	public $visibility; //visibility. Voorstel voor betekenis integers:
-											//0 is hidden
-											//1 is visible
+
+	/**
+	 * This integer defines the visibility of this reply
+	 * 
+	 * Possible values:
+	 * - 0 - hidden
+	 * - 1 - visible
+	 * 
+	 * @var int 
+	 */
+	public $visibility;
+
+	/**
+	 * Cache of the current nett number of credits for this reply. Needs refreshing at every relating {@link Models_Credit} insert or update, using {@link calcNettCredits()}.
+	 * @var int 
+	 */
 	public $credits;
 
 	/**
@@ -50,24 +100,23 @@ class Models_Reply extends Models_Base {
 		);
 		return $fields;
 	}
-	
-	
+
 	/**
-	 * gets an array of Credit-objects for this Reply
-	 *
-	 * @return Models_Credit[] array of Credit-objects
-	 * @uses Models_Base::fetchByQuery()	
-   * @uses Models_Base::getSelect()	
-	 * @todo SQL injection check, dwz: checken of inderdaad alle Object-velden safe zijn.
-	 * @todo Werkelijk Credit-objects maken... is dat niet heel kostbaar? Misschien eerder ergens array van platte credits opslaan in Reply-object?
-	 * @author Ramon Creyghton <r.creyghton@gmail.com>
+	 * Most values of this Models-object are determined with user-input. However, the creation time needs to be set at insert-time.
 	 */
-	public function getCredits() {
-		$query = Models_Credit::getSelect() . " WHERE reply_id=" . $this->id . ";";
-		return Models_Credit::fetchByQuery($query);
+	protected function insert() {
+		$this->ts_created = time();
+		parent::insert();
 	}
-	
-	
+
+	/**
+	 * Most values of this Models-object are determined with user-input. However, the modification time needs to be set at update-time.
+	 */
+	protected function update() {
+		$this->ts_modified = time();
+		parent::update();
+	}
+
 	/**
 	 * Recalculates the current nett credit-value for this Reply-object.
 	 * 
@@ -86,8 +135,7 @@ class Models_Reply extends Models_Base {
 		}
 		return $nettCredits;
 	}
-	
-	
+
 	/**
 	 * gets an existing Credit-object for this Reply for the calling Session
 	 * @todo Or toch per Ipadress? Heb nu gekozen voor loggen van alle gebruikers als User (met role Anonymous oid), zodat we hier user_id kunnen gebruiken.
@@ -95,7 +143,7 @@ class Models_Reply extends Models_Base {
 	 * @param Models_User $callingUser Reference to the Session Object that wants to get its credit for this reply
 	 * @return Models_Credit a Credit-objects
 	 * @uses Models_Base::fetchByQuery()	
-   * @uses Models_Base::getSelect()	
+	 * @uses Models_Base::getSelect()	
 	 * @author Ramon Creyghton <r.creyghton@gmail.com>
 	 */
 	public function getYourCredit($callingUser) {
@@ -103,6 +151,5 @@ class Models_Reply extends Models_Base {
 		$creditsArray = Models_Credit::fetchByQuery($query);
 		return (empty($creditsArray)) ? false : $creditsArray[1];
 	}
-}
 
-?>
+}

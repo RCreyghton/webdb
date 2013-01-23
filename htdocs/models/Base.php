@@ -21,11 +21,11 @@ if (!defined("WEBDB_EXEC"))
  * @todo	Check whether get_called_class() en static:: references indeed work as intended.
  */
 abstract class Models_Base {
+	
 	/*
 	 * Each child class must return an array including it's fields
 	 * Each field need also be present in the corresponding database
 	 */
-
 	abstract function declareFields();
 
 	/**

@@ -14,11 +14,15 @@ if (!defined("WEBDB_EXEC"))
  * @author Ramon Creyghton <r.creyghton@gmail.com>
  */
 class Models_User extends Models_Base {
+	
 	/**
-	 * @var string Name of the DB-table corresponding with this class.
+	 * The name of the table in the Database associated with this Model.
 	 */
-
 	const TABLENAME = "users";
+
+	/**
+	 * Constants with possible values of {@link $role}.
+	 */
 	const ROLE_USER = 0;
 	const ROLE_ADMIN = 1;
 
@@ -27,43 +31,47 @@ class Models_User extends Models_Base {
 	 * @var int
 	 */
 	public $id;
-	
+
 	/**
 	 * MD5-hash of the password the user registered with
 	 * @var string
 	 */
 	public $pass;
-	
+
 	/**
 	 * Email address of the user, must be unique within the system
 	 * @var string
 	 */
 	public $email;
-	
+
 	/**
-	 * timestamp of when the user was registered
+	 * Unix-timestamp of when the user was registered
 	 * @var int
 	 */
 	public $ts_registered;
-	
+
 	/**
 	 * Role of the user
-	 * @var int [0: registered user, 1: admin]
+	 * 
+	 * Possible values:
+	 * - 0 - registered user
+	 * - 1 - admin
+	 * @var int
 	 */
 	public $role;
-	
+
 	/**
-	 * first name of the user
+	 * First name of the user
 	 * @var string
 	 */
 	public $firstname;
-	
+
 	/**
-	 * last name of the user
+	 * Last name of the user
 	 * @var string
 	 */
 	public $lastname;
-	
+
 	/**
 	 * Names of the relevant fields of this object, the must correspond with the
 	 * column-names of the associated table in the database.
@@ -74,17 +82,20 @@ class Models_User extends Models_Base {
 	 */
 	public function declareFields() {
 		$fields = array(
-			"id",
-			"pass",
-			"email",
-			"ts_registered",
-			"role",
-			"firstname",
-			"lastname"
+				"id",
+				"pass",
+				"email",
+				"ts_registered",
+				"role",
+				"firstname",
+				"lastname"
 		);
 		return $fields;
 	}
 
+	/**
+	 * Most values of this Models-object are determined with user-input. However, the registration time needs to be set at insert-time.
+	 */
 	protected function insert() {
 		$this->ts_registered = time();
 		parent::insert();
@@ -112,5 +123,3 @@ class Models_User extends Models_Base {
 	}
 
 }
-
-?>
