@@ -19,12 +19,13 @@ abstract class Views_Threads_Base extends Views_Base {
 	public function printThreads() {
 		foreach ($this->threads as $thread) {
 			$user = Models_User::fetchById( $thread->user_id );
+			$category = Models_Category::fetchById( $thread->category_id );
 			$noReplies = $thread->getForeignCount( "Models_Reply" );
-			echo "<div class=\"element\"><h3>Thread:</h3><p>";
-			echo var_dump( $thread );
-			echo "</p><h3>Door user:</h3><p>";
-			echo var_dump( $user );
-			echo "</p><h3>Deze thread heeft {$noReplies} replies.</h3></div>";
+			echo "<div class=\"element\">\n<h3>{$thread->title}</h3>\n";
+			echo "<p><span>Gepost op " . strftime('%A %d %B %Y, %R', $thread->ts_created) . " door user: {$user->firestname} {$user->lastname}</span><br />\n";
+			echo "in de categorie <em>{$category->name}. Deze thread heeft {$noReplies} replie";
+			echo ($noReplies == 1) ? "s" : "" ;
+			echo ".</span></p>\n<p>{$thread->content}</p>\n</div>\n";
 		}
 	}
 	
