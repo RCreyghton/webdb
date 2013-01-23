@@ -18,7 +18,6 @@ class Helpers_User {
 		Wij heten u van harte welkom.... U kunt hier vanalles doen....";
 		
 		mail("{$u->firstname} {$u->lastname} <{$email}>", $subject, $message, "From: noreply@webdboverflow.nl");
-		echo "Thank you for using our mail form";
 	}
 
 }

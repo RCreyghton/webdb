@@ -96,7 +96,7 @@ class Controllers_Users extends Controllers_Base {
 		$query = Models_User::getSelect() . " WHERE `email`='" . Helpers_Db::escape( $email ) . "';";
 		$result = Models_User::fetchByQuery($query);
 		if( !empty( $result ) ) {
-			$formresult ["email"] ["errormessage"] = "Geef een geldig email adres op";
+			$formresult ["email"] ["errormessage"] = "Dit e-mailadres is al geregistreerd op deze site.";
 			return $formresult;
 		}
 		
