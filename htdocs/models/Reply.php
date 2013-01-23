@@ -27,13 +27,13 @@ class Models_Reply extends Models_Base {
 	public $id;
 
 	/**
-	 * Relation with the user that posted this reply, see {@link Models_User->$id}.
+	 * Relation with the user that posted this reply, see {@link Models_User::$id}.
 	 * @var int 
 	 */
 	public $user_id;
 
 	/**
-	 * Relation with the thread this reply belongs to, see {@link Models_Thread->$id}.
+	 * Relation with the thread this reply belongs to, see {@link Models_Thread::$id}.
 	 * @var int 
 	 */
 	public $thread_id;

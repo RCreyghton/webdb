@@ -28,13 +28,13 @@ class Models_Thread extends Models_Base {
 	public $id;
 
 	/**
-	 * Relation with the user that posted this thread, see {@link Models_User->$id}.
+	 * Relation with the user that posted this thread, see {@link Models_User::$id}.
 	 * @var int
 	 */
 	public $user_id;
 
 	/**
-	 * Relation with the category in which this thread is place, see {@link Models_Category->$id}.
+	 * Relation with the category in which this thread is place, see {@link Models_Category::$id}.
 	 * @var int 
 	 */
 	public $category_id;
@@ -77,7 +77,7 @@ class Models_Thread extends Models_Base {
 	public $status;
 
 	/**
-	 * Relation with the reply that is selected as an answer to this thread. see {@link Models_Reply->$id}.
+	 * Relation with the reply that is selected as an answer to this thread. see {@link Models_Reply::$id}.
 	 * @var int 
 	 */
 	public $answer_id;

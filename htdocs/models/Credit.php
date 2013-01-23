@@ -27,7 +27,7 @@ class Models_Credit extends Models_Base {
 	public $id;
 
 	/**
-	 * Relation with the user that posted this reply, see {@link Models_User->$id}.
+	 * Relation with the user that posted this reply, see {@link Models_User::$id}.
 	 * @var int 
 	 */
 	public $user_id;
@@ -39,7 +39,7 @@ class Models_Credit extends Models_Base {
 	public $value;
 
 	/**
-	 * Relation with the reply to which this object adds credit, see {@link Models_Reply->$id}.
+	 * Relation with the reply to which this object adds credit, see {@link Models_Reply::$id}.
 	 * @var int 
 	 */
 	public $reply_id;
