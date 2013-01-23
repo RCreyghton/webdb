@@ -35,8 +35,8 @@ abstract class Views_Threads_Base extends Views_Base {
 			echo "<span>in de categorie <em>{$category->name}</em>. Deze thread heeft {$noReplies} repl";
 			echo ($noReplies == 1) ? "y" : "ies";
 			echo ".</span></p>\n<p>";
-			echo ( strlen($thread->content) > 50) ?
-							substr($thread->content, 0, 50) . "..." :
+			echo ( strlen($thread->content) > 250) ?
+							substr($thread->content, 0, 250) . "..." :
 							$thread->content;
 			echo "</p>\n</div>\n";
 		}
@@ -51,7 +51,7 @@ abstract class Views_Threads_Base extends Views_Base {
 			if ($i == $this->page)
 				echo "<em>{$i}</em>";
 			else
-				echo "<a href=\"" . getUrl("threads", "unanswered") . "?p={$i}&ps={$this->pagesize}\">$i</a>"; //nog hardcoded unanswered url
+				echo "<a href=\"" . $this->getUrl("threads", "unanswered") . "?p={$i}&ps={$this->pagesize}\">$i</a>"; //nog hardcoded unanswered url
 		}
 		echo "</div>";
 	}
