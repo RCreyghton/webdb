@@ -63,18 +63,20 @@ abstract class Controllers_Base {
 	public function getInt( $key, $default = NULL ) {
 		//first check own params
 		if( isset( $this->params[ $key ] ) && is_numeric( $this->params[ $key ] ) )
-			return intval ( $this->params[ $key ] );
+			$rv = intval ( $this->params[ $key ] );
 		
 		//then check post
-		if( isset( $_POST[ $key ] ) && is_numeric( $_POST[ $key ] ) )
-			return intval ( $_POST[ $key ] );
+		elseif( isset( $_POST[ $key ] ) && is_numeric( $_POST[ $key ] ) )
+			$rv = intval ( $_POST[ $key ] );
 		
 		//then check get
-		if( isset( $_GET[ $key ] ) && is_numeric( $_GET[ $key ] ) )
-			return intval ( $_GET[ $key ] );
+		elseif( isset( $_GET[ $key ] ) && is_numeric( $_GET[ $key ] ) )
+			$rv = intval ( $_GET[ $key ] );
 		
 		//return default, if default was not passed it will be NULL
-		return $default;		 
+		$rv = $default;
+		
+		return Helpers_Db::escape( $rv );	 
 	}
 	
 	
@@ -88,17 +90,19 @@ abstract class Controllers_Base {
 	public function getString( $key, $default = NULL ) {
 		//first check own params
 		if( isset( $this->params[ $key ] ) && is_string( $this->params[ $key ] ) )
-			return "{$this->params[ $key ]}";
+			$rv = "{$this->params[ $key ]}";
 		
 		//then check post
-		if( isset( $_POST[ $key ] ) && is_string( $_POST[ $key ] ) )
-			return "{$_POST[ $key ]}";
+		elseif( isset( $_POST[ $key ] ) && is_string( $_POST[ $key ] ) )
+			$rv = "{$_POST[ $key ]}";
 		
 		//then check get
-		if( isset( $_GET[ $key ] ) && is_string( $_GET[ $key ] ) )
-			return "{$_GET[ $key ]}";
+		elseif( isset( $_GET[ $key ] ) && is_string( $_GET[ $key ] ) )
+			$rv = "{$_GET[ $key ]}";
 		
 		//return default, if default was not passed it will be NULL
-		return $default;		 
+		$rv = $default;
+		
+		return Helpers_Db::escape( $rv );
 	}
 }

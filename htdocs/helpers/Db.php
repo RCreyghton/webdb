@@ -11,10 +11,11 @@ if (!defined("WEBDB_EXEC"))
  */
 class Helpers_Db {
 
-	private $dbserver			= 'localhost'; //(string) server name
-	private $dbname				= 'webdb13AD3';   //(string) database name
-	private $dbuser				= 'webdb13AD3';   //(string) database user having writing rights
-	private $dbpass				= 'justafio';   //(string) database password for writing user
+	private $dbserver;
+	private $dbname;
+	private $dbuser;
+	private $dbpass;
+	
 	private static $instance	= NULL;  //(Object-referene) to this object if there's a connection already
 	private $mysqli;
 
@@ -42,6 +43,17 @@ class Helpers_Db {
 	 * @author RCreyghton
 	 */
 	private function __construct() {
+		$config = BASE . "../mysqlconfig.xml";
+		if( ! is_file( $config ) ) {
+			throw new Exception( "Could not load MySQL config file" );
+		}
+		
+		$config = simplexml_load_file( $config );
+		$this->dbserver = $config->host;
+		$this->dbname = $config->db;
+		$this->dbuser = $config->user;
+		$this->dbpass = $config->pass;
+		
 		$this->instance = $this;
 
 		if (!$this->connect()) {

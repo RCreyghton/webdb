@@ -96,16 +96,16 @@ class Controllers_Users extends Controllers_Base {
 		$query = Models_User::getSelect() . " WHERE `email`='" . Helpers_Db::escape( $email ) . "';";
 		$result = Models_User::fetchByQuery($query);
 		if( !empty( $result ) ) {
-			$formresult ["email"] ["errormessage"] = "Dit e-mailadres is al geregistreerd op deze site.";
+			$formresult ["email"] ["errormessage"] = "Dit e-mailadres is al geregistreerd op deze site";
 			return $formresult;
 		}
 		
 		//now we know that all is well, finally build the user
 		$u = new Models_User();
 		$u->role		= Models_User::ROLE_USER;
-		$u->email		= Helpers_Db::escape( $email );
-		$u->firstname	= Helpers_Db::escape( $firstname );
-		$u->lastname	= Helpers_Db::escape( $lastname );
+		$u->email		= $email;
+		$u->firstname	= $firstname;
+		$u->lastname	= $lastname;
 		$u->pass		= md5( $pass1 );
 		$u->save();
 		
