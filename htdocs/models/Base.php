@@ -173,7 +173,7 @@ abstract class Models_Base {
 	public static function fetchById($model_id) {
 		//make quary based on the called class, that we can find using SLB: static::
 		$resultarray = static::fetchByQuery(static::getSelect() . " WHERE id=" . $model_id);
-		return $resultarray[0];
+		return empty( $resultarray ) ? NULL : $resultarray[0];
 	}
 
 	/**
