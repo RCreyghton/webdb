@@ -11,7 +11,7 @@ html, body, p {
 }
 
 body {
-    background-color: #aaa;
+    background-color: #fff;
     font-family: verdana;
 }
 
@@ -101,7 +101,7 @@ div.content_open {
 
 ul.menu {
     list-style-type:none;
-    margin: 10px;
+    margin: 10px 0;
 	padding:0 0 0 25px;
 }
 
@@ -127,8 +127,10 @@ div.content_wrapper {
 }
 
 div.content {
-    background-color: #fff;
-    padding: 5px 0; 
+    background-color: #fff;    
+	padding: 5px 25px;
+    width: 948px;
+	min-height:300px;
     border-left: 1px solid #bbb;
     border-right: 1px solid #bbb;
 }

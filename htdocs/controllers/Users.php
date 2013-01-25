@@ -5,6 +5,37 @@ if (!defined("WEBDB_EXEC"))
 
 class Controllers_Users extends Controllers_Base {
 	
+	public function login() {
+		if( $this->getString( "login_submit" ) ) {
+			
+		 $user = $this->getString( "username");
+		 $pass = $this->getString( "password");
+		 
+		 
+		 if ( empty($user) || empty($pass)){
+		 	
+		 	$this->view = new Views_User_Loginform();
+		 	$this->view->errormessage= " U dient uw gebruiksnaam en wachtwoord in te vullen ! ";
+		 } else {
+		 	
+		 	$query= Models_User::getSelect();
+		 	
+		 	$this->view = new Views_User_Loginform();
+		 	$this->view->errormessage=$query;
+		 	
+		 }
+			
+			
+			
+			
+			
+		} else {
+			$this->view = new Views_User_Loginform();
+		}
+		
+	    $this->display();
+	}
+		
 	public function register() {
 		//if we have a submitted form, process it
 		if( $this->getString( "register_submit" ) ) {
