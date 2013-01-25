@@ -5,26 +5,42 @@ if (!defined("WEBDB_EXEC"))
 
 class Views_User_Loginform extends Views_Base {
 	
-	public $formresult = array();
+	public $errormessage = "";
 	
 	public function render() {
+
 		$this->title = "Registreren";
+		if( ! empty( $this->errormessage ) ) {
+			echo "<h3>Fout: {$this->errormessage} </h3>";
+		}
 ?>
-<form action="login.php" method="post">
-    <fieldset>
-        <div class="control-group">
-            <input autofocus name="username" placeholder="Username" type="text"/>
-        </div>
-        <div class="control-group">
-            <input name="password" placeholder="Password" type="password"/>
-        </div>
-        <div class="control-group">
-            <button type="inloggen" class="btn">inloggen</button>
-        </div>
-    </fieldset>
+<form action="./users/login" method="post">
+	<table>
+		<tr>
+			<td>
+				Gebruikersnaam
+			</td>
+			<td>
+				<input name="username" type="text"/>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Wachtwoord
+			</td>
+			<td>
+				<input name="password" type="password"/>
+			</td>
+		</tr>
+		<tr>
+			<td colspan='2'>
+				<input type='submit' name='login_submit' value='Inloggen' />
+			</td>
+		</tr>
+	</table> 
 </form>
 <div>
-     <a href="register.php"> Nog geen WebdbOverflow account?</a> 
+     <a href="./users/register"> Nog geen WebdbOverflow account?</a> 
 </div>
 <?php
 	}
