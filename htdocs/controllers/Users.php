@@ -20,8 +20,27 @@ class Controllers_Users extends Controllers_Base {
 		 	
 		 	$query= Models_User::getSelect();
 		 	
-		 	$this->view = new Views_User_Loginform();
-		 	$this->view->errormessage=$query;
+		 	$pass = md5($pass);
+		 	$query .= " WHERE `email` = '$user' AND `pass` = '$pass' ";
+		 	
+		 	$result = Models_User::fetchByQuery($query);
+		 	
+		 	if(empty( $result)){ 
+		 		
+		 		$this->view = new Views_User_Loginform();
+		 		$this->view->errormessage = "uw gegevens kloppen niet! ";
+		 	
+		 	} else { 
+		 		
+		 		Helpers_User::login($result[0]);
+		 		
+		 		$this->view = new Views_Threads_Unanswered();
+		 		
+		 	
+		 	}
+		 	
+		 	
+
 		 	
 		 }
 			
