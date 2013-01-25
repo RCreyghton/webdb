@@ -16,9 +16,14 @@ class Controllers_Users extends Controllers_Base {
 		 	
 		 	$this->view = new Views_User_Loginform();
 		 	$this->view->errormessage= " U dient uw gebruiksnaam en wachtwoord in te vullen ! ";
+		 } else {
+		 	
+		 	$query= Models_User::getSelect();
+		 	
+		 	$this->view = new Views_User_Loginform();
+		 	$this->view->errormessage=$query;
+		 	
 		 }
-		 
-		 
 			
 			
 			
