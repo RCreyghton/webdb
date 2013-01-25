@@ -7,7 +7,23 @@ class Controllers_Users extends Controllers_Base {
 	
 	public function login() {
 		if( $this->getString( "login_submit" ) ) {
-			//verwerking formulier
+			
+		 $user = $this->getString( "username");
+		 $pass = $this->getString( "password");
+		 
+		 
+		 if ( empty($user) || empty($pass)){
+		 	
+		 	$this->view = new Views_User_Loginform();
+		 	$this->view->errormessage= " U dient uw gebruiksnaam en wachtwoord in te vullen ! ";
+		 }
+		 
+		 
+			
+			
+			
+			
+			
 		} else {
 			$this->view = new Views_User_Loginform();
 		}
