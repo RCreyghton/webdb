@@ -43,13 +43,15 @@ abstract class Controllers_Base {
 	 * @param	string	$task	Name of the method asked to execute.
 	 * @return	boolean|mixed	Return value of the method called or false.
 	 * @author	Ramon Creyghton <r.creyghton@gmail.com>
-	 * @todo	remove DEFAULTTASK?
+	 * @todo	! method_exists is NIET AFDOENDE CONTROLE! Je kunt nu wel bijv. display, getInt of zelfs execute zelf aanroepen via url. Dan moet niet mogen!
+	 * @todo Bovenstaande todo probereno op te lossen. Controleren!
 	 */
 	public function execute($task) {
 		if ($task == NULL)
-			$task = static::DEFAULTTASK;
-		if (!method_exists($this, $task)) {
-			throw new Exception("Task not found");
+			throw new Exception("Onvolledige URL: task not found.");
+		$methodCall = array($this, $task);
+		if ( ! is_callable($methodCall) || ( in_array( $task, get_class_methods( get_parent_class( $this ) ) ) ) ) {
+			throw new Exception("Verkeerde URL: Task not found");
 		}
 		return $this->$task();
 	}
