@@ -1,104 +1,79 @@
-CTYPE html>
-
-  <html>
-      <head>
-          <link href="styles.css" rel="stylesheet"/>
-          <script src="scripts.js"></script>
-          <title>Discussieforum</title>
-    
-
-<h1>
-        
-<I>  
-
-Vragen & Antwoorden Bewerkt nu met git! 
-
-</I>
-
-</h1>
-      </body>
-<p>
-<br>
-<br>
-<br>
-  </html>
-      <body>
-
-<h2> Top 5 populair: </h2>
-
-<h3>
-
-          <b> Mobile spy algemeen</b>
-          antwoorden
-          <a href="http://www.discussieforum.nl/vraag1">click</a>
-<p>
- <body>
-          <b> Mobile spy Android</b>
-          antwoorden
-          <a href="http://www.discussieforum.nl/vraag2">click</a>
-<p>
- <body>
-          <b> Mobile spy iPhone</b>
-          antwoorden
-          <a href="http://www.discussieforum.nl/vraag3">click</a>
-<p>
- <body>
-          <b> Mobile spy Blackberry</b>
-          antwoorden
-          <a href="http://www.discussieforum.nl/vraag4">click</a>
-<p>
- <body>
-          <b> Mobile spy Samsung</b>
-          antwoorden
-          <a href="http://www.discussieforum.nl/vraag5">click</a>
-<p>
- <body>
-          <b> Mobile spy algemeen</b>
-          antwoorden
-          <a href="http://www.discussieforum.nl/vraag6">click</a>
-<p>
-      </body>
-  </html>
-</h3>
-
-
-Titel
-inhoud
-Tijd aangemaakt
-tijd gewijzigd
-gebruiker
-status
-tags
- 
- 
- 
-<div class='question'>
- 
-<h3 class='title'>Titel</h3>
- 
- 
- 
-<h3>Titel</h3>
- 
- 
- 
- 
+<form action="login.php" method="post">
+    <fieldset>
+        <div class="control-group">
+            <input autofocus name="username" placeholder="Username" type="text"/>
+        </div>
+        <div class="control-group">
+            <input name="password" placeholder="Password" type="password"/>
+        </div>
+        <div class="control-group">
+            <button type="inloggen" class="btn">inloggen</button>
+        </div>
+    </fieldset>
+</form>
+<div>
+     <a href="register.php"> Nog geen WebdbOverflow account?</a> 
 </div>
- 
 
- 
- 
-.question {
- 
-inhoud
- 
-}
- 
-.question h3 {
+<
+<br><br><br><br><br><br><br><br><br><br>
 
-titel
 
-}
+<?php
 
+    // configuration
+    require("../includes/config.php"); 
+
+    // if form was submitted
+    if ($_SERVER["REQUEST_METHOD"] == "POST")
+    {
+        // validate submission
+        if (empty($_POST["username"]))
+        {
+            apologize("You must provide your username.");
+        }
+        else if (empty($_POST["password"]))
+        {
+            apologize("You must provide your password.");
+        }
+
+        // query database for user
+        $rows = query("SELECT * FROM users WHERE username = ?", $_POST["username"]);
+
+        // if we found user, check password
+        if (count($rows) == 1)
+        {
+            // first (and only) row
+            $row = $rows[0];
+
+            // compare hash of user's input against hash that's in database
+            if (crypt($_POST["password"], $row["hash"]) == $row["hash"])
+            {
+                // remember that user's now logged in by storing user's ID in session
+                $_SESSION["id"] = $row["id"];
+
+                // redirect to portfolio
+                redirect("/");
+            }
+        }
+
+        // else apologize
+        apologize("Invalid username and/or password.");
+    }
+    else
+    {
+        // else render form
+        render("login_form.php", ["title" => "Log In"]);
+    }
+
+?>
+
+
+
+
+<br><br><br><br><br><br><br><br><br><br>
+
+
+SELECT FORM* users where username whith mail-in
 
 
