@@ -9,7 +9,8 @@ class Views_User_Loginform extends Views_Base {
 	
 	public function render() {
 		$this->title = "Registreren";
-		echo "<form action="login.php" method="post">
+?>
+<form action="login.php" method="post">
     <fieldset>
         <div class="control-group">
             <input autofocus name="username" placeholder="Username" type="text"/>
@@ -24,6 +25,7 @@ class Views_User_Loginform extends Views_Base {
 </form>
 <div>
      <a href="register.php"> Nog geen WebdbOverflow account?</a> 
-</div>";
+</div>
+<?php
 	}
 }
