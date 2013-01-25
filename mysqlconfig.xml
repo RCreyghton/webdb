@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mysql>
 	<host>localhost</host>
-	<db>webdb13ad3</db>
-	<user>root</user>
-	<pass>frietbaard</pass>
+	<db>webdb13AD3</db>
+	<user>webdb13AD3</user>
+	<pass>justafio</pass>
 </mysql>
