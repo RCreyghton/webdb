@@ -30,7 +30,12 @@ class Controllers_Users extends Controllers_Base {
 		 		$this->view = new Views_User_Loginform();
 		 		$this->view->errormessage = "uw gegevens kloppen niet! ";
 		 	
-		 	} else {
+		 	} else { 
+		 		
+		 		Helpers_User::login($result[0]);
+		 		
+		 		$this->view = new Views_Threads_Unanswered();
+		 		
 		 	
 		 	}
 		 	
