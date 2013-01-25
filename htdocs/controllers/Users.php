@@ -5,6 +5,16 @@ if (!defined("WEBDB_EXEC"))
 
 class Controllers_Users extends Controllers_Base {
 	
+	public function login() {
+		if( $this->getString( "login_submit" ) ) {
+			//verwerking formulier
+		} else {
+			$this->view = new Views_User_Loginform();
+		}
+		
+	    $this->display();
+	}
+		
 	public function register() {
 		//if we have a submitted form, process it
 		if( $this->getString( "register_submit" ) ) {
