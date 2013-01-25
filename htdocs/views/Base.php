@@ -74,10 +74,10 @@ MENU;
 		return <<<LOGIN
 						<ul>
 							<li>
-								<a href="login.php">Login</a>
+								<a href="./users/login">Login</a>
 							</li>
 							<li>
-								<a href="register.php">Registreer</a>
+								<a href="./users/register">Registreer</a>
 							</li>
 						</ul>
 LOGIN;
