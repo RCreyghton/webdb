@@ -82,7 +82,7 @@ class Helpers_Db {
 		);
 
 		if (mysqli_connect_errno()) {
-			err_die("Connect error: " . mysqli_connect_error());
+			throw new Exception ("Connect error: " . mysqli_connect_error());
 		}
 		return TRUE;
 	}
