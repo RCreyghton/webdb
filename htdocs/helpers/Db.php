@@ -1,21 +1,25 @@
 <?php
 
 /*
- * DB handler
- * Handles most basic queries.
- *
- * ASSUMES WebDB Kaper's
- * fatalerror.inc.php as DbError.php
+ * All classes and scripts must be loaded via index.php, where WEBDB_EXEC is set,
+ * and stop executing immediatly if otherwise.
  */
+if (!defined("WEBDB_EXEC"))
+	die("No direct access!");
 
-include_once 'DbError.php';
-
+/**
+ * Handler class for the database. Contains a bunch of static helper methods.
+ * Implements the Singleton pattern
+ * 
+ * @todo Controleren of die Singleton wel het beste is...
+ */
 class Helpers_Db {
 
-	private $dbserver			= 'localhost'; //(string) server name
-	private $dbname				= 'webdb13AD3';   //(string) database name
-	private $dbuser				= 'webdb13AD3';   //(string) database user having writing rights
-	private $dbpass				= 'justafio';   //(string) database password for writing user
+	private $dbserver;
+	private $dbname;
+	private $dbuser;
+	private $dbpass;
+	
 	private static $instance	= NULL;  //(Object-referene) to this object if there's a connection already
 	private $mysqli;
 
@@ -43,10 +47,21 @@ class Helpers_Db {
 	 * @author RCreyghton
 	 */
 	private function __construct() {
-		$this->dbh = $this;
+		$config = BASE . "../mysqlconfig.xml";
+		if( ! is_file( $config ) ) {
+			throw new Exception( "Could not load MySQL config file" );
+		}
+		
+		$config = simplexml_load_file( $config );
+		$this->dbserver = $config->host;
+		$this->dbname = $config->db;
+		$this->dbuser = $config->user;
+		$this->dbpass = $config->pass;
+		
+		self::$instance = $this;
 
 		if (!$this->connect()) {
-			$this->dbh = NULL;
+			self::$instance = NULL;
 			throw new Exception("Could not connect to database.");
 		}
 	}
@@ -81,6 +96,11 @@ class Helpers_Db {
 		@$this->mysqli->close();
 	}
 
+	public static function escape( $string ) {
+		//make sure we've connected to the db
+		return self::getInstance()->mysqli->real_escape_string( $string );
+	}
+	
 	/* Riped from webdb Voorbeeldcode.
 	  Return a prepared statement (safe version)
 	  On error, the script dies with a standard debug-message
@@ -118,7 +138,7 @@ class Helpers_Db {
 	 */
 	public static function getError() {
 		$no = self::getInstance()->mysqli->errno;
-		$me = self::getInstance()->mysqli->err;
+		$me = self::getInstance()->mysqli->error;
 		return $no != 0 ? "({$no}) {$me}" : false;
 	}
 	

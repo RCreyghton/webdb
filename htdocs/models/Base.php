@@ -1,10 +1,11 @@
 <?php
+
 /*
  * All classes and scripts must be loaded via index.php, where WEBDB_EXEC is set,
  * and stop executing immediatly if otherwise.
  */
-if( ! defined("WEBDB_EXEC") ) die("No direct access!");
-
+if (!defined("WEBDB_EXEC"))
+	die("No direct access!");
 
 /**
  * Base class
@@ -16,17 +17,17 @@ if( ! defined("WEBDB_EXEC") ) die("No direct access!");
  * @author Frank van Luijn <frank@accode.nl>
  * @author Ramon Creyghton <r.creyghton@gmail.com>
  * @author Shafiq Ahmadi <s.ah@live.nl>
+ * @todo	Maybe drop the declareFields()-method altogher, since it is implemented not-static in the Childs: inefficient. Use get_class_vars() instead?.
+ * @todo	Check whether get_called_class() en static:: references indeed work as intended.
  */
 abstract class Models_Base {
-	
 	
 	/*
 	 * Each child class must return an array including it's fields
 	 * Each field need also be present in the corresponding database
 	 */
 	abstract function declareFields();
-	
-	
+
 	/**
 	 * saves a model-object to the database
 	 * 
@@ -38,14 +39,13 @@ abstract class Models_Base {
 	 * @return boolean true if saved succesfully
 	 */
 	public function save() {
-		if( isset( $this->id ) ) {
+		if (isset($this->id)) {
 			return($this->update());
 		} else {
 			return($this->insert());
 		}
 	}
-	
-	
+
 	/**
 	 * inserts the data of the current ($this) object to the database as a new record
 	 * 
@@ -54,29 +54,25 @@ abstract class Models_Base {
 	 * 
 	 * @uses declareFields() To determine wich fields and values thera are to be saved
 	 * @author Frank van Luijn <frank@accode.nl>
-	 * @todo echo uitzetten.
-	 * @todo testen id teruguitlezen uit db auto_increment
 	 */
-	private function insert() {
-		$fields		= $this->declareFields();
-		$values		= array();
-		
+	protected function insert() {
+		$fields = $this->declareFields();
+		$values = array();
+
 		//get the field list
-		$fieldsstring = implode("`, `", $fields );
-		
+		$fieldsstring = implode("`, `", $fields);
+
 		//iterate over object to get corresponding values
 		//voor test-doeneinde mysql_rea_escape_string verwijderd
-		foreach( $fields as $field ) {
+		foreach ($fields as $field) {
 			$values[] = "'" . $this->$field . "'";
 		}
-		
+
 		//build the query
-		$query = "INSERT INTO `" . $this::TABLENAME . "` ( `" . $fieldsstring . "` ) VALUES (" . implode(", ", $values ). ");";
-		echo $query;
-		
-		$result = Helpers_Db::run( $query );
-		
-		if(! $result) {
+		$query = "INSERT INTO `" . static::TABLENAME . "` ( `" . $fieldsstring . "` ) VALUES (" . implode(", ", $values) . ");";
+		$result = Helpers_Db::run($query);
+
+		if ($result !== true) {
 			throw new Exception(Helpers_Db::getError());
 		} else {
 			$this->id = Helpers_Db::getId();
@@ -84,8 +80,7 @@ abstract class Models_Base {
 		//this returns true if no errors were found.
 		return $result;
 	}
-	
-	
+
 	/**
 	 * updates the data of the current ($this) object in the existing corresponding record in the database
 	 * 
@@ -96,40 +91,26 @@ abstract class Models_Base {
 	 * @uses catFieldValue To concatenate field and value in the fields-array.
 	 * @author Ramon Creyghton <r.creyghton@gmail.com>
 	 * @return boolean true if inserted succesfully
-	 * @todo echo uitzetten
 	 */
-	private function update() {
-		$fields	= $this->declareFields();
+	protected function update() {
+		$fields = $this->declareFields();
 		
-		//met array_walk en catFieldValue elk element uit fields van zijn value
-		//voorzien volgens field='value'
-		array_walk($fields, array($this, 'catFieldValue'));
-		$setString = implode(", ", $fields);
-		
+		$concat = array();
+		foreach( $fields as $field ) {
+			$concat[] = "`{$field}`='{$this->$field}'";
+		}
+
 		//build the query
-		$query = "UPDATE `" . $this::TABLENAME . "` SET " . $setString . " WHERE id=" . $this->id . ";";
-		echo $query;
-		
-		$result = Helpers_Db::run( $query );
-		
-		if(! $result) {
+		$query = "UPDATE `" . static::TABLENAME . "` SET " . implode(", ", $concat) . " WHERE `id`='" . $this->id . "';";
+
+		$result = Helpers_Db::run($query);
+
+		if (!$result) {
 			throw new Exception(Helpers_Db::getError());
 		}
 		return $result;
 	}
-	
-	/**
-	 * Concatenates field with its corresponding value in this object to the form
-	 * {field}='{value}'
-	 * 
-	 * @param string $field that wil be alterd
-	 * @param mixed $key not in use
-	 */
-	private function catFieldValue(&$field, $key) {
-		$field = $field . "='" . $this->$field . "'";
-	}
-	
-	
+
 	/**
 	 * Deletes 
 	 * 
@@ -138,17 +119,16 @@ abstract class Models_Base {
 	 * @todo dependencies!
 	 */
 	public function delete() {
-		$query = "DELETE FROM `" . $this::TABLENAME . "` WHERE id=" . $this->id . " LIMIT 1;";
-		echo $query;
-		$result = Helpers_Db::run( $query );
-		if(! $result) {
+		$query = "DELETE FROM `" . static::TABLENAME . "` WHERE `id`='" . $this->id . "';";
+		
+		$result = Helpers_Db::run($query);
+		if ( ! $result ) {
 			throw new Exception(Helpers_Db::getError());
 		}
 		return $result;
 	}
-	
-	
-  /**
+
+	/**
 	 * Exists a record with the given ID in the database???
 	 * Ramon: ik begrijp niet precies wanneer dit nuttig is?
 	 * 
@@ -161,17 +141,25 @@ abstract class Models_Base {
 		return true;
 	}
 
-	
 	/**
 	 * getSelect returns the first part of a SQL query that makes a SELECT from the 
 	 * table associated with the current object
 	 * 
-	 * @param String $fields
-	 * @return String First part of a SQL-query of the form SELECT ... FROM ...
-	 * @todo Werkt alleen met child-objecten die inderdaad een TABLENAME hebben. Mag dit ding dan wel hier in base zo staan?
+	 * @param string $fields
+	 * @return string First part of a SQL-query of the form SELECT ... FROM ...
 	 */
-	public static function getSelect( $fields = "*" ) {
-		return "SELECT " . $fields . " FROM `" . get_called_class()->TABLENAME . "` ";
+	public static function getSelect($fields = "*") {
+		return "SELECT " . $fields . " FROM `" . static::TABLENAME . "` ";
+	}
+	
+	
+	/**
+	 * getSelect returns the first part of a SQL query that makes a SELECT COUNT( * ) from the DB.
+	 * 
+	 * @return string First part of a SQL query.
+	 */
+	public static function getSelectCount() {
+		return "SELECT COUNT( * ) FROM `" . static::TABLENAME . "` ";
 	}
 	
 	
@@ -181,14 +169,12 @@ abstract class Models_Base {
 	 * @author Ramon Creyghton <r.creyghton@gmail.com>
 	 * @param int $model_id
 	 * @return Object	Van type {model}-child.
-	 * @todo	Net als bij getSelect controleren of get_called_class()-> wel werkt...
 	 */
 	public static function fetchById($model_id) {
-		//make quary based on the called class.
-		$resultarray = get_called_class()->fetchByQuery(getSelect() . " WHERE id=" . $model_id);
-		return $resultarray[0];
+		//make quary based on the called class, that we can find using SLB: static::
+		$resultarray = static::fetchByQuery(static::getSelect() . " WHERE id=" . $model_id);
+		return empty( $resultarray ) ? NULL : $resultarray[0];
 	}
-	
 
 	/**
 	 * Assamles an array of {models}-objects from the result returned by the given SQL query (SELECT).
@@ -199,61 +185,81 @@ abstract class Models_Base {
 	 */
 	public static function fetchByQuery($query) {
 		$result = Helpers_Db::run($query);
-		if(! $result) {
-			throw new Exception(Helpers_Db::getError());
+		if ( ! $result ) {
+			throw new Exception( Helpers_Db::getError() );
 		}
-		
-		//Converting each row as the object (type accordig to called class) and add to array.
+
+		//Converting each row as the object (type according to called class) and add to array.
 		$objectsarray = array();
-		while ($model = $result->fetch_object(get_called_class())) {
-			$objectsarray[] = $model;
-    }
-		return $objectsarray;
-	}
-	
-	
-	/**
-	 * fetchByQuery kan 1 _of_ meer objecten terugkrijgen, dus een array, want heel algemeen
-	 * 
-	 * @param String $query
-	 * @return array[Object] rechstreeks het mysqli-geval, of een bewerkte rij(en) eruit?
-	 * @author Ramon Creyghton <r.creyghton@gmail.com>
-	 */
-	public static function fetchByQueryOld($query) {
-		$result = Helpers_Db::run( $query );
-		if(! $result) {
-			throw new Exception(Helpers_Db::getError());
+		while ( $model = $result->fetch_object() ) {
+			$objectsarray[] = self::rowToObject( $model );
 		}
-		
-		//Converting each row in the result to an {models}-object and add it to a array.
-		$objectsarray = array();
-		while ($row = $result->fetch_assoc()) {
-			$objectsarray[] = rowToObject($row);
-    }
 		return $objectsarray;
 	}
 
-
 	/**
-	 * Moet een child-object van deze base klasse returnen, op basis van de eerste
-	 * rij van een mysqli result.
+	 * converts a stdClass to an object of the current type
 	 * 
 	 * @param assoc_array[Strings] $sqlrow
 	 * @return Object A child object of this Base class
 	 * @author Ramon Creyghton <r.creyghton@gmail.com>
-	 * @todo Deze functie slaat alle id's over, omdat die niet in declareFields zitten. We kunnen denk ik beter gebruik maken van de mysqi method $result->fetch_object en deze rowToObject weggooien.
+	 * @todo DONE ? Deze functie slaat alle id's over, omdat die niet in declareFields zitten. We kunnen denk ik beter gebruik maken van de mysqi method $result->fetch_object en deze rowToObject weggooien.
 	 */
-	private static function rowToObject($sqlrow){
-		//met get_callec_class() weten we ook in deze static methode wat voor'n
-		//object we eigenlijk willen maken.
-		$modeltype = get_called_class();
-		$model = new $modeltype;
-		$fieldsToFill = $model->declareFields();
+	private static function rowToObject( $object ) {
+		$model = new static();
+		$fields = $model->declareFields();
+		$fields[] = 'id';
 		//Elke element in deze assoc_array in het object plakken
-		foreach ($fieldsToFill as $field) {
-			$model->$field = $sqlrow[$field];
+		foreach ($fields as $field) {
+			$model->$field = $object->$field;
 		}
 		return $model;
 	}
-		
+
+	/**
+	 * Fetches all records in DB that have n:1 relation (param $modelType : $this) with this {models}-object.
+	 *
+	 * Assumes that such an relation exists. Returns the return of fetchByQuery anyway.
+	 * 
+	 * @uses Models_Base::fetchByQuery()	
+	 * @uses Models_Base::getSelect()	
+	 * @param string	Classname of the type of {models}-object asked for.
+	 * @return Models_Base[]|boolean	An array of {models}-objects of the type specified by $modelType, OR false if no such DB-relation is found.
+	 * @author Ramon Creyghton <r.creyghton@gmail.com>
+	 * @author Frank van Luijn <frank@accode.nl>
+	 */
+	public function getForeignModels( $connectedModel ) {
+		$prefix = strtolower( end( explode("_", get_class($this)) ) );
+		$query = $connectedModel::getSelect() . " WHERE `{$prefix}_id`='" . $this->id . "';";
+		return $connectedModel::fetchByQuery($query);
+	}
+	
+	
+	/**
+	 * Gets the number of records in DB that have n:1 relation (param $modelType : $this) with this {models}-object.
+	 * 
+	 * @param string	Classname of the type of {models}-object asked for.
+	 * @return integer|boolean	An integer indicating the number of foreign models, OR false if no such DB-relation is found.
+	 * @author Ramon Creyghton <r.creyghton@gmail.com>
+	 * @author Frank van Luijn <frank@accode.nl>
+	 */
+	public function getForeignCount( $connectedModel ) {
+		$prefix = strtolower( end( explode("_", get_class($this)) ) );
+		$query = $connectedModel::getSelectCount() . " WHERE `{$prefix}_id`='" . $this->id . "';";
+		return static::getCount( $query );
+	}
+	
+	
+	/**
+	 *
+	 */
+	public static function getCount( $query ) {
+		$result = Helpers_Db::run($query);
+		if ( ! $result ) {
+			throw new Exception( Helpers_Db::getError() );
+		}
+		$row = $result->fetch_row();
+		return $row[0];
+	}
+
 }
