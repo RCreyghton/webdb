@@ -47,6 +47,14 @@ class Views_Threads_Single extends Views_Threads_Base {
 				echo "<div class='threads_single_reply_container'>";
 				echo "<h3 class='threads_single_reply_header'>{$r->title}</h3>";
 				echo "<p>{$r->content}</p>";
+				
+				//details
+					echo "<div class='threads_single_reply_details'>";
+					echo "<p>";
+					echo "Gesteld door <a href='./threads/user/?usr={$t->user_id}'>{$t->user->firstname} {$t->user->lastname}</a> <br/>";
+					echo date("d-m-Y H:i");
+					echo "</p>";
+					echo "</div>";
 				echo "</div>";
 			}
 		} else {
@@ -60,7 +68,6 @@ class Views_Threads_Single extends Views_Threads_Base {
 			echo "</div>";
 		}
 		
-		var_dump( $this->replies );
 	}
 	
 }

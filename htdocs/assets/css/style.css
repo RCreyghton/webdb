@@ -212,4 +212,5 @@ div.element {
 .threads_single_thread_details { height:50px; float:right; }
 .threads_single_thread_details p { text-align: right; }
 .threads_single_reply_container { width:90%; margin:50px auto; }
+.threads_single_reply_details p { text-align:right; }
 .threads_single_reply_header { border-bottom:1px solid #3CB6EC; }

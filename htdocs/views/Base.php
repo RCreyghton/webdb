@@ -34,6 +34,7 @@ abstract class Views_Base {
 		$template = str_replace("<!-- BASEURL -->", $this->getBaseURL(), $template);
 		$template = str_replace("<!-- MENU -->", $this->getMenu($controller, $task), $template);
 		$template = str_replace("<!-- LOGIN -->", $this->getLogin(), $template);
+		$template = str_replace("<!-- STATISTICS -->", $this->getStatistics(), $template);
 		return $template;
 	}
 
@@ -59,6 +60,7 @@ abstract class Views_Base {
 			"Home"					=> "threads/unanswered",
 			"Categorieën"			=> "categories/overview",
 			"Meest gestelde vragen" => "threads/answered",
+			"Zoeken"				=> "search/new",
 			"Stel een vraag"		=> "threads/new"
 		);
 		
@@ -70,7 +72,32 @@ abstract class Views_Base {
 		$rv .= "</ul>\n";
 		return $rv;
 	}
+	
+	public function getStatistics() {
+		$base_q = Models_Thread::getSelect();
+		$threads_cnt = Models_Thread::getCount( $base_q );
+		$threads_ans = Models_Thread::getCount( $base_q . "WHERE `answer_id` IS NOT NULL" );
+		$threads_una = $threads_cnt - $threads_ans;
+		$threads_rat = number_format( $threads_ans / $threads_cnt, 2);
+		
+		$cat_cnt = Models_Category::getCount( Models_Category::getSelect() );
+		$usr_cnt = Models_User::getCount( Models_User::getSelect() );
+		$rpl_cnt = Models_Reply::getCount( Models_Reply::getSelect() );
+		
+		return "<div class='statistics_container'>
+						<h3><span class='hero_number'>{$threads_cnt}</span> vragen</h3>
+						<h3><span class='hero_number'>{$threads_ans}</span> beantwoord</h3>
+						<h3><span class='hero_number'>{$threads_una}</span> onbeantwoord</h3>
+						<h3><span class='hero_number'>{$threads_rat} %</span> verhouding</h3>
+					</div>
 
+					<div class='statistics_container'>
+						<h3><span class='hero_number'>{$cat_cnt}</span> categorie&euml;n</h3>
+						<h3><span class='hero_number'>{$usr_cnt}</span> gebruikers</h3>
+						<h3><span class='hero_number'>{$rpl_cnt}</span> reacties</h3>
+					</div>
+		";
+	}
 	/**
 	 * Assembles html for the login / register or logout / dashboard block any pages' header.
 	 * 
