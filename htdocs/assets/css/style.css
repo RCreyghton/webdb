@@ -118,7 +118,7 @@ ul.menu li a {
 	padding-bottom:4px;
 }
 
-ul.menu li a:hover, ul.menu li a:active {
+ul.menu li a:hover, ul.menu li a:active, ul.menu li a.active {
 	border-bottom:4px solid #3CB6EC;
     color: #000;
 }

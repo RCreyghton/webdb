@@ -21,6 +21,12 @@ abstract class Controllers_Base {
 	public $params = array();
 
 	/**
+	 * This holds the task thats currently being executed
+	 * @var string
+	 */
+	public $task;
+	
+	/**
 	 * This controller controls a view, to which a reference is stored in this variable.
 	 * @var Views_Base	A child of the Views_Base-class. 
 	 */
@@ -51,6 +57,7 @@ abstract class Controllers_Base {
 		if ( ! is_callable($methodCall) || ( in_array( $task, get_class_methods( get_parent_class( $this ) ) ) ) ) {
 			throw new Exception("Verkeerde URL: Task not found");
 		}
+		$this->task = $task;
 		return $this->$task();
 	}
 
@@ -67,8 +74,10 @@ abstract class Controllers_Base {
 		$rendered = ob_get_contents();
 		ob_end_clean();
 
+		$controllerName = explode( "_", get_class( $this ) );
+		$controller = strtolower( end( $controllerName ) );
 		//nu kunnen we de template openen en onze render op de plek van de content injecteren.
-		echo str_replace("<!-- CONTENT -->", $rendered, $this->view->getTemplate());
+		echo str_replace("<!-- CONTENT -->", $rendered, $this->view->getTemplate($controller, $this->task) );
 	}
 
 	/**

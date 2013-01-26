@@ -28,11 +28,11 @@ abstract class Views_Base {
 	 * @uses assets/template.html The lay-out template, dynamic elements left out.
 	 * @return string	A huge string containing the preprocessed template, missing only the contents.
 	 */
-	public function getTemplate() {
+	public function getTemplate($controller, $task) {
 		$template = file_get_contents(BASE . "assets/template.html");
 		$template = str_replace("<!-- TITLE -->", $this->title, $template);
 		$template = str_replace("<!-- BASEURL -->", $this->getBaseURL(), $template);
-		$template = str_replace("<!-- MENU -->", $this->getMenu(), $template);
+		$template = str_replace("<!-- MENU -->", $this->getMenu($controller, $task), $template);
 		$template = str_replace("<!-- LOGIN -->", $this->getLogin(), $template);
 		return $template;
 	}
@@ -54,14 +54,21 @@ abstract class Views_Base {
 	 * @todo Dynamisch maken, huidige view arceren?
 	 * @return string Correctly indented xhtml in the context of assets/template.html
 	 */
-	public function getMenu() {
-		return <<<MENU
-					<ul class="menu">
-						<li><a href="index.php?forum=1" class="menulink">Forum 1</a></li>
-						<li><a href="index.php?forum=2" class="menulink">Forum 2</a></li>
-						<li><a href="index.php?forum=3" class="menulink">Forum 3</a></li>
-					</ul>
-MENU;
+	public function getMenu($controller, $task) {
+		$items = array(
+			"Home"					=> "threads/unanswered",
+			"Categorieën"			=> "categories/overview",
+			"Meest gestelde vragen" => "threads/answered",
+			"Stel een vraag"		=> "threads/new"
+		);
+		
+		$rv = "<ul class='menu'>";
+		foreach( $items as $name => $link ) {
+			$active = $controller . "/" . $task == $link ? " active":"";
+			$rv .= "<li><a href='./{$link}' class='menulink{$active}'>{$name}</a></li>\n";
+		}
+		$rv .= "</ul>\n";
+		return $rv;
 	}
 
 	/**
