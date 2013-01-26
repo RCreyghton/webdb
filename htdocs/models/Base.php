@@ -228,7 +228,8 @@ abstract class Models_Base {
 	 * @author Frank van Luijn <frank@accode.nl>
 	 */
 	public function getForeignModels( $connectedModel ) {
-		$prefix = strtolower( end( explode("_", get_class($this)) ) );
+		$classParts = explode("_",  get_class($this) );
+		$prefix = strtolower ( end( $classParts ) );
 		$query = $connectedModel::getSelect() . " WHERE `{$prefix}_id`='" . $this->id . "';";
 		return $connectedModel::fetchByQuery($query);
 	}
