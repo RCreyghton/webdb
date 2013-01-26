@@ -43,8 +43,6 @@ abstract class Controllers_Base {
 	 * @param	string	$task	Name of the method asked to execute.
 	 * @return	boolean|mixed	Return value of the method called or false.
 	 * @author	Ramon Creyghton <r.creyghton@gmail.com>
-	 * @todo	! method_exists is NIET AFDOENDE CONTROLE! Je kunt nu wel bijv. display, getInt of zelfs execute zelf aanroepen via url. Dan moet niet mogen!
-	 * @todo Bovenstaande todo probereno op te lossen. Controleren!
 	 */
 	public function execute($task) {
 		if ($task == NULL)
