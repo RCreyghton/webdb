@@ -143,5 +143,19 @@ class Models_Thread extends Models_Base {
 		$repliesArray = Models_Reply::fetchByQuery($query);
 		return (empty($repliesArray)) ? false : $repliesArray[1];
 	}
+	
+	
+	/**
+	 * Very ugly function that forces the connected models into a non-existing
+	 * object-variable. This way you can get a quick (and dirty) instantiation
+	 * of all related objects.
+	 */
+	public function loadConnections() {
+		//load the user
+		$this->user = Models_User::fetchById( $this->user_id );
+		
+		//load the category
+		$this->category = Models_User::fetchById( $this->category_id );	
+	}
 
 }
