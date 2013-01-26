@@ -135,10 +135,9 @@ abstract class Models_Base {
 	 * @return boolean true if this object has a corresponding database record?
 	 * @todo everything
 	 */
-	public static function exists() {
-		//get_called_class();
-		//SQL exists ding in fetchByQuery gooien.
-		return true;
+	public static function exists( $id ) {
+		$query = self::getSelect()."WHERE `id` = '{$id}' ";
+		return count( self::fetchByQuery($query) );
 	}
 
 	/**
