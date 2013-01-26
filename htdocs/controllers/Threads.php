@@ -150,8 +150,21 @@ class Controllers_Threads extends Controllers_Base {
 		$defaultorder = "date_a";
 		$this->setupView( $where, $defaultorder );
 	}
-	//public function userthreads()
-	//new
-	//edit
-	//save
+	
+	public function single() {
+		$threadId = $this->getInt("id");
+		if( ! $threadId ||  ! Models_Thread::exists( $threadId ) ) {
+			throw new Exception( "Unkown thread!" );
+		}
+		
+		//load the thread
+		$thread = Models_Thread::fetchById( $threadId );
+		$thread->loadConnections();
+		
+		//load the view
+		$this->view = new Views_Threads_Single();
+		$this->view->thread = $thread;
+		
+		$this->display();
+	}
 }
