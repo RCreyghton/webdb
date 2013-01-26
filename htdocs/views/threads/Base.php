@@ -30,7 +30,7 @@ abstract class Views_Threads_Base extends Views_Base {
 			$user = Models_User::fetchById($thread->user_id);
 			$category = Models_Category::fetchById($thread->category_id);
 			$noReplies = $thread->getForeignCount("Models_Reply");
-			echo "<div class=\"element\">\n<h3>{$thread->title}</h3>\n";
+			echo "<div class='element'>\n<h3>{$thread->title}</h3>\n";
 			echo "<p><span>Gepost op " . date("d-m-Y H:i", $thread->ts_created) . " door ";
 			echo "{$user->firstname} {$user->lastname}</span><br />\n";
 			echo "<span>in de categorie <em>{$category->name}</em>. Deze thread heeft {$noReplies} repl";
@@ -39,7 +39,9 @@ abstract class Views_Threads_Base extends Views_Base {
 			echo ( strlen($thread->content) > 250) ?
 							substr($thread->content, 0, 250) . "..." :
 							$thread->content;
-			echo "</p>\n</div>\n";
+			echo "</p>\n";
+			echo "<a href='./threads/single/?id={$thread->id}'>Bekijk deze vraag</a>";
+			echo "</div>\n";
 		}
 	}
 
