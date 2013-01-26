@@ -244,7 +244,8 @@ abstract class Models_Base {
 	 * @author Frank van Luijn <frank@accode.nl>
 	 */
 	public function getForeignCount( $connectedModel ) {
-		$prefix = strtolower( end( explode("_", get_class($this)) ) );
+		$classParts = explode("_",  get_class($this) );
+		$prefix = strtolower ( end( $classParts ) );
 		$query = $connectedModel::getSelectCount() . " WHERE `{$prefix}_id`='" . $this->id . "';";
 		return static::getCount( $query );
 	}
