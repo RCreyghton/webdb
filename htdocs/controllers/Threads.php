@@ -164,6 +164,7 @@ class Controllers_Threads extends Controllers_Base {
 		//load the view
 		$this->view = new Views_Threads_Single();
 		$this->view->thread = $thread;
+		$this->view->replies = $thread->getForeignModels( 'Models_Reply' );
 		
 		$this->display();
 	}
