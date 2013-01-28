@@ -14,7 +14,7 @@ class Controllers_Threads extends Controllers_Base {
 		if ( array_key_exists(2, $parts ))
 			$this->setParam ("id", $parts[2]);
 		if ( array_key_exists(3, $parts ))
-			$this->setParam ("ord", $parts[3]);
+			$this->setParam ("order", $parts[3]);
 		if ( array_key_exists(4, $parts ))
 			$this->setParam ("p", $parts[4]);
 		if ( array_key_exists(5, $parts ))
@@ -53,8 +53,8 @@ class Controllers_Threads extends Controllers_Base {
 	}
 
 
-	/**
-	 * Allowing the user to influence the ordering of the threads, and thus the SQL-query, introduces a need for rigorous parsing and checking, to avoid SQL-injection.
+	/**	
+ * Allowing the user to influence the ordering of the threads, and thus the SQL-query, introduces a need for rigorous parsing and checking, to avoid SQL-injection.
 	 * 
 	 * @param string $orderstring
 	 * @return string|null
@@ -84,7 +84,7 @@ class Controllers_Threads extends Controllers_Base {
 	private function setupView( $where , $defaultorder) {
 		$this->calcPagination($where);
 		
-		$orderarray = explode("_", $this->getString( "ord", $defaultorder) );
+		$orderarray = explode("_", $this->getString( "order", $defaultorder) );
 		$orderparsed = $this->parseOrder( $orderarray[0] );
 		//De gebruiker kan een niet valide order-string hebben meegegeven. In dat geval moeten we alnog de default gebruiken.
 		if ( $orderparsed == NULL ) {

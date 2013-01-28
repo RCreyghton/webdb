@@ -32,7 +32,7 @@ class Views_Threads_Single extends Views_Threads_Base {
 			//details
 			echo "<div class='threads_single_thread_details'>";
 			echo "<p>";
-			echo "Gesteld door <a href='./threads/user/?usr={$t->user_id}'>{$t->user->firstname} {$t->user->lastname}</a> <br/>";
+			echo "Gesteld door <a href='./threads/user/{$t->user_id}'>{$t->user->firstname} {$t->user->lastname}</a> <br/>";
 			echo date("d-m-Y H:i");
 			echo "</p>";
 			echo "</div>";
@@ -51,7 +51,7 @@ class Views_Threads_Single extends Views_Threads_Base {
 				//details
 					echo "<div class='threads_single_reply_details'>";
 					echo "<p>";
-					echo "Gesteld door <a href='./threads/user/?usr={$t->user_id}'>{$t->user->firstname} {$t->user->lastname}</a> <br/>";
+					echo "Gegeven <a href='./threads/user/{$user->id}'>{$user->firstname} {$user->lastname}</a> <br/>";
 					echo date("d-m-Y H:i");
 					echo "</p>";
 					echo "</div>";

@@ -13,6 +13,10 @@ if (!defined("WEBDB_EXEC"))
 abstract class Views_Threads_Base extends Views_Base {
 
 	public $threads;
+	
+	public $id;
+	public $order;
+	
 	public $page;
 	public $pagesize;
 	public $nopages;
@@ -40,14 +44,13 @@ abstract class Views_Threads_Base extends Views_Base {
 							substr($thread->content, 0, 250) . "..." :
 							$thread->content;
 			echo "</p>\n";
-			echo "<a href='./threads/single/?id={$thread->id}'>Bekijk deze vraag</a>";
+			echo "<a href='./threads/single/{$thread->id}'>Bekijk deze vraag</a>";
 			echo "</div>\n";
 		}
 	}
 
 	/**
 	 * Dynamically creates a pagination and echo's it.
-	 * todo Prints nu nog ondynamisch id and order.
 	 */
 	public function printPagination() {
 		echo "<div class=\"pagination\">";
@@ -55,9 +58,36 @@ abstract class Views_Threads_Base extends Views_Base {
 			if ($i == $this->page)
 				echo "<em>{$i}</em>";
 			else
-				echo "<a href=\"" . $this->getUrl() . "/1/date_d/{$i}/{$this->pagesize}\">$i</a>"; //nog hardcoded unanswered url
+				echo "<a href=\"" . $this->getUrl("order") . "/" . $i . "/" . $this->pagesize . "\">$i</a>";
 		}
 		echo "</div>";
+		$this->printSorting();
+	}
+	
+	public function printSorting() {
+		echo "<div class=\"sorting\">Sorteren op <ul>
+			<li><a href=\"{$this->getUrl("id")}/views_a/1/{$this->pagesize}\">Views - Weinig bovenaan</a></li>
+			<li><a href=\"{$this->getUrl("id")}/views_d/1/{$this->pagesize}\">Views - Veel bovenaan</a></li>
+			<li><a href=\"{$this->getUrl("id")}/date_a/1/{$this->pagesize}\">Datum - Oudste eerst</a></li>
+			<li><a href=\"{$this->getUrl("id")}/date_d/1/{$this->pagesize}\">Views - Nieuwste eerst</a></li></ul></div>";
+	}
+	
+	/**
+	 * Returns the URL for this thread-view with current order and id. Pagination left out (or: to be filled in).
+	 * 
+	 * @return type
+	 */
+	public function getURL($detail = "order") {
+		$url = parent::getURL() . "/" . $this->id ;
+		if ($detail == "id")
+			return $url;
+		$url .= "/" . $this->order;
+		if ($detail == "order")
+			return $url;
+		$url .= "/" . $this->page . "/" . $this->pagesize ;
+		if ($detail == "page")
+			return $url;
+		return parent::getURL();
 	}
 
 }
