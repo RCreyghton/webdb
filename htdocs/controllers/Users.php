@@ -37,7 +37,7 @@ class Controllers_Users extends Controllers_Base {
 
 					Helpers_User::login($result[0]);
 
-					$this->view = new Views_Threads_Unanswered();
+					$this->view = new Views_User_Loginsuccess();
 				}
 			}
 		} else {
@@ -45,6 +45,15 @@ class Controllers_Users extends Controllers_Base {
 		}
 
 		$this->display();
+	}
+	
+	public function logout() {
+		if ( Helpers_User::getLoggedIn() != null ) {
+			Helpers_User::logout();
+			// nu somehow naar de vorige controller/task terug gaan. Javascript?
+		} else {
+			$this->login();
+		}
 	}
 		
 	public function register() {

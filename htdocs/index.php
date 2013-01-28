@@ -19,6 +19,7 @@ if ( empty( $parts ) ) {
 	//this will be the homepage
 	$controller = "Threads";
 	$task		= "unanswered";
+	$parts = array(strtolower($controller),$task);
 } else {
 	$controller = ucfirst( $parts[ 0 ] );
 	$task		= ( isset( $parts[ 1 ] ) ) ? $parts[ 1 ] : NULL ;
