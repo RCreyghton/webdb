@@ -124,16 +124,18 @@ abstract class Views_Base {
 	 * @return string Correctly indented xhtml in the context of assets/template.html
 	 */
 	public function getLogin() {
-		return <<<LOGIN
-						<ul>
-							<li>
-								<a href="./users/login">Login</a>
+		$output = "						<ul>\n							<li>\n								";
+		$user = Helpers_User::getLoggedIn();
+		if ( $user != null ) {
+			$output .= "Welkom, {$user->firstname} {$user->lastname}.\n							</li>\n							<li>\n								";
+			$output .= "								<a href=\"./users/logout\">Logout</a>";
+		} else {
+			$output .= "								<a href=\"./users/login\">Login</a>
 							</li>
 							<li>
-								<a href="./users/register">Registreer</a>
-							</li>
-						</ul>
-LOGIN;
+								<a href=\"./users/register\">Registreer</a>";
+		}
+		return $output . "\n							</li>\n						</ul>";
 	}
 
 	/**

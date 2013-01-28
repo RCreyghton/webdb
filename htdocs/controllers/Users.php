@@ -1,58 +1,50 @@
 <?php
 
+/*
+ * All classes and scripts must be loaded via index.php, where WEBDB_EXEC is set,
+ * and stop executing immediatly if otherwise.
+ */
 if (!defined("WEBDB_EXEC"))
 	die("No direct access!");
 
 class Controllers_Users extends Controllers_Base {
-	
-	public function login() {
-		if( $this->getString( "login_submit" ) ) {
-			
-		 $user = $this->getString( "username");
-		 $pass = $this->getString( "password");
-		 
-		 
-		 if ( empty($user) || empty($pass)){
-		 	
-		 	$this->view = new Views_User_Loginform();
-		 	$this->view->errormessage= " U dient uw gebruiksnaam en wachtwoord in te vullen ! ";
-		 } else {
-		 	
-		 	$query= Models_User::getSelect();
-		 	
-		 	$pass = md5($pass);
-		 	$query .= " WHERE `email` = '$user' AND `pass` = '$pass' ";
-		 	
-		 	$result = Models_User::fetchByQuery($query);
-		 	
-		 	if(empty( $result)){ 
-		 		
-		 		$this->view = new Views_User_Loginform();
-		 		$this->view->errormessage = "uw gegevens kloppen niet! ";
-		 	
-		 	} else { 
-		 		
-		 		Helpers_User::login($result[0]);
-		 		
-		 		$this->view = new Views_Threads_Unanswered();
-		 		
-		 	
-		 	}
-		 	
-		 	
 
-		 	
-		 }
-			
-			
-			
-			
-			
+	public function login() {
+		if ($this->getString("login_submit")) {
+
+			$user = $this->getString("username");
+			$pass = $this->getString("password");
+
+
+			if (empty($user) || empty($pass)) {
+
+				$this->view = new Views_User_Loginform();
+				$this->view->errormessage = "U dient uw e-mailadres en uw wachtwoord in te vullen ! ";
+			} else {
+
+				$query = Models_User::getSelect();
+
+				$pass = md5($pass);
+				$query .= " WHERE `email` = '$user' AND `pass` = '$pass' ";
+
+				$result = Models_User::fetchByQuery($query);
+
+				if (empty($result)) {
+
+					$this->view = new Views_User_Loginform();
+					$this->view->errormessage = "Deze combinatie van gegevens is niet correct. Probeert het nog eens.";
+				} else {
+
+					Helpers_User::login($result[0]);
+
+					$this->view = new Views_Threads_Unanswered();
+				}
+			}
 		} else {
 			$this->view = new Views_User_Loginform();
 		}
-		
-	    $this->display();
+
+		$this->display();
 	}
 		
 	public function register() {

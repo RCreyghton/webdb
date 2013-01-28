@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * All classes and scripts must be loaded via index.php, where WEBDB_EXEC is set,
+ * and stop executing immediatly if otherwise.
+ */
 if (!defined("WEBDB_EXEC"))
 	die("No direct access!");
 
@@ -18,7 +22,7 @@ class Views_User_Loginform extends Views_Base {
 	<table>
 		<tr>
 			<td>
-				Gebruikersnaam
+				E-mailadres:<br /><small>(waarmee u zich registreerde)</small>
 			</td>
 			<td>
 				<input name="username" type="text"/>
@@ -26,7 +30,7 @@ class Views_User_Loginform extends Views_Base {
 		</tr>
 		<tr>
 			<td>
-				Wachtwoord
+				Wachtwoord:
 			</td>
 			<td>
 				<input name="password" type="password"/>

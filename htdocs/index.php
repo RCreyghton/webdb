@@ -13,7 +13,7 @@ spl_autoload_register('autoloader');
 //parse the URL
 //our basic url layout will be: /controllername/task
 $q = isset( $_GET['q'] ) ? $_GET['q'] : '';
-$parts =  explode( "/" , strtolower( $q ) ) ;
+$parts = array_filter( explode( "/" , strtolower( $q ) ) )  ;
 
 if ( empty( $parts ) ) {
 	//this will be the homepage

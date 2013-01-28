@@ -19,5 +19,25 @@ class Helpers_User {
 		
 		mail("{$u->firstname} {$u->lastname} <{$email}>", $subject, $message, "From: noreply@webdboverflow.nl");
 	}
+	
+	/**
+	 * 
+	 * @param Models_User $user
+	 * @todo Seed opslaan bij sessie zoals Robert Belleman wil.
+	 */
+	public static function login($user) {
+		if (! session_start() )
+			throw new Exception("Unable to start a session");
+		$_SESSION['user'] = $user->id . "_" . "seed";
+	}
+
+	public static function getLoggedIn() {
+		if ( ! isset($_SESSION['user']) )
+			return NULL;
+		$sessionstrings = explode("_", $_SESSION['user'] );
+		$user = Models_User::fetchById($sessionstrings[0]);
+		//seed afhandelen?
+		return $user;
+	}
 
 }
