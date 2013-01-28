@@ -44,11 +44,23 @@ abstract class Controllers_Base {
 	}
 
 	/**
+	 * Parses the parts of the ?q= given by index.php into params().
+	 * 
+	 * @param string[] $parts
+	 */
+	public function parseParts( $parts ) {
+		$this->setParam("controller", $parts[0]);
+		$this->setParam("task", $parts[1]);
+	}
+	
+	
+	/**
 	 * Checks if a method named $task exists in this Controller-object, and executes it.
 	 *
 	 * @param	string	$task	Name of the method asked to execute.
 	 * @return	boolean|mixed	Return value of the method called or false.
 	 * @author	Ramon Creyghton <r.creyghton@gmail.com>
+	 * @todo De task mee als argument bij deze methode? oF zelf ophalen uit params[]?
 	 */
 	public function execute($task) {
 		if ($task == NULL)
@@ -68,16 +80,16 @@ abstract class Controllers_Base {
 	 * @uses Views_Base::render To get the actual contents of {@link $view}.
 	 */
 	public function display() {
+		//Zodra deze functie display wordt aangeroepen, is de controller blijkbaar vrijwel klaar. We kunnen nu alle parameters die nodig zijn in de view laden.
+		$this->view->loadParams( $this );
 		//eerst de content renderen en in buffer opslaan.
 		ob_start();
 		$this->view->render();
 		$rendered = ob_get_contents();
 		ob_end_clean();
 
-		$controllerName = explode( "_", get_class( $this ) );
-		$controller = strtolower( end( $controllerName ) );
 		//nu kunnen we de template openen en onze render op de plek van de content injecteren.
-		echo str_replace("<!-- CONTENT -->", $rendered, $this->view->getTemplate($controller, $this->task) );
+		echo str_replace("<!-- CONTENT -->", $rendered, $this->view->getTemplate() );
 	}
 
 	/**

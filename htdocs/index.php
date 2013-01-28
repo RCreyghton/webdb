@@ -12,9 +12,8 @@ spl_autoload_register('autoloader');
 
 //parse the URL
 //our basic url layout will be: /controllername/task
-//TODO check whether q exists or catch this at htaccess
 $q = isset( $_GET['q'] ) ? $_GET['q'] : '';
-$parts = array_filter( explode( "/" , strtolower( $q ) ) );
+$parts =  explode( "/" , strtolower( $q ) ) ;
 
 if ( empty( $parts ) ) {
 	//this will be the homepage
@@ -28,6 +27,7 @@ if ( empty( $parts ) ) {
 if( is_file("./controllers/{$controller}.php") && ! empty( $task ) ) {
 	$controller = "Controllers_" . $controller ;
 	$controller = new $controller();
+	$controller->parseParts( $parts );
 	$controller->execute( $task );
 } else {
 	$controller = new Controllers_Error();

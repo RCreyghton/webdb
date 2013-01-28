@@ -16,6 +16,27 @@ abstract class Views_Base {
 	 * @var string  
 	 */
 	public $title;
+	
+	/**
+	 * For URL-making and other linking purposes its good the know the calling object.
+	 * The values for these will be stored in de controllers' params list, and can be loaded usingt {@link loadParams()}.
+	 * 
+	 * @var string
+	 */
+	public $controller;
+	public $task;
+	
+	/**
+	 * 
+	 * @param Controllers_Base	$controller
+	 */
+	public function loadParams( $controller ) {
+		foreach ($controller->params as $key => $value) {
+			if ( array_key_exists( $key, get_object_vars( $this )) ) {
+				$this->$key = $value;
+			}
+		}
+	}
 
 	/**
 	 * Every view should be able to render itself. 
@@ -28,11 +49,11 @@ abstract class Views_Base {
 	 * @uses assets/template.html The lay-out template, dynamic elements left out.
 	 * @return string	A huge string containing the preprocessed template, missing only the contents.
 	 */
-	public function getTemplate($controller, $task) {
+	public function getTemplate() {
 		$template = file_get_contents(BASE . "assets/template.html");
 		$template = str_replace("<!-- TITLE -->", $this->title, $template);
 		$template = str_replace("<!-- BASEURL -->", $this->getBaseURL(), $template);
-		$template = str_replace("<!-- MENU -->", $this->getMenu($controller, $task), $template);
+		$template = str_replace("<!-- MENU -->", $this->getMenu(), $template);
 		$template = str_replace("<!-- LOGIN -->", $this->getLogin(), $template);
 		$template = str_replace("<!-- STATISTICS -->", $this->getStatistics(), $template);
 		return $template;
@@ -41,21 +62,19 @@ abstract class Views_Base {
 	/**
 	 * Concatenates the given parameters to a relative URL to, presumably, the current view.
 	 * 
-	 * @param string $controller
-	 * @param string $task
 	 * @return string
 	 */
-	public function getURL($controller, $task) {
-		return "./" . $controller . "/" . $task;
+	public function getURL() {
+		return "./" . $this->controller . "/" . $this->task;
 	}
 
 	/**
 	 * Assembles html for the menu, to be put in the header of each view.
 	 * 
-	 * @todo Dynamisch maken, huidige view arceren?
 	 * @return string Correctly indented xhtml in the context of assets/template.html
+	 * @author Frank van Luijn <frank@accode.nl>
 	 */
-	public function getMenu($controller, $task) {
+	public function getMenu() {
 		$items = array(
 			"Home"					=> "threads/unanswered",
 			"Categorieën"			=> "categories/overview",
@@ -66,7 +85,7 @@ abstract class Views_Base {
 		
 		$rv = "<ul class='menu'>";
 		foreach( $items as $name => $link ) {
-			$active = $controller . "/" . $task == $link ? " active":"";
+			$active = ($this->controller . "/" . $this->task == $link) ? " active":"";
 			$rv .= "<li><a href='./{$link}' class='menulink{$active}'>{$name}</a></li>\n";
 		}
 		$rv .= "</ul>\n";

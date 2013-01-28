@@ -8,6 +8,19 @@ if (!defined("WEBDB_EXEC"))
 	die("No direct access!");
 
 class Controllers_Threads extends Controllers_Base {
+	
+	public function parseParts( $parts ) {
+		parent::parseParts( $parts );
+		if ( array_key_exists(2, $parts ))
+			$this->setParam ("id", $parts[2]);
+		if ( array_key_exists(3, $parts ))
+			$this->setParam ("ord", $parts[3]);
+		if ( array_key_exists(4, $parts ))
+			$this->setParam ("p", $parts[4]);
+		if ( array_key_exists(5, $parts ))
+			$this->setParam ("ps", $parts[5]);
+	}
+	
 
 	/**
 	 * Calculatas all parameters needed to make a correct Pagination in a Threads-View.
@@ -71,7 +84,7 @@ class Controllers_Threads extends Controllers_Base {
 	private function setupView( $where , $defaultorder) {
 		$this->calcPagination($where);
 		
-		$orderarray = explode("_", $this->getString( "order", $defaultorder) );
+		$orderarray = explode("_", $this->getString( "ord", $defaultorder) );
 		$orderparsed = $this->parseOrder( $orderarray[0] );
 		//De gebruiker kan een niet valide order-string hebben meegegeven. In dat geval moeten we alnog de default gebruiken.
 		if ( $orderparsed == NULL ) {
@@ -87,18 +100,15 @@ class Controllers_Threads extends Controllers_Base {
 		$query = Models_Thread::getSelect() . $where . " ORDER BY " . $order . " LIMIT {$offset}, {$limit}";
 		$threads = Models_Thread::fetchByQuery($query);
 		$this->view->threads = $threads;
-		//onderstaande automatiseren en in base zetten?
-/*
-		$this->view->page = $this->params["page"];
-		$this->view->pagesize = $this->params["pagesize"];
-		$this->view->nopages = $this->params["nopages"];
-		$this->view->nothreads = $this->params["nothreads"];
-	*/	
+
+		/* Onderstaande functionaliteit in methode in view geplaatst...
 		foreach ($this->params as $key => $value) {
 			if ( array_key_exists( $key, get_object_vars( $this->view )) ) {
 				$this->view->$key = $value;
 			}
 		}
+		 * Het inladen gebeurt nu met loadParams, dat wordt aangeroepen in display();
+		 */
 		
 		//now we can safely execute the view's specific render function, calling it via $this->display()
 		$this->display();
@@ -121,7 +131,7 @@ class Controllers_Threads extends Controllers_Base {
 	 */
 	public function category() {
 		$this->view = new Views_Threads_Category();
-		$category_id = $this->getInt("cat");
+		$category_id = $this->getInt("id");
 		if ($category_id == NULL)
 			throw new Exception ("Geen categorie opgegeven.");
 		$category = Models_Category::fetchById($category_id);
@@ -137,7 +147,7 @@ class Controllers_Threads extends Controllers_Base {
 
 	public function user() {
 		$this->view = new Views_Threads_User();
-		$user_id = $this->getInt("usr");
+		$user_id = $this->getInt("id");
 		if ($user_id == NULL)
 			throw new Exception ("Geen user opgegeven.");
 		$user = Models_User::fetchById($user_id);

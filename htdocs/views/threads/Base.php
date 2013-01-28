@@ -47,6 +47,7 @@ abstract class Views_Threads_Base extends Views_Base {
 
 	/**
 	 * Dynamically creates a pagination and echo's it.
+	 * todo Prints nu nog ondynamisch id and order.
 	 */
 	public function printPagination() {
 		echo "<div class=\"pagination\">";
@@ -54,7 +55,7 @@ abstract class Views_Threads_Base extends Views_Base {
 			if ($i == $this->page)
 				echo "<em>{$i}</em>";
 			else
-				echo "<a href=\"" . $this->getUrl("threads", "unanswered") . "?p={$i}&ps={$this->pagesize}\">$i</a>"; //nog hardcoded unanswered url
+				echo "<a href=\"" . $this->getUrl() . "/1/date_d/{$i}/{$this->pagesize}\">$i</a>"; //nog hardcoded unanswered url
 		}
 		echo "</div>";
 	}
