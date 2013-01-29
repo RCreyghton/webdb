@@ -6,6 +6,11 @@ class Views_Threads_Form extends Views_Threads_Base {
 	public $form;
 	
 	public function render() {
+		if( ! Helpers_User::isLoggedIn() ) {
+			echo "Om een nieuwe vraag te stellen moet u ingelogd zijn!";
+			return;
+		}
+		
 		echo "<form method='post' action='./threads/threadform'>";
 		echo "<table>";
 		foreach ( $this->form as $name => $e ) {
@@ -17,14 +22,30 @@ class Views_Threads_Form extends Views_Threads_Base {
 			
 			echo "<td>";
 			switch( $e ['type'] ) {
+				
+				case "select":
+					echo "<select name='" . $name . "'>";
+					foreach( $e['values'] as $id => $v ) {
+						echo "<option value='$id' " . ( $e['value'] == $id ? "selected='selected'":"") . ">$v</option>";
+					}
+					echo "</select>";
+					break;
+				
+				case "textarea":
+					echo "<textarea name='" . $name . "'>" . $e['value'] . "</textarea>";
+					break;
+				
 				default:
 					echo "<input type='" . $e['type'] . "' name='" . $name . "' value='" . $e['value'] . "' />";
 					break;
+					
 			}
 			echo "</td>";
 			
 			echo "</tr>";
 		}
+		
+		echo "<tr><td colspan='2'><input type='submit' name='threadform_submit' value='Stel deze vraag' /></td></td>";
 		echo "</table>";
 		echo "</form>";
 	}

@@ -214,6 +214,21 @@ class Controllers_Threads extends Controllers_Base {
 			'description'	=>	'Titel'
 		);
 		
+		$elements[ 'category' ] = array(
+			'type'			=>	'select',
+			'values'		=> array(
+				1 => "een test cat", 
+				2 => 'moet nog dynamisch...'
+			),
+			'description'	=>	'Categorie'
+		);
+		
+		$elements[ 'content' ] = array(
+			'type'			=>	'textarea',
+			'description'	=>	'Uw vraag'
+		);
+		
+		
 		foreach( $elements as &$e ) {
 			if( ! isset($e['value'] ) )
 				$e['value'] = ''; 
