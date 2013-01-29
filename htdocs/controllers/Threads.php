@@ -30,7 +30,6 @@ class Controllers_Threads extends Controllers_Base {
 	 * @uses Models_Thread::getSelectCount()
 	 * @uses Models_Thread::getCount()
 	 * @param string $where The same WHERE-clause of the SQL query is responsible for fetching the acutals threads, is needed here to calculate the number of threads we are to distribute over this pagination.
-	 * @todo Het gaat nog mis bij lege resultatenset!
 	 */
 	private function calcPagination($where) {
 		$page = $this->getInt("p", 1);
@@ -38,11 +37,11 @@ class Controllers_Threads extends Controllers_Base {
 
 		$countquery = Models_Thread::getSelectCount() . $where;
 		$nothreads = Models_Thread::getCount($countquery);
+		
+		//Pagination should not give negative results when there are no threads to display.
+		$nopages = ( $nothreads > 0 ) ? ceil($nothreads / $pagesize) : 1;
 
-		$nopages = ceil($nothreads / $pagesize);
-
-		//Als een te hoge pagina is opgevraagd, geven we de laatste pagina weer.
-		//TODO bij lege resultatenset!
+		//Limit the page number to the heighest possible page.
 		if ($page > $nopages)
 			$page = $nopages;
 

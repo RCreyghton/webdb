@@ -30,22 +30,26 @@ abstract class Views_Threads_Base extends Views_Base {
 	 * @author	Ramon Creyghton <r.creyghton@gmail.com>
 	 */
 	public function printThreads() {
-		foreach ($this->threads as $thread) {
-			$user = Models_User::fetchById($thread->user_id);
-			$category = Models_Category::fetchById($thread->category_id);
-			$noReplies = $thread->getForeignCount("Models_Reply");
-			echo "<div class='element'>\n<h3>{$thread->title}</h3>\n";
-			echo "<p><span>Gepost op " . date("d-m-Y H:i", $thread->ts_created) . " door ";
-			echo "{$user->firstname} {$user->lastname}</span><br />\n";
-			echo "<span>in de categorie <em>{$category->name}</em>. Deze thread heeft {$noReplies} repl";
-			echo ($noReplies == 1) ? "y" : "ies";
-			echo ".</span></p>\n<p>";
-			echo ( strlen($thread->content) > 250) ?
-							substr($thread->content, 0, 250) . "..." :
-							$thread->content;
-			echo "</p>\n";
-			echo "<a href='./threads/single/{$thread->id}'>Bekijk deze vraag</a>";
-			echo "</div>\n";
+		if ( empty($this->threads) ) {
+			echo "<h3>Er zijn geen threads om weer te geven</h3>";
+		} else {
+			foreach ($this->threads as $thread) {
+				$user = Models_User::fetchById($thread->user_id);
+				$category = Models_Category::fetchById($thread->category_id);
+				$noReplies = $thread->getForeignCount("Models_Reply");
+				echo "<div class='element'>\n<h3>{$thread->title}</h3>\n";
+				echo "<p><span>Gepost op " . date("d-m-Y H:i", $thread->ts_created) . " door ";
+				echo "{$user->firstname} {$user->lastname}</span><br />\n";
+				echo "<span>in de categorie <em>{$category->name}</em>. Deze thread heeft {$noReplies} repl";
+				echo ($noReplies == 1) ? "y" : "ies";
+				echo ".</span></p>\n<p>";
+				echo ( strlen($thread->content) > 250) ?
+								substr($thread->content, 0, 250) . "..." :
+								$thread->content;
+				echo "</p>\n";
+				echo "<a href='./threads/single/{$thread->id}'>Bekijk deze vraag</a>";
+				echo "</div>\n";
+			}
 		}
 	}
 
@@ -65,11 +69,12 @@ abstract class Views_Threads_Base extends Views_Base {
 	}
 	
 	public function printSorting() {
-		echo "<div class=\"sorting\">Sorteren op <ul>
-			<li><a href=\"{$this->getUrl("id")}/views_a/1/{$this->pagesize}\">Views - Weinig bovenaan</a></li>
-			<li><a href=\"{$this->getUrl("id")}/views_d/1/{$this->pagesize}\">Views - Veel bovenaan</a></li>
-			<li><a href=\"{$this->getUrl("id")}/date_a/1/{$this->pagesize}\">Datum - Oudste eerst</a></li>
-			<li><a href=\"{$this->getUrl("id")}/date_d/1/{$this->pagesize}\">Views - Nieuwste eerst</a></li></ul></div>";
+		echo "<div class=\"sorting\"><table border=\"0\">
+			<tr><td>Sorteren op</tr></td>
+			<tr class=\"" . (($this->order == "views_a") ? "active" : "") . "\"><td><a href=\"{$this->getUrl("id")}/views_a/1/{$this->pagesize}\">Veelbekeken</a></tr></td>
+			<tr class=\"" . (($this->order == "views_d") ? "active" : "") . "\"><td><a href=\"{$this->getUrl("id")}/views_d/1/{$this->pagesize}\">Weinigbekeken</a></tr></td>
+			<tr class=\"" . (($this->order == "date_a") ? "active" : "") . "\"><td><a href=\"{$this->getUrl("id")}/date_a/1/{$this->pagesize}\">Oudste</a></tr></td>
+			<tr class=\"" . (($this->order == "date_d") ? "active" : "") . "\"><td><a href=\"{$this->getUrl("id")}/date_d/1/{$this->pagesize}\">Nieuwste</a></tr></td></table></div>";
 	}
 	
 	/**
