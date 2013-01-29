@@ -10,7 +10,8 @@ class Views_Threads_Category extends Views_Threads_Base {
 	 * @author	Ramon Creyghton <r.creyghton@gmail.com>
 	 */
 	public function render() {
-		echo "<h2>Populaire threads in de categorie {$this->category->name}</h2>";
+		$this->title = "Vragen in de categorie {$this->category->name}";
+		$this->printHead();
 		$this->printThreads();
 		$this->printPagination();
 	}

@@ -31,13 +31,13 @@ abstract class Views_Threads_Base extends Views_Base {
 	 */
 	public function printThreads() {
 		if ( empty($this->threads) ) {
-			echo "<h3>Er zijn geen threads om weer te geven</h3>";
+			echo "\n					<h3>Er zijn geen threads om weer te geven</h3>\n";
 		} else {
 			foreach ($this->threads as $thread) {
 				$user = Models_User::fetchById($thread->user_id);
 				$category = Models_Category::fetchById($thread->category_id);
 				$noReplies = $thread->getForeignCount("Models_Reply");
-				echo "<div class='element'>\n<h3>{$thread->title}</h3>\n";
+				echo "\n					<div class='element'>\n						<h3>{$thread->title}</h3>\n";
 				echo "<p><span>Gepost op " . date("d-m-Y H:i", $thread->ts_created) . " door ";
 				echo "{$user->firstname} {$user->lastname}</span><br />\n";
 				echo "<span>in de categorie <em>{$category->name}</em>. Deze thread heeft {$noReplies} repl";
@@ -47,34 +47,47 @@ abstract class Views_Threads_Base extends Views_Base {
 								substr($thread->content, 0, 250) . "..." :
 								$thread->content;
 				echo "</p>\n";
-				echo "<a href='./threads/single/{$thread->id}'>Bekijk deze vraag</a>";
-				echo "</div>\n";
+				echo "						<a href='./threads/single/{$thread->id}'>Bekijk deze vraag</a>\n";
+				echo "					</div>\n";
 			}
 		}
 	}
 
 	/**
 	 * Dynamically creates a pagination and echo's it.
+	 * Calles printSorting, since every paginated view needs sorting as well.
 	 */
 	public function printPagination() {
-		echo "<div class=\"pagination\">";
+		echo "\n					<div class=\"pagination\">\n						";
 		for ($i = 1; $i <= $this->nopages; $i++) {
 			if ($i == $this->page)
 				echo "<em>{$i}</em>";
 			else
 				echo "<a href=\"" . $this->getUrl("order") . "/" . $i . "/" . $this->pagesize . "\">$i</a>";
 		}
-		echo "</div>";
+		echo "\n					</div>\n";
 		$this->printSorting();
 	}
-	
+
+	/**
+	 * Dymaically creates the Sorting-box for this page and echo's it.
+	 */
 	public function printSorting() {
-		echo "<div class=\"sorting\"><table border=\"0\">
-			<tr><td>Sorteren op</tr></td>
-			<tr class=\"" . (($this->order == "views_a") ? "active" : "") . "\"><td><a href=\"{$this->getUrl("id")}/views_a/1/{$this->pagesize}\">Veelbekeken</a></tr></td>
-			<tr class=\"" . (($this->order == "views_d") ? "active" : "") . "\"><td><a href=\"{$this->getUrl("id")}/views_d/1/{$this->pagesize}\">Weinigbekeken</a></tr></td>
-			<tr class=\"" . (($this->order == "date_a") ? "active" : "") . "\"><td><a href=\"{$this->getUrl("id")}/date_a/1/{$this->pagesize}\">Oudste</a></tr></td>
-			<tr class=\"" . (($this->order == "date_d") ? "active" : "") . "\"><td><a href=\"{$this->getUrl("id")}/date_d/1/{$this->pagesize}\">Nieuwste</a></tr></td></table></div>";
+		echo "\n					<div class=\"sorting\"><table border=\"0\">
+						<tr><td>Sorteren op</td></tr>
+						<tr class=\"" . (($this->order == "views_a") ? "active" : "") . "\"><td><a href=\"{$this->getUrl("id")}/views_a/1/{$this->pagesize}\">Veelbekeken</a></td></tr>
+						<tr class=\"" . (($this->order == "views_d") ? "active" : "") . "\"><td><a href=\"{$this->getUrl("id")}/views_d/1/{$this->pagesize}\">Weinigbekeken</a></td></tr>
+						<tr class=\"" . (($this->order == "date_a") ? "active" : "") . "\"><td><a href=\"{$this->getUrl("id")}/date_a/1/{$this->pagesize}\">Oudste</a></td></tr>
+						<tr class=\"" . (($this->order == "date_d") ? "active" : "") . "\"><td><a href=\"{$this->getUrl("id")}/date_d/1/{$this->pagesize}\">Nieuwste</a></td></tr>
+					</table></div>\n\n";
+	}
+
+	/**
+	 * Returns a string like "pagina 1 van 3" or null if just 1 page.
+	 * @return string|null	
+	 */
+	public function printHead() {
+		echo "					<h2>" . $this->title . ( ($this->nopages > 1) ? " - pagina {$this->page} van {$this->nopages}" : "" ) . "</h2>\n";
 	}
 	
 	/**

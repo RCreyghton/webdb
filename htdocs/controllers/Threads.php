@@ -83,33 +83,35 @@ class Controllers_Threads extends Controllers_Base {
 	private function setupView( $where , $defaultorder) {
 		$this->calcPagination($where);
 		
-		$orderarray = explode("_", $this->getString( "order", $defaultorder) );
+		//An ordering for these threads could be given as string in many places, or default from the task.
+		$orderparam = $this->getString( "order", $defaultorder);
+		//Put it back in param's list, so we're sure the view will get it.
+		$this->setParam("order", $orderparam);
+		//Now we can parse it.
+		$orderarray = explode("_", $orderparam );
 		$orderparsed = $this->parseOrder( $orderarray[0] );
 		//De gebruiker kan een niet valide order-string hebben meegegeven. In dat geval moeten we alnog de default gebruiken.
 		if ( $orderparsed == NULL ) {
+			$this->setParam("order", $defaultorder);
 			$orderarray = explode("_", $defaultorder );
 			$orderparsed = $this->parseOrder( $orderarray[0] );
 		}
+		
+		//Now we can work it, to be ready for an SQL-query.
 		$order = "`" . $orderparsed . "`";
 		if ( count($orderarray) > 1 && $orderarray[1] == "d" )
 			$order .= " DESC";
 		
+		//In addition we need the pagination in the SQL.
 		$limit = $this->params["pagesize"];
 		$offset = ( $this->params["page"] - 1 ) * $limit;
+		
+		//Now we can assable the query, excecute it, put the results in the view and display the view. 
 		$query = Models_Thread::getSelect() . $where . " ORDER BY " . $order . " LIMIT {$offset}, {$limit}";
 		$threads = Models_Thread::fetchByQuery($query);
 		$this->view->threads = $threads;
-
-		/* Onderstaande functionaliteit in methode in view geplaatst...
-		foreach ($this->params as $key => $value) {
-			if ( array_key_exists( $key, get_object_vars( $this->view )) ) {
-				$this->view->$key = $value;
-			}
-		}
-		 * Het inladen gebeurt nu met loadParams, dat wordt aangeroepen in display();
-		 */
 		
-		//now we can safely execute the view's specific render function, calling it via $this->display()
+		//now we can safely execute the view's specific render function, calling it via $this->display(). This will load the param's list in the view as well.
 		$this->display();
 	}
 
@@ -140,7 +142,7 @@ class Controllers_Threads extends Controllers_Base {
 		$this->setParam("category", $category);
 		
 		$where = " WHERE ((`status` > 0) AND (`category_id` = {$category_id}))";
-		$defaultorder = "views_d";
+		$defaultorder = "views_a";
 		$this->setupView( $where, $defaultorder );
 	}
 

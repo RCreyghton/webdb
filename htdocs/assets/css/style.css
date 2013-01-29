@@ -244,7 +244,7 @@ a:hover.headerlink {
 	text-decoration: underline;
 }
 
-/* Pagination and sorting of Threads-views */
+/* Sorting of Threads-views */
 .sorting {
 	text-align: right;
 	position: absolute;
@@ -265,10 +265,9 @@ a:hover.headerlink {
 	visibility: collapse;
 }
 
-.sorting table tr a {
+.sorting table tr td a {
 	color: #444;
   text-decoration: none;
-	background-color: #fff;
 }
 
 .sorting table tr.active {
@@ -280,10 +279,38 @@ a:hover.headerlink {
 	padding-top: 0;
 	border: 1px solid #3CB6EC;
 	background: rgb(255, 255, 255);
-	background: rgba(255, 255, 255, 0.6);
+	background: rgba(255, 255, 255, 0.8);
 	height: 125px;
 }
 
 .sorting:hover table tr  {
 	visibility: visible;
+}
+
+.sorting:hover table tr td a:hover {
+	color: #000;
+	background-color: #fff;
+}
+
+
+/* Pagination of Threads-views */
+.pagination {
+	text-align: center;
+}
+
+.pagination a {
+	text-decoration: none;
+	border: 1px solid #3CB6EC;
+	padding: 0px 1px;
+	margin: 0px 5px;
+}
+
+.pagination a:hover {
+	background-color: #3CB6EC;
+}
+
+.pagination em {
+	font-style: normal;
+	font-weight: bold;
+	color: #3CB6EC;
 }

@@ -114,7 +114,7 @@ abstract class Views_Base {
 		$usr_cnt = Models_User::getCount( Models_User::getSelectCount() );
 		$rpl_cnt = Models_Reply::getCount( Models_Reply::getSelectCount() );
 		
-		return "<div class='statistics_container'>
+		return "					<div class='statistics_container'>
 						<h3><span class='hero_number'>{$threads_cnt}</span> vragen</h3>
 						<h3><span class='hero_number'>{$threads_ans}</span> beantwoord</h3>
 						<h3><span class='hero_number'>{$threads_una}</span> onbeantwoord</h3>

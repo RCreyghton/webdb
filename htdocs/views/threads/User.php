@@ -10,7 +10,8 @@ class Views_Threads_User extends Views_Threads_Base {
 	 * @author	Ramon Creyghton <r.creyghton@gmail.com>
 	 */
 	public function render() {
-		echo "<h2>Threads door {$this->user->firstname} {$this->user->lastname}</h2>";
+		$this->title = "Alle vragen door {$this->user->firstname} {$this->user->lastname}";
+		$this->printHead();
 		$this->printThreads();
 		$this->printPagination();
 	}
