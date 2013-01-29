@@ -178,6 +178,11 @@ div.element {
 	text-align:right;
 }
 
+a {
+	font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
+	text-decoration:underline;
+	color:#444;
+}
 .content_close span {
 	font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
 	padding-right:25px;
@@ -220,6 +225,9 @@ div.element {
 .threads_single_actionbar a, .threads_single_actionbar_reply a { margin-left:15px; }
 .threads_single_reply_accepted {background: #E1FCE3; position:relative; }
 .accepted_hover { position:absolute; top: 50%; margin-top:-16px; left:-46px;}
+
+.threads_add_thread { height:32px; line-height:32px; display:inline-block; padding:10px 10px 10px 52px; background: url('../images/icons/32x32/add.png') 10px center no-repeat;}
+
 /* Categories Overview */
 .categories_overview_header { border-bottom:4px solid #3CB6EC; }
 .categories_overview_container { border-bottom:1px solid #3CB6EC; }

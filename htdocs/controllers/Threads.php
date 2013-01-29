@@ -189,6 +189,7 @@ class Controllers_Threads extends Controllers_Base {
 			if( $thread->user_id == $user->id || $user->role == Models_User::ROLE_ADMIN ) {
 				$thread->answer_id = 'NULL';
 				$thread->save();
+				$thread->answer_id = NULL; //ugly i know....
 			}
 		}
 		
@@ -198,5 +199,26 @@ class Controllers_Threads extends Controllers_Base {
 		$this->view->replies = $thread->getForeignModels( 'Models_Reply' );
 		
 		$this->display();
+	}
+	
+	public function threadform () {
+		$this->view = new Views_Threads_Form();
+		$this->view->form = $this->getThreadForm();
+		$this->display();
+	}
+	
+	private function getThreadForm() {
+		$elements = array();
+		
+		$elements[ 'title' ] = array(
+			'type'			=>	'text',
+			'description'	=>	'Titel'
+		);
+		
+		foreach( $elements as &$e ) {
+			if( ! isset($e['value'] ) )
+				$e['value'] = ''; 
+		}
+		return $elements;
 	}
 }
