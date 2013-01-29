@@ -206,16 +206,21 @@ div.element {
 
 /* Threads Single */
 .threads_single_thread_header { border-bottom:4px solid #3CB6EC; }
-.threads_single_thread_content { font-size:16px; padding:25px 0; min-height:50px; }
+.threads_single_thread_content { font-size:16px; padding:25px 10px; min-height:50px; }
+.threads_single_reply_content {  padding:25px 10px; min-height:50px; }
 .threads_single_thread_container { border-bottom:1px solid #3CB6EC; }
 .threads_single_thread_details_container { height:50px; width:100%; }
 .threads_single_thread_credits { height:50px; float:left; }
 .threads_single_thread_details { height:50px; float:right; }
-.threads_single_thread_details p { text-align: right; }
-.threads_single_reply_container { width:90%; margin:50px auto; }
-.threads_single_reply_details p { text-align:right; }
+.threads_single_thread_details p { text-align: right;  padding-right:10px;}
+.threads_single_reply_container { width:90%; margin:50px auto; padding:10px;}
+.threads_single_reply_details p { text-align:right;  padding-right:10px;}
 .threads_single_reply_header { border-bottom:1px solid #3CB6EC; }
-
+.threads_single_actionbar { float:right; height:20px; padding:25px 10px 0 0;}
+.threads_single_actionbar_reply { float:right; height:20px; padding:15px 10px 0 0;}
+.threads_single_actionbar a, .threads_single_actionbar_reply a { margin-left:15px; }
+.threads_single_reply_accepted {background: #E1FCE3; position:relative; }
+.accepted_hover { position:absolute; top: 50%; margin-top:-16px; left:-46px;}
 /* Categories Overview */
 .categories_overview_header { border-bottom:4px solid #3CB6EC; }
 .categories_overview_container { border-bottom:1px solid #3CB6EC; }
