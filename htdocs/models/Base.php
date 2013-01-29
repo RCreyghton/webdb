@@ -65,7 +65,10 @@ abstract class Models_Base {
 		//iterate over object to get corresponding values
 		//voor test-doeneinde mysql_rea_escape_string verwijderd
 		foreach ($fields as $field) {
-			$values[] = "'" . $this->$field . "'";
+			if( $this->$field == 'NULL' )
+				$values[] = "NULL";
+			else
+				$values[] = "'" . $this->$field . "'";
 		}
 
 		//build the query
@@ -97,7 +100,10 @@ abstract class Models_Base {
 		
 		$concat = array();
 		foreach( $fields as $field ) {
-			$concat[] = "`{$field}`='{$this->$field}'";
+			if( $this->$field == 'NULL' )
+				$concat[] = "`{$field}`= NULL";
+			else
+				$concat[] = "`{$field}`='{$this->$field}'";
 		}
 
 		//build the query

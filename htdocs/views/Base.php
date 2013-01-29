@@ -108,7 +108,7 @@ abstract class Views_Base {
 		$threads_cnt = Models_Thread::getCount( $base_q );
 		$threads_ans = Models_Thread::getCount( $base_q . "WHERE `answer_id` IS NOT NULL" );
 		$threads_una = $threads_cnt - $threads_ans;
-		$threads_rat = number_format( $threads_ans / $threads_cnt, 2);
+		$threads_rat = number_format( 100 * $threads_ans / $threads_cnt, 2);
 		
 		$cat_cnt = Models_Category::getCount( Models_Category::getSelectCount() );
 		$usr_cnt = Models_User::getCount( Models_User::getSelectCount() );

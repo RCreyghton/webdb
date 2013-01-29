@@ -29,7 +29,7 @@ class Views_Threads_Single extends Views_Threads_Base {
 
 		//what if the current user is an admin
 		if ($user_role == Models_User::ROLE_ADMIN) {
-			echo "<a href=''><img src='./assets/images/icons/16x16/application_delete.png' width='16' height='16' alt='verberg' title='verberg' /></a>";
+			echo "<a href='./threads/single/{$t->id}?hide_thread=$t->id''><img src='./assets/images/icons/16x16/application_delete.png' width='16' height='16' alt='verberg' title='verberg' /></a>";
 		}
 
 		if ($user_role == Models_User::ROLE_ADMIN || $t->user_id == $user_id) {
@@ -83,9 +83,8 @@ class Views_Threads_Single extends Views_Threads_Base {
 				##### start actionbar
 				echo "<div class='threads_single_actionbar_reply'>";
 
-				//what if the current user is an admin
 				if ($user_role == Models_User::ROLE_ADMIN) {
-					echo "<a href=''><img src='./assets/images/icons/16x16/application_delete.png' width='16' height='16' alt='verberg' title='verberg' /></a>";
+					echo "<a href='./threads/single/{$t->id}?hide_reply=$r->id'><img src='./assets/images/icons/16x16/application_delete.png' width='16' height='16' alt='verberg' title='verberg' /></a>";
 				}
 
 				if ($user_role == Models_User::ROLE_ADMIN || $r->user_id == $user_id) {
@@ -94,7 +93,7 @@ class Views_Threads_Single extends Views_Threads_Base {
 				
 				if ( 
 					( $user_id == $t->user_id || $user_role == Models_User::ROLE_ADMIN )
-					&& $t->answer_id == NULL			
+					&& $t->answer_id == 'NULL'			
 				) {
 					echo "<a href='./threads/single/{$t->id}?accept=$r->id'><img src='./assets/images/icons/16x16/accept.png' width='16' height='16' alt='Accepteer antwoord' title='Accpeteer antwoord' /></a>";
 				}
