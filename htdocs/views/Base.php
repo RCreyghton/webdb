@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * All classes and scripts must be loaded via index.php, where WEBDB_EXEC is set,
+ * and stop executing immediatly if otherwise.
+ */
 if (!defined("WEBDB_EXEC"))
 	die("No direct access!");
 
@@ -25,7 +29,7 @@ abstract class Views_Base {
 	 */
 	public $controller;
 	public $task;
-	
+
 	/**
 	 * 
 	 * @param Controllers_Base	$controller
@@ -91,17 +95,24 @@ abstract class Views_Base {
 		$rv .= "</ul>\n";
 		return $rv;
 	}
-	
+
+	/**
+	 * Calculatates and renders the statistics block.
+	 * 
+	 * @uses Models_Base::getSelectCount
+	 * @uses Models_Base::getCount
+	 * @return string	HTML-block containing the statistics at the footer of the site.
+	 */
 	public function getStatistics() {
-		$base_q = Models_Thread::getSelect();
+		$base_q = Models_Thread::getSelectCount();
 		$threads_cnt = Models_Thread::getCount( $base_q );
 		$threads_ans = Models_Thread::getCount( $base_q . "WHERE `answer_id` IS NOT NULL" );
 		$threads_una = $threads_cnt - $threads_ans;
 		$threads_rat = number_format( $threads_ans / $threads_cnt, 2);
 		
-		$cat_cnt = Models_Category::getCount( Models_Category::getSelect() );
-		$usr_cnt = Models_User::getCount( Models_User::getSelect() );
-		$rpl_cnt = Models_Reply::getCount( Models_Reply::getSelect() );
+		$cat_cnt = Models_Category::getCount( Models_Category::getSelectCount() );
+		$usr_cnt = Models_User::getCount( Models_User::getSelectCount() );
+		$rpl_cnt = Models_Reply::getCount( Models_Reply::getSelectCount() );
 		
 		return "<div class='statistics_container'>
 						<h3><span class='hero_number'>{$threads_cnt}</span> vragen</h3>
@@ -117,6 +128,7 @@ abstract class Views_Base {
 					</div>
 		";
 	}
+
 	/**
 	 * Assembles html for the login / register or logout / dashboard block any pages' header.
 	 * 

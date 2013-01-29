@@ -252,7 +252,11 @@ abstract class Models_Base {
 	
 	
 	/**
-	 *
+	 * Fetches the number of records matching $query.
+	 * 
+	 * @param string $query	Valid SQL SELECT COUNT ... query.
+	 * @return int The number of records matching the query.
+	 * @throws Exception
 	 */
 	public static function getCount( $query ) {
 		$result = Helpers_Db::run($query);

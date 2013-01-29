@@ -214,3 +214,7 @@ div.element {
 .threads_single_reply_container { width:90%; margin:50px auto; }
 .threads_single_reply_details p { text-align:right; }
 .threads_single_reply_header { border-bottom:1px solid #3CB6EC; }
+
+/* Categories Overview */
+.categories_overview_header { border-bottom:4px solid #3CB6EC; }
+.categories_overview_container { border-bottom:1px solid #3CB6EC; }
