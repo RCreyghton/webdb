@@ -27,22 +27,20 @@ class Helpers_User {
 	 * @todo lifetime?
 	 */
 	public static function login($user) {
-		//TODO checken of sessie al ergens gestart is.. Dit in index doen?
-		if (! session_start() )
-			throw new Exception("Unable to start a session");
-		$_SESSION['user'] = $user->id . "_" . "seed";
+		$_SESSION['user'] = $user->id;
+		$_SESSION['user_ip'] = $_SERVER['REMOTE_ADDR'];
 	}
 
+	public static function isLoggedIn() {
+		return isset( $_SESSION['user'] ) 
+				&& isset( $_SESSION['user_ip'] ) 
+				&& $_SESSION['user_ip'] == $_SERVER['REMOTE_ADDR'];
+	}
 	public static function getLoggedIn() {
-		//TODO checken of sessie al ergens gestart is.. Dit in index doen?
-		if (! session_start() )
-			throw new Exception("Unable to start a session");
-		if ( ! isset($_SESSION['user']) )
+		if ( ! self::isLoggedIn() )
 			return NULL;
-		$sessionstrings = explode("_", $_SESSION['user'] );
-		$user = Models_User::fetchById($sessionstrings[0]);
-		//seed afhandelen?
-		return $user;
+		
+		return Models_User::fetchById( $_SESSION['user'] );
 	}
 	
 	public static function logout() {

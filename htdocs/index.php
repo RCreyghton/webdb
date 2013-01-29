@@ -10,6 +10,10 @@ define("BASE", getcwd() . DS );
  */
 spl_autoload_register('autoloader');
 
+//start the session
+if (! session_start() )
+	throw new Exception("Unable to start a session");
+
 //parse the URL
 //our basic url layout will be: /controllername/task
 $q = isset( $_GET['q'] ) ? $_GET['q'] : '';
@@ -19,7 +23,7 @@ if ( empty( $parts ) ) {
 	//this will be the homepage
 	$controller = "Threads";
 	$task		= "unanswered";
-	$parts = array(strtolower($controller),$task);
+	$parts		= array(strtolower($controller),$task);
 } else {
 	$controller = ucfirst( $parts[ 0 ] );
 	$task		= ( isset( $parts[ 1 ] ) ) ? $parts[ 1 ] : NULL ;
