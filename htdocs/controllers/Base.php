@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * All classes and scripts must be loaded via index.php, where WEBDB_EXEC is set,
+ * and stop executing immediatly if otherwise.
+ */
 if (!defined("WEBDB_EXEC"))
 	die("No direct access!");
 
@@ -45,6 +49,7 @@ abstract class Controllers_Base {
 
 	/**
 	 * Parses the parts of the ?q= given by index.php into params().
+	 * We can assume that [0] and [1] exists since this validity is checked by index.php
 	 * 
 	 * @param string[] $parts
 	 */
