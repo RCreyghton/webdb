@@ -167,9 +167,30 @@ class Controllers_Threads extends Controllers_Base {
 			throw new Exception( "Unkown thread!" );
 		}
 		
+		
 		//load the thread
 		$thread = Models_Thread::fetchById( $threadId );
 		$thread->loadConnections();
+		
+		//perform accept and deaccept actions
+		$accept = $this->getInt('accept');
+		$deaccept = $this->getInt('deaccept');
+		
+		if( $accept ) {
+			$user = Helpers_User::getLoggedIn();
+			if( $thread->user_id == $user->id || $user->role == Models_User::ROLE_ADMIN ) {
+				$thread->answer_id = $accept;
+				$thread->save();
+			}
+		}
+		
+		if( $deaccept ) {
+			$user = Helpers_User::getLoggedIn();
+			if( $thread->user_id == $user->id || $user->role == Models_User::ROLE_ADMIN ) {
+				$thread->answer_id = NULL;
+				$thread->save();
+			}
+		}
 		
 		//load the view
 		$this->view = new Views_Threads_Single();
