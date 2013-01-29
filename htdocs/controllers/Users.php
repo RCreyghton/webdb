@@ -24,7 +24,15 @@ class Controllers_Users extends Controllers_Base {
 
 				$query = Models_User::getSelect();
 
-				$pass = md5($pass);
+				//get the salt for the pass
+				$config = BASE . "../mysqlconfig.xml";
+				if( ! is_file( $config ) ) {
+					throw new Exception( "Could not load config file" );
+				}
+				$config = simplexml_load_file( $config );
+				$salt = $config->salt;
+				
+				$pass = md5( $salt . $pass . $salt );
 				$query .= " WHERE `email` = '$user' AND `pass` = '$pass' ";
 
 				$result = Models_User::fetchByQuery($query);
@@ -48,12 +56,14 @@ class Controllers_Users extends Controllers_Base {
 	}
 	
 	public function logout() {
-		if ( Helpers_User::getLoggedIn() != null ) {
+		if ( Helpers_User::isLoggedIn() ) {
 			Helpers_User::logout();
-			// nu somehow naar de vorige controller/task terug gaan. Javascript?
-		} else {
-			$this->login();
 		}
+		
+		$controller = new Controllers_Threads();
+		$parts		= array( "threads", "unanswered");
+		$controller->parseParts( $parts );
+		$controller->execute( "unanswered" );
 	}
 		
 	public function register() {
@@ -150,13 +160,22 @@ class Controllers_Users extends Controllers_Base {
 			return $formresult;
 		}
 		
+		//get the salt for the pass
+		$config = BASE . "../mysqlconfig.xml";
+		if( ! is_file( $config ) ) {
+			throw new Exception( "Could not load config file" );
+		}
+		$config = simplexml_load_file( $config );
+		$salt = $config->salt;
+		
+		
 		//now we know that all is well, finally build the user
 		$u = new Models_User();
 		$u->role		= Models_User::ROLE_USER;
 		$u->email		= $email;
 		$u->firstname	= $firstname;
 		$u->lastname	= $lastname;
-		$u->pass		= md5( $pass1 );
+		$u->pass		= md5( $salt . $pass1 . $salt );
 		$u->save();
 		
 		if( isset( $u->id ) ) {
