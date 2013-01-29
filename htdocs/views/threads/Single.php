@@ -13,6 +13,11 @@ class Views_Threads_Single extends Views_Threads_Base {
 	public function render() {
 		$t = $this->thread;
 		
+		if( $t->status < 1) {
+			echo "<h1>Deze vraag is niet meer beschikbaar.</h1>";
+			return;
+		}
+		
 		echo "<div class='threads_single_thread_container'>";
 		echo "<h1 class='threads_single_thread_header'>{$t->title}</h1>";
 		echo "<p class='threads_single_thread_content'>";
@@ -43,6 +48,9 @@ class Views_Threads_Single extends Views_Threads_Base {
 		//render all the replies
 		if( count( $this->replies ) ) {
 			foreach( $this->replies as $r ) {
+				if( $r->visibility == 0 ) {
+					continue;
+				}
 				$user = Models_User::fetchById( $r->user_id );
 				echo "<div class='threads_single_reply_container'>";
 				echo "<h3 class='threads_single_reply_header'>{$r->title}</h3>";
