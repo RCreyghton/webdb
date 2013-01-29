@@ -23,6 +23,7 @@ class Models_User extends Models_Base {
 	/**
 	 * Constants with possible values of {@link $role}.
 	 */
+	const ROLE_ANON = -1;
 	const ROLE_USER = 0;
 	const ROLE_ADMIN = 1;
 
