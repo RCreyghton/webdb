@@ -99,7 +99,7 @@ class Models_User extends Models_Base {
 	 */
 	protected function insert() {
 		$this->ts_registered = time();
-		parent::insert();
+		return parent::insert();
 	}
 
 	/**

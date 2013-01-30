@@ -65,12 +65,12 @@ abstract class Models_Base {
 		//iterate over object to get corresponding values
 		//voor test-doeneinde mysql_rea_escape_string verwijderd
 		foreach ($fields as $field) {
-			if( $this->$field == 'NULL' )
+			if( $this->$field === 'NULL' ) {
 				$values[] = "NULL";
-			else
+			} else
 				$values[] = "'" . $this->$field . "'";
 		}
-
+		
 		//build the query
 		$query = "INSERT INTO `" . static::TABLENAME . "` ( `" . $fieldsstring . "` ) VALUES (" . implode(", ", $values) . ");";
 		$result = Helpers_Db::run($query);
