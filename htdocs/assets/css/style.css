@@ -53,13 +53,16 @@ div.header_wrapper {
 }
 
 div.header_title {
-    height: 80px;
+		position: relative;
+		clear: both;
+    min-height: 80px;
     color: #fff;
 }
 
 div.header_title h1 {
     margin: 0 0 0 25px;
-	display:inline-block;
+		display: block;
+		float: left;
     width: 360px;
     height: 60px;
     font-size: 3em;
@@ -67,11 +70,13 @@ div.header_title h1 {
     font-variant: small-caps;
 }
 
+/* Search Bar */
 div.searchbar {
 	position: relative;
+	float: left;
+	margin: 30px 20px 20px 20px;
 	width: 400px;
-	height: 40px;
-	margin: 0px auto;
+	height: 30px;
 }
 
 div.searchbar form input.search_input {
@@ -79,12 +84,23 @@ div.searchbar form input.search_input {
 	left: 0px;
 	width: 336px;
 	height: 15px;
+	border: 2px solid #3CB6EC;
+	border-radius: 5px;
+	font-size: 13px;
+	color: #999;
+}
+
+div.searchbar form input.search_input:focus {
+	outline:none;
+	border-color: #ddd;
+	box-shadow:0 0 10px #eee;
+	color: #000;
 }
 
 div.searchbar form input.search_submit {
 	position: absolute;
 	right: 0px;
-	top: 3px;
+	top: 2px;
 }
 
 div.searchbar ul {
@@ -92,9 +108,11 @@ div.searchbar ul {
 	padding: 0;
 	position: absolute;
 	width: 338px;
-	top: 25px;
+	min-height: 10px;
+	top: 23px;
 	left: 1px;
 	border: 1px solid #3CB6EC;
+	border-top: none;
 	list-style-type: none;
 	
 }
@@ -107,8 +125,9 @@ div.searchbar ul li {
 }
 
 div.searchbar ul li a {
-	margin: 0 px;
-	padding: 2px 4px;
+	margin: 0;
+	margin-top: -2px;
+	padding: 4px 4px 2px 4px;
 	text-decoration: none;
 	display: block;
 	width: 330px;
@@ -119,10 +138,11 @@ div.searchbar ul li a:hover {
 	color: #fff;
 }
 
+/* Service Panel */
 div.header_service {
   width: 100px;
-	padding:10px 20px;
-	float:right;
+	padding: 10px 20px;
+	float: right;
 }
 
 div.header_service ul li a {
@@ -150,7 +170,7 @@ div.content_open {
     border-top-right-radius: 25px;
 }
 
-
+/* Menu */
 ul.menu {
     list-style-type:none;
     margin: 10px 0;

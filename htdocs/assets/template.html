@@ -10,6 +10,7 @@
 		<script language="javascript" type="application/javascript">
 var xmlhttp;
 
+
 function GetXMLHTTPObject()
 {
   var xmlhttp = null;
@@ -60,15 +61,66 @@ function stateChanged(str)
 		<div class="wrapper">
 			<div class="header_wrapper wrapped">
 				<div class="header_title body_centered">
-					<img alt='webdboverflow' title = 'webdboverflow' src="./assetsimages/logo-2.png"/>
+					<h1>WebDBOverflow</h1>
 					<div class="searchbar">
 						<form action="./search/full" method="get">
-							<input type="text" name="search" class="search_input" id="search_input" onkeyup="getThreadTitles(this.value)" />
-							<input type="submit" name="search_submit" class="search_submit" value="Zoek!" />
+							<input type="text" name="search" value="" class="search_input" id="search_input" onkeyup="getThreadTitles(this.value)" />
+							<input type="submit" name="search_submit" class="search_submit" id ="search_submit" value="Zoek!" />
 							<ul id="quickThreads">
 							</ul>
 						</form>
-					</div> 
+					</div>
+					<script><!--
+/* Script van http://zenverse.net/javascript-search-box-show-default-text-on-load/ , aangevuld door Ramon Creyghton */
+var searchbox = document.getElementById( "search_input" );
+searchbox.focused = false;
+var submit = document.getElementById( "search_submit" );
+submit.focused = false;
+
+var searchdefault = 'Zoeken in WebDBOverflow...';
+searchbox.value = searchdefault;
+
+function testFocus() {
+	if ( searchbox.focused == false && submit.focused == false )
+		clearSearch();
+}
+
+function clearSearch() {
+	if ( submit.focused == false ) {
+		searchbox.value = searchdefault;
+		
+		if ( document.getElementById( "quickThreads" ).innerHTML != "" ) {
+			document.getElementById( "quickThreads" ).innerHTML = "";
+			searchbox.removeAttribute( "autocomplete" );
+		}
+	}
+}
+
+function beginSearch() {
+	if ( searchbox.value == searchdefault ) {
+		searchbox.value = "";
+	}
+}
+
+searchbox.onfocus = function() {
+	this.focused = true;
+	beginSearch();
+}
+searchbox.onblur = function() {
+	this.focused = false;
+	setTimeout("testFocus()", 500);
+}
+submit.onfocus = function ()
+{
+	this.focused = true;
+}
+submit.onblur = function()
+{
+	this.focused = false;
+	setTimeout("testFocus()", 500);
+}
+
+						--></script>
 					<div class="header_service">
 <!-- LOGIN -->
 					</div>
