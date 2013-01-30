@@ -38,11 +38,10 @@ abstract class Views_Threads_Base extends Views_Base {
 				$category = Models_Category::fetchById($thread->category_id);
 				$noReplies = $thread->getForeignCount("Models_Reply");
 				echo "\n					<div class='threads_listing_thread_container'>\n						<h3 class='threads_listing_thread_header'><a href='./threads/single/{$thread->id}' class='headerlink'>{$thread->title}</a></h3>\n";
-				echo "						<div class='threads_listing_thread_details'><p>" . date("d-m-Y H:i", $thread->ts_created) . " | ";
-				echo "{$user->firstname} {$user->lastname}</p>\n";
-				echo "						<p><em>{$category->name}</em> | {$noReplies} repl";
+				echo "						<div class='threads_listing_thread_details'>\n							<p>" . date("d-m-Y H:i", $thread->ts_created) . " in <em><a href=\"./threads/category/{$category->id}\">{$category->name}</a></em></p>\n";
+				echo "							<p><a href=\"./threads/user/{$user->id}\">{$user->firstname} {$user->lastname}</a> | {$noReplies} repl";
 				echo ($noReplies == 1) ? "y" : "ies";
-				echo ".</span></div>\n						<p>";
+				echo ".</p>\n						</div>\n						<p>";
 				echo ( strlen($thread->content) > 250) ?
 								substr($thread->content, 0, 250) . "..." :
 								$thread->content;

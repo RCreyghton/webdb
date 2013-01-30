@@ -310,8 +310,17 @@ a {
 .threads_listing_thread_container:first-of-type {border-top: 2px solid #3CB6EC;}
 .threads_listing_thread_header { border-bottom:1px solid #3CB6EC; background-color: #eee;}
 .threads_listing_thread_content { font-size:14px; padding:5px 10px; min-height:25px; }
-.threads_listing_thread_details { height:50px; min-width: 200px; position: absolute; top: 0px; right: 0px;}
+.threads_listing_thread_details { height:50px; min-width: 250px; position: absolute; top: 0px; right: 0px;}
 .threads_listing_thread_details p { text-align: right;  padding: 2px; padding-right:10px; margin: 0;}
+
+/* Search Listing */
+.search_listing_thread_container { border-bottom: 2px solid #3CB6EC; position: relative;}
+.search_listing_thread_container:first-of-type {border-top: 2px solid #3CB6EC;}
+.search_listing_thread_header { border-bottom:1px solid #3CB6EC; background-color: #eee;}
+.search_listing_content_container { font-size:14px; padding:5px 10px; min-height:25px; }
+.search_listing_content_container h4 {border-bottom: 1px solid #3CB6EC;}
+.search_listing_thread_details { height:50px; min-width: 250px; position: absolute; top: 0px; right: 0px;}
+.search_listing_thread_details p { text-align: right;  padding: 2px; padding-right:10px; margin: 0;}
 
 
 

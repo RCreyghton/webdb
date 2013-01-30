@@ -16,12 +16,16 @@ class Views_Search_Full extends Views_Base {
 		$i = 0;
 		while ( isset( $this->posts[$i] ) ) {
 			$thread = $this->posts[$i];
-			echo "					<div class='element'>\n						<h3>{$thread->title}</h3>\n";
+			$user = Models_User::fetchById($thread->user_id);
+			$category = Models_Category::fetchById($thread->category_id);
+			echo "					<div class='search_listing_thread_container'>\n						<h3 class='search_listing_thread_header'><a href='./threads/single/{$thread->id}' class='headerlink'>{$thread->title}</a></h3>\n";
+			echo "						<div class='search_listing_thread_details'>\n							<p>" . date("d-m-Y H:i", $thread->ts_created) . " in <em>{$category->name}</em></p>\n";
+			echo "							<p>{$user->firstname} {$user->lastname}</p>\n						</div>\n";
 			$i++;
 			while ( isset( $this->posts[$i] ) && ! $this->posts[$i] instanceof Models_Thread ) {
 				$post = $this->posts[$i];
-				echo "						<div class='subcontent'>Relevante " . ( ($post["post_id"] == - $thread->id ) ? " inhoud" : "reactie" ) . ":
-							<h4>{$post['title']}</h4>
+				echo "						<div class='search_listing_content_container'>
+							<h4>Relevante " . ( ($post["post_id"] == - $thread->id ) ? " inhoud" : "reactie" ) . ": {$post['title']}</h4>
 							<p>{$post['content']}</p>
 						</div>\n"; 
 				$i++;
