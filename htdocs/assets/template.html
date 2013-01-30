@@ -46,7 +46,12 @@ function getThreadTitles(str)
 function stateChanged(str)
 {
   if (xmlhttp.readyState == 4 && xmlhttp.status == 200) { 
-    document.getElementById("quickThreads").innerHTML = xmlhttp.responseText;
+    document.getElementById( "quickThreads" ).innerHTML = xmlhttp.responseText;
+		if ( xmlhttp.responseText != "" ) {
+			document.getElementById( "search_input" ).setAttribute( "autocomplete", "off" )
+		} else {
+			document.getElementById( "search_input" ).removeAttribute( "autocomplete" )
+		}
   }
 }
 	</script>
@@ -55,11 +60,11 @@ function stateChanged(str)
 		<div class="wrapper">
 			<div class="header_wrapper wrapped">
 				<div class="header_title body_centered">
-					<img alt='webdboverflow' title = 'webdboverflow' src="./images/logo-2.png"/>
+					<img alt='webdboverflow' title = 'webdboverflow' src="./assetsimages/logo-2.png"/>
 					<div class="searchbar">
 						<form action="./search/full" method="get">
-							<input type="text" name="search" onkeyup="getThreadTitles(this.value)" />
-							<input type="submit" name="search_submit" value="Zoek!" />
+							<input type="text" name="search" class="search_input" id="search_input" onkeyup="getThreadTitles(this.value)" />
+							<input type="submit" name="search_submit" class="search_submit" value="Zoek!" />
 							<ul id="quickThreads">
 							</ul>
 						</form>

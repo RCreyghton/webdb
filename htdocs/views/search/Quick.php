@@ -13,8 +13,7 @@ class Views_Search_Quick extends Views_Base {
 	
 	public function render() {
 		foreach ($this->posts as $post) {
-			echo "<li>{$post[1]}</li>";
-			
+			echo "<li><a href=\"./threads/single/{$post[0]}\" >{$post[1]}</a></li>";
 		}
 	}
 }

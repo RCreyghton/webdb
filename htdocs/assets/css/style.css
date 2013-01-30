@@ -67,8 +67,60 @@ div.header_title h1 {
     font-variant: small-caps;
 }
 
+div.searchbar {
+	position: relative;
+	width: 400px;
+	height: 40px;
+	margin: 0px auto;
+}
+
+div.searchbar form input.search_input {
+	position: absolute;
+	left: 0px;
+	width: 336px;
+	height: 15px;
+}
+
+div.searchbar form input.search_submit {
+	position: absolute;
+	right: 0px;
+	top: 3px;
+}
+
+div.searchbar ul {
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	width: 338px;
+	top: 25px;
+	left: 1px;
+	border: 1px solid #3CB6EC;
+	list-style-type: none;
+	
+}
+
+div.searchbar ul li {
+	padding: 0;
+	margin: 0;
+	background-color: #fff;
+	color: #000;
+}
+
+div.searchbar ul li a {
+	margin: 0 px;
+	padding: 2px 4px;
+	text-decoration: none;
+	display: block;
+	width: 330px;
+}
+
+div.searchbar ul li a:hover {
+	background-color: #3CB6EC;
+	color: #fff;
+}
+
 div.header_service {
-    width: 100px;
+  width: 100px;
 	padding:10px 20px;
 	float:right;
 }
