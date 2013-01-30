@@ -32,6 +32,7 @@ class Views_Threads_Form extends Views_Threads_Base {
 					break;
 				
 				case "textarea":
+					echo isset( $e['original'] ) ? $e['original'] . "<hr/>" : "";
 					echo "<textarea name='" . $name . "'>" . $e['value'] . "</textarea>";
 					break;
 				

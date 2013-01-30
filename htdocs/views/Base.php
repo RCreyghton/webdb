@@ -20,7 +20,7 @@ abstract class Views_Base {
 	 * @var string  
 	 */
 	public $title;
-	
+
 	/**
 	 * For URL-making and other linking purposes its good the know the calling object.
 	 * The values for these will be stored in de controllers' params list, and can be loaded usingt {@link loadParams()}.
@@ -34,9 +34,9 @@ abstract class Views_Base {
 	 * 
 	 * @param Controllers_Base	$controller
 	 */
-	public function loadParams( $controller ) {
+	public function loadParams($controller) {
 		foreach ($controller->params as $key => $value) {
-			if ( array_key_exists( $key, get_object_vars( $this )) ) {
+			if (array_key_exists($key, get_object_vars($this))) {
 				$this->$key = $value;
 			}
 		}
@@ -80,16 +80,16 @@ abstract class Views_Base {
 	 */
 	public function getMenu() {
 		$items = array(
-			"Home"					=> "threads/unanswered",
-			"Categorieën"			=> "categories/overview",
+			"Home" => "threads/unanswered",
+			"Categorieën" => "categories/overview",
 			"Meest gestelde vragen" => "threads/answered",
-			"Zoeken"				=> "search/new",
-			"Stel een vraag"		=> "threads/new"
+			"Zoeken" => "search/new",
+			"Stel een vraag" => "threads/new"
 		);
-		
+
 		$rv = "<ul class='menu'>";
-		foreach( $items as $name => $link ) {
-			$active = ($this->controller . "/" . $this->task == $link) ? " active":"";
+		foreach ($items as $name => $link) {
+			$active = ($this->controller . "/" . $this->task == $link) ? " active" : "";
 			$rv .= "<li><a href='./{$link}' class='menulink{$active}'>{$name}</a></li>\n";
 		}
 		$rv .= "</ul>\n";
@@ -105,15 +105,15 @@ abstract class Views_Base {
 	 */
 	public function getStatistics() {
 		$base_q = Models_Thread::getSelectCount();
-		$threads_cnt = Models_Thread::getCount( $base_q );
-		$threads_ans = Models_Thread::getCount( $base_q . "WHERE `answer_id` IS NOT NULL" );
+		$threads_cnt = Models_Thread::getCount($base_q);
+		$threads_ans = Models_Thread::getCount($base_q . "WHERE `answer_id` IS NOT NULL");
 		$threads_una = $threads_cnt - $threads_ans;
-		$threads_rat = number_format( 100 * $threads_ans / $threads_cnt, 2);
-		
-		$cat_cnt = Models_Category::getCount( Models_Category::getSelectCount() );
-		$usr_cnt = Models_User::getCount( Models_User::getSelectCount() );
-		$rpl_cnt = Models_Reply::getCount( Models_Reply::getSelectCount() );
-		
+		$threads_rat = number_format(100 * $threads_ans / $threads_cnt, 2);
+
+		$cat_cnt = Models_Category::getCount(Models_Category::getSelectCount());
+		$usr_cnt = Models_User::getCount(Models_User::getSelectCount());
+		$rpl_cnt = Models_Reply::getCount(Models_Reply::getSelectCount());
+
 		return "					<div class='statistics_container'>
 						<h3><span class='hero_number'>{$threads_cnt}</span> vragen</h3>
 						<h3><span class='hero_number'>{$threads_ans}</span> beantwoord</h3>
@@ -136,18 +136,17 @@ abstract class Views_Base {
 	 * @return string Correctly indented xhtml in the context of assets/template.html
 	 */
 	public function getLogin() {
-		$output = "						<ul>\n							<li>\n								";
+		$output = "<ul>";
 		$user = Helpers_User::getLoggedIn();
-		if ( $user != null ) {
-			$output .= "Welkom, {$user->firstname} {$user->lastname}.\n							</li>\n							<li>\n								";
-			$output .= "								<a href=\"./users/logout\">Logout</a>";
+		if ($user != null) {
+			$output .= "<li>Welkom, {$user->firstname}</li>";
+			$output .= "<li><a href='./users/logout'>Logout</a></li>";
 		} else {
-			$output .= "								<a href=\"./users/login\">Login</a>
-							</li>
-							<li>
-								<a href=\"./users/register\">Registreer</a>";
+			$output .= "<li><a href='./users/login'>Login</a></li>";
+			$output .= "<li><a href='./users/register'>Registreer</a></li>";
 		}
-		return $output . "\n							</li>\n						</ul>";
+		$output .= "</ul>";
+		return $output;
 	}
 
 	/**
