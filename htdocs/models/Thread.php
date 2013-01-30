@@ -116,7 +116,7 @@ class Models_Thread extends Models_Base {
 	 */
 	protected function insert() {
 		$this->ts_created = time();
-		parent::insert();
+		return parent::insert();
 	}
 
 	/**
@@ -124,7 +124,7 @@ class Models_Thread extends Models_Base {
 	 */
 	protected function update() {
 		$this->ts_modified = time();
-		parent::update();
+		return parent::update();
 	}
 
 	/**

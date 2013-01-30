@@ -40,6 +40,7 @@ class Views_Threads_Form extends Views_Threads_Base {
 					break;
 					
 			}
+			if( !empty($e['errormessage']) ) echo "<span class='errormessage'>" . $e['errormessage'] . "</span>";
 			echo "</td>";
 			
 			echo "</tr>";
