@@ -37,18 +37,16 @@ abstract class Views_Threads_Base extends Views_Base {
 				$user = Models_User::fetchById($thread->user_id);
 				$category = Models_Category::fetchById($thread->category_id);
 				$noReplies = $thread->getForeignCount("Models_Reply");
-				echo "\n					<div class='element'>\n						<h3>{$thread->title}</h3>\n";
-				echo "<p><span>Gepost op " . date("d-m-Y H:i", $thread->ts_created) . " door ";
-				echo "{$user->firstname} {$user->lastname}</span><br />\n";
-				echo "<span>in de categorie <em>{$category->name}</em>. Deze thread heeft {$noReplies} repl";
+				echo "\n					<div class='threads_listing_thread_container'>\n						<h3 class='threads_listing_thread_header'><a href='./threads/single/{$thread->id}' class='headerlink'>{$thread->title}</a></h3>\n";
+				echo "						<div class='threads_listing_thread_details'><p>" . date("d-m-Y H:i", $thread->ts_created) . " | ";
+				echo "{$user->firstname} {$user->lastname}</p>\n";
+				echo "						<p><em>{$category->name}</em> | {$noReplies} repl";
 				echo ($noReplies == 1) ? "y" : "ies";
-				echo ".</span></p>\n<p>";
+				echo ".</span></div>\n						<p>";
 				echo ( strlen($thread->content) > 250) ?
 								substr($thread->content, 0, 250) . "..." :
 								$thread->content;
-				echo "</p>\n";
-				echo "						<a href='./threads/single/{$thread->id}'>Bekijk deze vraag</a>\n";
-				echo "					</div>\n";
+				echo "</p>\n					</div>\n";
 			}
 		}
 	}

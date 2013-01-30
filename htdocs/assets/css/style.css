@@ -305,8 +305,20 @@ a {
 .categories_overview_header { border-bottom:4px solid #3CB6EC; }
 .categories_overview_container { border-bottom:1px solid #3CB6EC; }
 
+/* Threads Listings */
+.threads_listing_thread_container { border-bottom: 2px solid #3CB6EC; position: relative;}
+.threads_listing_thread_container:first-of-type {border-top: 2px solid #3CB6EC;}
+.threads_listing_thread_header { border-bottom:1px solid #3CB6EC; background-color: #eee;}
+.threads_listing_thread_content { font-size:14px; padding:5px 10px; min-height:25px; }
+.threads_listing_thread_details { height:50px; min-width: 200px; position: absolute; top: 0px; right: 0px;}
+.threads_listing_thread_details p { text-align: right;  padding: 2px; padding-right:10px; margin: 0;}
+
+
+
 /* Alle linkende headers */
 a.headerlink {
+	display: block;
+	width: 100%;
 	font-weight: bold;
 	color: #000;
 	text-decoration: none;
