@@ -53,13 +53,16 @@ div.header_wrapper {
 }
 
 div.header_title {
-    height: 80px;
+	position: relative;
+	clear: both;
+    min-height: 80px;
     color: #fff;
 }
 
 div.header_title h3 {
     margin: 0 0 0 25px;
-	display:inline-block;
+	display: block;
+	float: left;
     width: 360px;
     height: 60px;
     font-size: 30px;
@@ -71,12 +74,12 @@ div.header_title h3 {
 .header_title .column2 { width: 60%; display:inline-block;vertical-align:top; padding-top:20px;}
 .header_title .column3 { width:19%; display:inline-block; vertical-align:top;}
 
+
 div.searchbar {
 	position: relative;
-	padding-top:15px;
+	margin: 30px 20px 20px 20px;
 	width: 400px;
-	height: 40px;
-	margin: 0px auto;
+	height: 30px;
 }
 
 div.searchbar form input.search_input {
@@ -85,12 +88,23 @@ div.searchbar form input.search_input {
 	top:4px;
 	width: 336px;
 	height: 15px;
+	border: 2px solid #3CB6EC;
+	border-radius: 5px;
+	font-size: 13px;
+	color: #999;
+}
+
+div.searchbar form input.search_input:focus {
+	outline:none;
+	border-color: #ddd;
+	box-shadow:0 0 10px #eee;
+	color: #000;
 }
 
 div.searchbar form input.search_submit {
 	position: absolute;
 	right: 0px;
-	top: 3px;
+	top: 2px;
 }
 
 div.searchbar ul {
@@ -98,11 +112,13 @@ div.searchbar ul {
 	padding: 0;
 	position: absolute;
 	width: 338px;
-	top: 25px;
+	min-height: 10px;
+	top: 23px;
 	left: 1px;
 	border: 1px solid #3CB6EC;
+	border-top: none;
 	list-style-type: none;
-	
+
 }
 
 div.searchbar ul li {
@@ -113,8 +129,9 @@ div.searchbar ul li {
 }
 
 div.searchbar ul li a {
-	margin: 0 px;
-	padding: 2px 4px;
+	margin: 0;
+	margin-top: -2px;
+	padding: 4px 4px 2px 4px;
 	text-decoration: none;
 	display: block;
 	width: 330px;
@@ -125,8 +142,11 @@ div.searchbar ul li a:hover {
 	color: #fff;
 }
 
+/* Service Panel */
 div.header_service {
 	padding:10px 0;
+	width: 100px;
+	float: right;
 }
 
 div.header_service ul li a {
@@ -153,7 +173,7 @@ div.content_open {
     border-top-right-radius: 25px;
 }
 
-
+/* Menu */
 ul.menu {
     list-style-type:none;
     margin: 10px 0;
@@ -209,7 +229,7 @@ div.element {
 	background: -o-linear-gradient(top,  #e5e5e5 0%,#ffffff 100%); /* Opera 11.10+ */
 	background: -ms-linear-gradient(top,  #e5e5e5 0%,#ffffff 100%); /* IE10+ */
 	background: linear-gradient(to bottom,  #e5e5e5 0%,#ffffff 100%); /* W3C */
-/*	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e5e5e5', endColorstr='#ffffff',GradientType=0 );*/ /* IE 6-9 even uitgeschakeld ivm valide CSS */
+	/*	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e5e5e5', endColorstr='#ffffff',GradientType=0 );*/ /* IE 6-9 even uitgeschakeld ivm valide CSS */
 }
 
 .footer_wrapper {
@@ -322,7 +342,7 @@ a:hover.headerlink {
 
 .sorting table tr td a {
 	color: #444;
-  text-decoration: none;
+	text-decoration: none;
 }
 
 .sorting table tr.active {

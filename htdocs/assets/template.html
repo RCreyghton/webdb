@@ -6,55 +6,10 @@
 		<title>WebDBOverflow - <!-- TITLE --></title>
 		<!-- BASEURL --> 
 		<link rel="stylesheet" href="assets/css/style.css" type="text/css" />
-		<!-- Code uit collegevoorbeeld Robert Belleman -->
-		<script language="javascript" type="application/javascript">
-			var xmlhttp;
-
-			function GetXMLHTTPObject()
-			{
-			var xmlhttp = null;
-
-			if (window.XMLHttpRequest) {
-			// code for IE7+, Firefox, Chrome, Opera, Safari
-			xmlhttp = new XMLHttpRequest();
-			} else {
-			// code for IE6, IE5
-			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-			}
-
-			return xmlhttp;
-			}
-
-			function getThreadTitles(str)
-			{ 
-			xmlhttp = GetXMLHTTPObject();
-			if (xmlhttp == null){
-			alert ("Your browser does not support HTTP requests");
-			return;
-			}
-
-			var url="./search/quick";
-			str = str.replace(/\n/g, " ");
-			url = url + "?search=" + str;
-			url = url + "&sid=" + Math.random();
-
-			xmlhttp.onreadystatechange = stateChanged;
-			xmlhttp.open("GET", url, true);
-			xmlhttp.send(null);
-			}
-
-			function stateChanged(str)
-			{
-			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) { 
-			document.getElementById( "quickThreads" ).innerHTML = xmlhttp.responseText;
-			if ( xmlhttp.responseText != "" ) {
-			document.getElementById( "search_input" ).setAttribute( "autocomplete", "off" )
-			} else {
-			document.getElementById( "search_input" ).removeAttribute( "autocomplete" )
-			}
-			}
-			}
-		</script>
+		
+		<script src='assets/js/1.js' type='text/javascript'> </script>
+		<script src='assets/js/2.js' type='text/javascript'> </script>
+		
 	</head>
 	<body>
 		<div class="wrapper">
@@ -81,8 +36,15 @@
 								<!-- LOGIN -->
 							</div>
 						</div>
+					<h1>WebDBOverflow</h1>
+					<div class="searchbar">
+						<form action="./search/full" method="get">
+							<input type="text" name="search" value="" class="search_input" id="search_input" onkeyup="getThreadTitles(this.value)" />
+							<input type="submit" name="search_submit" class="search_submit" id ="search_submit" value="Zoek!" />
+							<ul id="quickThreads">
+							</ul>
+						</form>
 					</div>
-
 				</div>
 				<div class="content_open body_centered">
 					<!-- MENU -->
