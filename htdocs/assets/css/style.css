@@ -23,8 +23,7 @@ div.wrapper {
 }
 
 .body_centered {
-    min-width: 498px;
-    max-width: 998px;
+    width: 998px;
     margin: 0 auto;
 }
 
