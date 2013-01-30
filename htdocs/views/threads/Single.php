@@ -123,7 +123,7 @@ class Views_Threads_Single extends Views_Threads_Base {
 			
 			
 			if ( Helpers_User::isLoggedIn() ) {
-				echo "<a class='threads_add_thread' href='./replies/replyform/?id={$t->id}'>Geef een beter antwoord!</a>";
+				echo "<a class='threads_add_thread' href='./replies/replyform/?tid={$t->id}'>Geef een beter antwoord!</a>";
 			} else {
 				echo "<a href='./users/login/'>Login om te antwoorden</a>";
 			}
@@ -132,7 +132,7 @@ class Views_Threads_Single extends Views_Threads_Base {
 			echo "<div class='threads_single_notanswered'>";
 			echo "Deze vraag is nog niet beantwoord. Kunt u helpen? <br/>";
 			if ( Helpers_User::isLoggedIn() ) {
-				echo "<a class='threads_add_thread' href='./replies/replyform/?id={$t->id}'>Beantwoord deze vraag!</a>";
+				echo "<a class='threads_add_thread' href='./replies/replyform/?tid={$t->id}'>Beantwoord deze vraag!</a>";
 			} else {
 				echo "<a href='./users/login/'>Login om te reageren</a>";
 			}

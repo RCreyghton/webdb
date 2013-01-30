@@ -21,7 +21,7 @@ class Controllers_Replies extends Controllers_Base {
 				$c->execute( "single" );
 				return;
 			} elseif( is_array( $result ) ) {
-				$this->view = new Views_Threads_Form();
+				$this->view = new Views_Replies_Form();
 				$this->view->form = $result;
 			} else {
 				//if the script reaches this point, something whent wrong
@@ -29,7 +29,12 @@ class Controllers_Replies extends Controllers_Base {
 				$this->view = new Views_Error_Internal();
 			}
 		} else {
-			$this->view = new Views_Threads_Form();
+			
+			$threadid = $this->getInt('tid');
+			if( ! $threadid ) {
+				throw new Exception("No thread id specified");
+			}
+			$this->view = new Views_Replies_Form();
 			$this->view->form = $this->getReplyForm();
 		}
 		
@@ -87,6 +92,10 @@ class Controllers_Replies extends Controllers_Base {
 		$t->status		= 1; //visibility on
 		$t->answer_id	= "NULL";
 		
+		
+		/**
+		 * MUST RETURN THE THREAD ID!!!
+		 */
 		if( $t->save() ) {
 			return $t->id;
 		} else {
@@ -107,23 +116,11 @@ class Controllers_Replies extends Controllers_Base {
 			'description'	=>	'Titel'
 		);
 		
-		$elements[ 'category' ] = array(
-			'type'			=>	'select',
-			'description'	=>	'Categorie'
-		);
-		
-		$query = Models_Category::getSelect() . " WHERE `status` = '1'";
-		$cats = Models_Category::fetchByQuery($query);
-		foreach( $cats as $c ) { 
-			$elements[ 'category' ] [ 'values' ] [ $c->id ] = $c->name;
-		};
-		
 		$elements[ 'content' ] = array(
 			'type'			=>	'textarea',
-			'description'	=>	'Uw vraag'
+			'description'	=>	'Uw antwoord'
 		);
-		
-		
+				
 		foreach( $elements as &$e ) {
 			$e['value'] = ''; 
 		}
@@ -132,10 +129,9 @@ class Controllers_Replies extends Controllers_Base {
 		$id = $this->getInt('id');
 		$user = Helpers_User::getLoggedIn();
 		if( $id && ( $id == $user->id || $user->role == Models_User::ROLE_ADMIN ) ) {
-			$t = Models_Thread::fetchById( $id );
+			$t = Models_Reply::fetchById( $id );
 			$elements ['id']		['value'] = $t->id;
 			$elements ['title']		['value'] = $t->title;
-			$elements ['category']	['value'] = $t->category_id;
 			$elements ['content']	['original'] = $t->content;
 		}
 		
