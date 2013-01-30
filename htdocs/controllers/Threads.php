@@ -197,7 +197,20 @@ class Controllers_Threads extends Controllers_Base {
 		//load the view
 		$this->view = new Views_Threads_Single();
 		$this->view->thread = $thread;
-		$this->view->replies = $thread->getForeignModels( 'Models_Reply' );
+		
+		
+		$replies = $thread->getForeignModels( 'Models_Reply' );
+		if( $thread->answer_id ) {
+			$answer = Models_Reply::fetchById( $thread->answer_id );
+			foreach( $replies as $key => $r ) {
+				if( $r->id == $answer->id ) {
+					unset( $replies[$key] );
+				}
+			}
+			$replies = array_merge( array( $answer), $replies );
+		}
+		
+		$this->view->replies = $replies;
 		
 		$this->display();
 	}
