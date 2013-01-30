@@ -11,7 +11,7 @@
 		<script src='assets/js/2.js' type='text/javascript'> </script>
 		
 	</head>
-	<body>
+	<body onload="init()">
 		<div class="wrapper">
 			<div class="header_wrapper wrapped">
 				<div class="header_title body_centered">
@@ -36,14 +36,6 @@
 								<!-- LOGIN -->
 							</div>
 						</div>
-					<h1>WebDBOverflow</h1>
-					<div class="searchbar">
-						<form action="./search/full" method="get">
-							<input type="text" name="search" value="" class="search_input" id="search_input" onkeyup="getThreadTitles(this.value)" />
-							<input type="submit" name="search_submit" class="search_submit" id ="search_submit" value="Zoek!" />
-							<ul id="quickThreads">
-							</ul>
-						</form>
 					</div>
 				</div>
 				<div class="content_open body_centered">

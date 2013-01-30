@@ -142,7 +142,7 @@ abstract class Views_Base {
 			$output .= "<li>Welkom, {$user->firstname}</li>";
 			$output .= "<li><a href='./users/logout'>Logout</a></li>";
 		} else {
-			$output .= "<li><a href='./users/login'>Login</a><li>";
+			$output .= "<li><a href='./users/login'>Login</a></li>";
 			$output .= "<li><a href='./users/register'>Registreer</a></li>";
 		}
 		$output .= "</ul>";
