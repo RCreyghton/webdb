@@ -12,6 +12,7 @@ class Views_Search_Full extends Views_Base {
 	public $posts;
 	
 	public function render() {
+		$this->title = "Zoeken op " . $this->title;
 		$i = 0;
 		while ( isset( $this->posts[$i] ) ) {
 			$thread = $this->posts[$i];

@@ -16,7 +16,7 @@ class Controllers_Search extends Controllers_Base {
 	}
 	
 	public function quick() {
-		$searchstring = str_replace("~", " ", $this->getString("search") );
+		$searchstring = urldecode( $this->getString("search") );
 		
 		$q = Helpers_Db::escape($searchstring);
 		
@@ -47,7 +47,8 @@ GROUP BY thread_id
 
 ON ( ordering.thread_id = threads.id )
 
-ORDER BY ordering.thread_score DESC;";
+ORDER BY ordering.thread_score DESC
+LIMIT 10;";
 		
 		$result = Helpers_Db::run($query);
 		if ( ! $result ) {
@@ -67,11 +68,11 @@ ORDER BY ordering.thread_score DESC;";
 	}
 	
 	public function full() {
-		$searchstring = str_replace("~", " ", $this->getString("search") );
+		$searchstring = urldecode( $this->getString("search") );
+		$this->view = new Views_Search_Full();
+		$this->view->title = $searchstring;
 		
 		$q = Helpers_Db::escape($searchstring);
-		
-		$this->view = new Views_Search_Full();
 		
 		$query = "SELECT records.*, ordering.thread_score
 FROM 
