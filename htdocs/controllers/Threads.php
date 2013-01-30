@@ -197,7 +197,20 @@ class Controllers_Threads extends Controllers_Base {
 		//load the view
 		$this->view = new Views_Threads_Single();
 		$this->view->thread = $thread;
-		$this->view->replies = $thread->getForeignModels( 'Models_Reply' );
+		
+		
+		$replies = $thread->getForeignModels( 'Models_Reply' );
+		if( $thread->answer_id ) {
+			$answer = Models_Reply::fetchById( $thread->answer_id );
+			foreach( $replies as $key => $r ) {
+				if( $r->id == $answer->id ) {
+					unset( $replies[$key] );
+				}
+			}
+			$replies = array_merge( array( $answer), $replies );
+		}
+		
+		$this->view->replies = $replies;
 		
 		$this->display();
 	}
@@ -255,6 +268,7 @@ class Controllers_Threads extends Controllers_Base {
 		
 		$id =  $this->getInt('id');
 		$user = Helpers_User::getLoggedIn();
+		
 		if( $id ) {
 			$t = Models_Thread::fetchById ( $id );
 			
@@ -262,7 +276,7 @@ class Controllers_Threads extends Controllers_Base {
 				//user does not own this thread!
 				return $form;
 			}
-			$t->content .= "\n\n Bijgewerkt op " . date("d-m-Y", time() ) . ":\n";
+			$t->content .= "\n\n\n Bijgewerkt op " . date("d-m-Y", time() ) . ":\n -----------------------------------\n";
 		} else {
 			$t				= new Models_Thread();
 			$t->content		= '';
@@ -320,7 +334,11 @@ class Controllers_Threads extends Controllers_Base {
 		//now if it is an edit, load up all the known values
 		$id = $this->getInt('id');
 		$user = Helpers_User::getLoggedIn();
-		if( $id && ( $id == $user->id || $user->role == Models_User::ROLE_ADMIN ) ) {
+		
+		if( $id )
+			$thread = Models_Thread::fetchById( $id );
+		
+		if( $id && ( $thread->user_id == $user->id || $user->role == Models_User::ROLE_ADMIN ) ) {
 			$t = Models_Thread::fetchById( $id );
 			$elements ['id']		['value'] = $t->id;
 			$elements ['title']		['value'] = $t->title;

@@ -88,7 +88,7 @@ class Views_Threads_Single extends Views_Threads_Base {
 				}
 
 				if ($user_role == Models_User::ROLE_ADMIN || $r->user_id == $user_id) {
-					echo "<a href=''><img src='./assets/images/icons/16x16/application_edit.png' width='16' height='16' alt='bewerk' title='bewerk' /></a>";
+					echo "<a href='./replies/replyform/?id={$r->id}&tid={$t->id}'><img src='./assets/images/icons/16x16/application_edit.png' width='16' height='16' alt='bewerk' title='bewerk' /></a>";
 				}
 				
 				if ( 
@@ -109,13 +109,13 @@ class Views_Threads_Single extends Views_Threads_Base {
 				##### end actionbar
 
 				echo "<h3 class='threads_single_reply_header'>{$r->title}</h3>";
-				echo "<p class='threads_single_reply_content'>{$r->content}</p>";
+				echo "<p class='threads_single_reply_content'>" . nl2br( $r->content ) . "</p>";
 
 				//details
 				echo "<div class='threads_single_reply_details'>";
 				echo "<p>";
 				echo "<a href='./threads/user/{$user->id}'>{$user->firstname} {$user->lastname}</a> <br/>";
-				echo $r->ts_modified ? date("d-m-Y H:i", $r->ts_modified) : date("d-m-Y H:i", $r->ts_created);
+				echo date("d-m-Y H:i", $r->ts_modified);
 				echo "</p>";
 				echo "</div>";
 				echo "</div>";
