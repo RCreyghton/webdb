@@ -203,9 +203,70 @@ class Controllers_Threads extends Controllers_Base {
 	}
 	
 	public function threadform () {
-		$this->view = new Views_Threads_Form();
-		$this->view->form = $this->getThreadForm();
+		if( $this->getString( "threadform_submit" ) ) {
+			$result = $this->saveThread();
+			
+			//if succesfull, show the Registrationcomplete view
+			//else show the form with the faulty entered data
+			if( is_numeric( $result ) ) {
+				$c = new Controllers_Threads();
+				$c->setParam( "id" , $result );
+				$c->execute( "single" );
+				return;
+			} elseif( is_array( $result ) ) {
+				$this->view = new Views_Threads_Form();
+				$this->view->form = $result;
+			} else {
+				//if the script reaches this point, something whent wrong
+				//while saving the user
+				$this->view = new Views_Error_Internal();
+			}
+		} else {
+			$this->view = new Views_Threads_Form();
+			$this->view->form = $this->getThreadForm();
+		}
+		
 		$this->display();
+	}
+	
+	private function saveThread() {
+		$form = $this->getThreadForm();
+		$failure = false;
+		foreach( $form as $name => &$e ) {
+			switch( $e['type']) {
+				case 'select':
+					$val = $this->getInt( $name );
+					break;
+				default:
+					$val = $this->getString( $name );
+			}
+			
+			if( empty( $val ) ) {
+				$failure = true;
+				$e[ 'errormessage' ] = 'Dit veld mag niet leeg zijn.';
+			} else {
+				$e ['value'] = $val;
+			}
+		}
+		
+		//any errors or user is not logged in
+		if( $failure || ! Helpers_User::isLoggedIn() )
+			return $form;
+		
+		$t				= new Models_Thread();
+		$t->user_id		= Helpers_User::getLoggedIn()->id;
+		$t->title		= $form ['title'] ['value'];
+		$t->category_id = $form ['category'] ['value'];
+		$t->content		= $form ['content'] ['value'];
+		$t->ts_created	= time();
+		$t->status		= 1; //visibility on
+		$t->answer_id	= "NULL";
+		
+		if( $t->save() ) {
+			return $t->id;
+		} else {
+			return false;
+		}
 	}
 	
 	private function getThreadForm() {
@@ -218,12 +279,14 @@ class Controllers_Threads extends Controllers_Base {
 		
 		$elements[ 'category' ] = array(
 			'type'			=>	'select',
-			'values'		=> array(
-				1 => "een test cat", 
-				2 => 'moet nog dynamisch...'
-			),
 			'description'	=>	'Categorie'
 		);
+		
+		$query = Models_Category::getSelect() . " WHERE `status` = '1'";
+		$cats = Models_Category::fetchByQuery($query);
+		foreach( $cats as $c ) { 
+			$elements[ 'category' ] [ 'values' ] [ $c->id ] = $c->name;
+		};
 		
 		$elements[ 'content' ] = array(
 			'type'			=>	'textarea',
@@ -232,8 +295,7 @@ class Controllers_Threads extends Controllers_Base {
 		
 		
 		foreach( $elements as &$e ) {
-			if( ! isset($e['value'] ) )
-				$e['value'] = ''; 
+			$e['value'] = ''; 
 		}
 		return $elements;
 	}
