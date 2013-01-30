@@ -1,86 +1,97 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" 
-  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
+	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title>WebDBOverflow - <!-- TITLE --></title>
 		<!-- BASEURL --> 
 		<link rel="stylesheet" href="assets/css/style.css" type="text/css" />
 		<!-- Code uit collegevoorbeeld Robert Belleman -->
 		<script language="javascript" type="application/javascript">
-var xmlhttp;
+			var xmlhttp;
 
-function GetXMLHTTPObject()
-{
-  var xmlhttp = null;
+			function GetXMLHTTPObject()
+			{
+			var xmlhttp = null;
 
-  if (window.XMLHttpRequest) {
-    // code for IE7+, Firefox, Chrome, Opera, Safari
-    xmlhttp = new XMLHttpRequest();
-  } else {
-    // code for IE6, IE5
-    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-  }
+			if (window.XMLHttpRequest) {
+			// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp = new XMLHttpRequest();
+			} else {
+			// code for IE6, IE5
+			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+			}
 
-  return xmlhttp;
-}
+			return xmlhttp;
+			}
 
-function getThreadTitles(str)
-{ 
-  xmlhttp = GetXMLHTTPObject();
-  if (xmlhttp == null){
-    alert ("Your browser does not support HTTP requests");
-    return;
-  }
-  
-  var url="./search/quick";
-  str = str.replace(/\n/g, " ");
-  url = url + "?search=" + str;
-  url = url + "&sid=" + Math.random();
+			function getThreadTitles(str)
+			{ 
+			xmlhttp = GetXMLHTTPObject();
+			if (xmlhttp == null){
+			alert ("Your browser does not support HTTP requests");
+			return;
+			}
 
-  xmlhttp.onreadystatechange = stateChanged;
-  xmlhttp.open("GET", url, true);
-  xmlhttp.send(null);
-}
+			var url="./search/quick";
+			str = str.replace(/\n/g, " ");
+			url = url + "?search=" + str;
+			url = url + "&sid=" + Math.random();
 
-function stateChanged(str)
-{
-  if (xmlhttp.readyState == 4 && xmlhttp.status == 200) { 
-    document.getElementById( "quickThreads" ).innerHTML = xmlhttp.responseText;
-		if ( xmlhttp.responseText != "" ) {
+			xmlhttp.onreadystatechange = stateChanged;
+			xmlhttp.open("GET", url, true);
+			xmlhttp.send(null);
+			}
+
+			function stateChanged(str)
+			{
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) { 
+			document.getElementById( "quickThreads" ).innerHTML = xmlhttp.responseText;
+			if ( xmlhttp.responseText != "" ) {
 			document.getElementById( "search_input" ).setAttribute( "autocomplete", "off" )
-		} else {
+			} else {
 			document.getElementById( "search_input" ).removeAttribute( "autocomplete" )
-		}
-  }
-}
-	</script>
-  </head>
-  <body>
+			}
+			}
+			}
+		</script>
+	</head>
+	<body>
 		<div class="wrapper">
 			<div class="header_wrapper wrapped">
 				<div class="header_title body_centered">
-					<img alt='webdboverflow' title = 'webdboverflow' src="./assetsimages/logo-2.png"/>
-					<div class="searchbar">
-						<form action="./search/full" method="get">
-							<input type="text" name="search" class="search_input" id="search_input" onkeyup="getThreadTitles(this.value)" />
-							<input type="submit" name="search_submit" class="search_submit" value="Zoek!" />
-							<ul id="quickThreads">
-							</ul>
-						</form>
-					</div> 
-					<div class="header_service">
-<!-- LOGIN -->
+					<div class='header_columns'>
+						<div class='column1'>
+							<h3>WebDB Overflow</h3>
+						</div>
+
+						<div class='column2'>
+							<div class="searchbar">
+								<form action="./search/full" method="get">
+									<input type="text" name="search" class="search_input" id="search_input" onkeyup="getThreadTitles(this.value)" />
+									<input type="submit" name="search_submit" class="search_submit" value="Zoek!" />
+									<ul id="quickThreads">
+									</ul>
+								</form>
+							</div> 
+						</div>
+						
+						<div class='column3'>
+							<div class="header_service">
+								<!-- LOGIN -->
+							</div>
+						</div>
 					</div>
+
 				</div>
 				<div class="content_open body_centered">
-<!-- MENU -->
+					<!-- MENU -->
 				</div>
 			</div>
 
 			<div class="content_wrapper wrapped light_grey_gradient"> 
 				<div class="content body_centered">
-<!-- CONTENT -->
+					<!-- CONTENT -->
 				</div>
 			</div>
 
@@ -92,10 +103,10 @@ function stateChanged(str)
 				</div>
 
 				<div class="statistics body_centered">
-<!-- STATISTICS -->
+					<!-- STATISTICS -->
 				</div>
 			</div>
 
 		</div>
-  </body>
+	</body>
 </html>

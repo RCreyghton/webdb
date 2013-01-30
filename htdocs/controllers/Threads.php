@@ -241,7 +241,7 @@ class Controllers_Threads extends Controllers_Base {
 					$val = $this->getString( $name );
 			}
 			
-			if( empty( $val ) ) {
+			if( empty( $val ) && $name != 'id' ) {
 				$failure = true;
 				$e[ 'errormessage' ] = 'Dit veld mag niet leeg zijn.';
 			} else {
@@ -253,11 +253,25 @@ class Controllers_Threads extends Controllers_Base {
 		if( $failure || ! Helpers_User::isLoggedIn() )
 			return $form;
 		
-		$t				= new Models_Thread();
-		$t->user_id		= Helpers_User::getLoggedIn()->id;
+		$id =  $this->getInt('id');
+		$user = Helpers_User::getLoggedIn();
+		if( $id ) {
+			$t = Models_Thread::fetchById ( $id );
+			
+			if($t->user_id != $user->id && $user->role != Models_User::ROLE_ADMIN) {
+				//user does not own this thread!
+				return $form;
+			}
+			$t->content .= "\n\n Bijgewerkt op " . date("d-m-Y", time() ) . ":\n";
+		} else {
+			$t				= new Models_Thread();
+			$t->content		= '';
+		}
+		
+		$t->user_id		= $user->id;
 		$t->title		= $form ['title'] ['value'];
 		$t->category_id = $form ['category'] ['value'];
-		$t->content		= $form ['content'] ['value'];
+		$t->content		.= $form ['content'] ['value'];
 		$t->ts_created	= time();
 		$t->status		= 1; //visibility on
 		$t->answer_id	= "NULL";
@@ -271,6 +285,11 @@ class Controllers_Threads extends Controllers_Base {
 	
 	private function getThreadForm() {
 		$elements = array();
+		
+		$elements[ 'id' ] = array(
+			'type'			=>	'hidden',
+			'description'	=>	''
+		);
 		
 		$elements[ 'title' ] = array(
 			'type'			=>	'text',
@@ -297,6 +316,18 @@ class Controllers_Threads extends Controllers_Base {
 		foreach( $elements as &$e ) {
 			$e['value'] = ''; 
 		}
+		
+		//now if it is an edit, load up all the known values
+		$id = $this->getInt('id');
+		$user = Helpers_User::getLoggedIn();
+		if( $id && ( $id == $user->id || $user->role == Models_User::ROLE_ADMIN ) ) {
+			$t = Models_Thread::fetchById( $id );
+			$elements ['id']		['value'] = $t->id;
+			$elements ['title']		['value'] = $t->title;
+			$elements ['category']	['value'] = $t->category_id;
+			$elements ['content']	['original'] = $t->content;
+		}
+		
 		return $elements;
 	}
 }

@@ -29,18 +29,18 @@ class Views_Threads_Single extends Views_Threads_Base {
 
 		//what if the current user is an admin
 		if ($user_role == Models_User::ROLE_ADMIN) {
-			echo "<a href='./threads/single/{$t->id}?hide_thread=$t->id''><img src='./assets/images/icons/16x16/application_delete.png' width='16' height='16' alt='verberg' title='verberg' /></a>";
+			echo "<a href='./threads/single/{$t->id}?hide_thread=$t->id'><img src='./assets/images/icons/16x16/application_delete.png' width='16' height='16' alt='verberg' title='verberg' /></a>";
 		}
 
 		if ($user_role == Models_User::ROLE_ADMIN || $t->user_id == $user_id) {
-			echo "<a href=''><img src='./assets/images/icons/16x16/application_edit.png' width='16' height='16' alt='bewerk' title='bewerk' /></a>";
+			echo "<a href='./threads/threadform/?id={$t->id}'><img src='./assets/images/icons/16x16/application_edit.png' width='16' height='16' alt='bewerk' title='bewerk' /></a>";
 		}
 		echo "</div>";
 		##### end actionbar
 
 		echo "<h1 class='threads_single_thread_header'>{$t->title}</h1>";
 		echo "<p class='threads_single_thread_content'>";
-		echo $t->content;
+		echo nl2br( $t->content );
 		echo "</p>";
 		echo "</div>";
 
