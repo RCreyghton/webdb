@@ -46,7 +46,7 @@ class Controllers_Replies extends Controllers_Base {
 		$failure = false;
 		foreach( $form as $name => &$e ) {
 			switch( $e['type']) {
-				case 'select':
+				case 'hidden':
 					$val = $this->getInt( $name );
 					break;
 				default:
@@ -65,39 +65,35 @@ class Controllers_Replies extends Controllers_Base {
 		if( $failure || ! Helpers_User::isLoggedIn() )
 			return $form;
 		
-		
-		
-		die();
-		
 		$id =  $this->getInt('id');
 		$user = Helpers_User::getLoggedIn();
 		if( $id ) {
-			$t = Models_Thread::fetchById ( $id );
+			$r = Models_Reply::fetchById ( $id );
 			
-			if($t->user_id != $user->id && $user->role != Models_User::ROLE_ADMIN) {
-				//user does not own this thread!
+			if($r->user_id != $user->id && $user->role != Models_User::ROLE_ADMIN) {
+				//user does not own this reply!
 				return $form;
 			}
-			$t->content .= "\n\n Bijgewerkt op " . date("d-m-Y", time() ) . ":\n";
+			$r->content .= "\n\n\n Bijgewerkt op " . date("d-m-Y", time() ) . ":\n -----------------------------------\n";
 		} else {
-			$t				= new Models_Thread();
-			$t->content		= '';
+			$r				= new Models_Reply();
+			$r->content		= '';
 		}
 		
-		$t->user_id		= $user->id;
-		$t->title		= $form ['title'] ['value'];
-		$t->category_id = $form ['category'] ['value'];
-		$t->content		.= $form ['content'] ['value'];
-		$t->ts_created	= time();
-		$t->status		= 1; //visibility on
-		$t->answer_id	= "NULL";
+		$r->user_id		= $user->id;
+		$r->title		= $form ['title'] ['value'];
+		$r->content		.= $form ['content'] ['value'];
+		$r->ts_created	= time();
+		$r->visibility	= 1; //visibility on by default
+		$r->credits		= 0; //visibility on by default
+		$r->thread_id	= $form ['tid'] ['value'];
 		
 		
 		/**
 		 * MUST RETURN THE THREAD ID!!!
 		 */
-		if( $t->save() ) {
-			return $t->id;
+		if( $r->save() ) {
+			return $r->thread_id;
 		} else {
 			return false;
 		}
@@ -107,6 +103,11 @@ class Controllers_Replies extends Controllers_Base {
 		$elements = array();
 		
 		$elements[ 'id' ] = array(
+			'type'			=>	'hidden',
+			'description'	=>	''
+		);
+		
+		$elements[ 'tid' ] = array(
 			'type'			=>	'hidden',
 			'description'	=>	''
 		);
@@ -125,10 +126,18 @@ class Controllers_Replies extends Controllers_Base {
 			$e['value'] = ''; 
 		}
 		
+		//set the thread id
+		$elements ['tid']		['value']	=	$this->getInt("tid");
+		
+		
+		
 		//now if it is an edit, load up all the known values
 		$id = $this->getInt('id');
+		if( $id )
+			$reply = Models_Reply::fetchById( $id );
+		
 		$user = Helpers_User::getLoggedIn();
-		if( $id && ( $id == $user->id || $user->role == Models_User::ROLE_ADMIN ) ) {
+		if( $id && ( $reply->user_id == $user->id || $user->role == Models_User::ROLE_ADMIN ) ) {
 			$t = Models_Reply::fetchById( $id );
 			$elements ['id']		['value'] = $t->id;
 			$elements ['title']		['value'] = $t->title;

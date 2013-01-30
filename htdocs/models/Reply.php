@@ -106,7 +106,8 @@ class Models_Reply extends Models_Base {
 	 */
 	protected function insert() {
 		$this->ts_created = time();
-		parent::insert();
+		$this->ts_modified = time();
+		return parent::insert();
 	}
 
 	/**
@@ -114,7 +115,7 @@ class Models_Reply extends Models_Base {
 	 */
 	protected function update() {
 		$this->ts_modified = time();
-		parent::update();
+		return parent::update();
 	}
 
 	/**
