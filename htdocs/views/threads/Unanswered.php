@@ -8,17 +8,17 @@ class Views_Threads_Unanswered extends Views_Threads_Base {
 	 * @author	Ramon Creyghton <r.creyghton@gmail.com>
 	 */
 	public function render() {
-				$this->title = "Alle onbeantwoorde vragen";
+		$this->title = "Alle onbeantwoorde vragen";
 		if( Helpers_User::isLoggedIn() )
-			echo "					<a class='threads_add_thread' href='./threads/threadform'>Stel een nieuwe vraag</a>\n";
+			echo "<a class='threads_add_thread' href='./threads/threadform'>Stel een nieuwe vraag</a>\n";
 		
-		echo "					<h2>Onbeantwoorde Vragen</h2>\n";
+		echo "<h2>Onbeantwoorde Vragen</h2>";
 		$this->printHead();
 		$this->printThreads();
 		$this->printPagination();
 		
 		if( Helpers_User::isLoggedIn() )
-			echo "					<a class='threads_add_thread' href='./threads/threadform'>Stel een nieuwe vraag</a>\n";
+			echo "<a class='threads_add_thread' href='./threads/threadform'>Stel een nieuwe vraag</a>\n";
 	}
 	
 }

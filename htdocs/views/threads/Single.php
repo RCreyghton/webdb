@@ -48,7 +48,7 @@ class Views_Threads_Single extends Views_Threads_Base {
 		echo "<div class='threads_single_thread_details_container'>";
 		echo "<div class='threads_single_thread_credits'>";
 		echo "<p>";
-		echo "Credits";
+		echo "Credits ";
 		echo "45";
 		echo "</p>";
 		echo "</div>";
@@ -119,15 +119,23 @@ class Views_Threads_Single extends Views_Threads_Base {
 				echo "</p>";
 				echo "</div>";
 				echo "</div>";
+			} //end foreach
+			
+			
+			if ( Helpers_User::isLoggedIn() ) {
+				echo "<a class='threads_add_thread' href='./replies/replyform/?id={$t->id}'>Geef een beter antwoord!</a>";
+			} else {
+				echo "<a href='./users/login/'>Login om te antwoorden</a>";
 			}
+			
 		} else {
 			echo "<div class='threads_single_notanswered'>";
 			echo "Deze vraag is nog niet beantwoord. Kunt u helpen? <br/>";
-			//if ( Helpers_User::is_loggedin() ) {
-			echo "<a href=''>Beantwoord deze vraag!</a>";
-			//} else {
-			echo "<a href='./users/login/'>Login om te reageren</a>";
-			//}
+			if ( Helpers_User::isLoggedIn() ) {
+				echo "<a class='threads_add_thread' href='./replies/replyform/?id={$t->id}'>Beantwoord deze vraag!</a>";
+			} else {
+				echo "<a href='./users/login/'>Login om te reageren</a>";
+			}
 			echo "</div>";
 		}
 	}

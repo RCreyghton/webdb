@@ -44,3 +44,25 @@ function stateChanged(str)
 		}
 	}
 }
+
+function testFocus() {
+	if ( searchbox.focused == false && submit.focused == false )
+		clearSearch();
+}
+
+function clearSearch() {
+	if ( submit.focused == false ) {
+		searchbox.value = searchdefault;
+		
+		if ( document.getElementById( "quickThreads" ).innerHTML != "" ) {
+			document.getElementById( "quickThreads" ).innerHTML = "";
+			searchbox.removeAttribute( "autocomplete" );
+		}
+	}
+}
+
+function beginSearch() {
+	if ( searchbox.value == searchdefault ) {
+		searchbox.value = "";
+	}
+}
