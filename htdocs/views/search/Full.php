@@ -7,7 +7,7 @@
 if (!defined("WEBDB_EXEC"))
 	die("No direct access!");
 
-class Views_Search_Results extends Views_Base {
+class Views_Search_Full extends Views_Base {
 
 	public $posts;
 	
