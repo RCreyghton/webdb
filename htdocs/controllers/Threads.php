@@ -160,6 +160,8 @@ class Controllers_Threads extends Controllers_Base {
 	 */
 	public function unanswered() {
 		$this->view = new Views_Threads_Unanswered();
+		//We need a dummy id to be able to have uniform pagination and ordering functions
+		$this->setParam("id", 0);
 		$where = " WHERE ((`status` = " . Models_Thread::VISIBLE . ") AND (`answer_id` IS NULL))";
 		$defaultorder = "date_a";
 		$this->setupView( $where, $defaultorder );
