@@ -81,7 +81,5 @@ class Models_Category extends Models_Base {
 		$query = Models_Thread::getSelect() . " WHERE category_id=" . $this->id . ";";
 		return Models_Thread::fetchByQuery($query);
 	}
-
+	
 }
-
-?>
