@@ -13,6 +13,10 @@ class Views_Search_Full extends Views_Base {
 	
 	public function render() {
 		$this->title = "Zoeken op " . $this->title;
+		echo "					<h2>{$this->title}</h2>\n";
+		if ( empty( $this->posts ) )
+			echo "						<p>Helaas, geen resultaten.</p>";
+		
 		$i = 0;
 		while ( isset( $this->posts[$i] ) ) {
 			$thread = $this->posts[$i];
