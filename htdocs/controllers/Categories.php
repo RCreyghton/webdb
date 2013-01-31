@@ -58,10 +58,10 @@ class Controllers_Categories extends Controllers_Base {
 			}
 		}
 		
-		$where = "";
+		$where = "WHERE `status` > '-1' ";
 		$user = Helpers_User::getLoggedIn();
 		if( $user != NULL && $user->role == Models_User::ROLE_ADMIN )
-			$where = "WHERE `status` > '-1' ";
+			$where = "";
 		
 		//Now we can acuatually fetch all categories and display them
 		$query = Models_Category::getSelect() . $where . "ORDER BY `name`;";
