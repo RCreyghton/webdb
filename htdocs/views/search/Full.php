@@ -12,7 +12,7 @@ class Views_Search_Full extends Views_Base {
 	public $posts;
 	
 	public function render() {
-		$this->title = "Zoeken op " . $this->title;
+		$this->title = "Zoeken op <em>{$this->title}</em>:";
 		echo "					<h2>{$this->title}</h2>\n";
 		if ( empty( $this->posts ) )
 			echo "						<p>Helaas, geen resultaten.</p>";
