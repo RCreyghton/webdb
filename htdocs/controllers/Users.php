@@ -186,4 +186,57 @@ class Controllers_Users extends Controllers_Base {
 		}
 	}
 	
+	
+	/**
+	 * Fetches all users from the database and assambles a listing.
+	 * Allowes for editing of the Users's role if admin is logged in.
+	 */
+	public function overview() {
+		$this->view = new Views_Users_Overview();
+		
+		//Get evantualities: is there some edititing to do on this user?
+		$make_admin = $this->getInt('make_admin');
+		$make_user = $this->getInt('make_user');
+		$make_block = $this->getInt('make_block');
+		
+		if( $make_admin ) {
+			$user = Helpers_User::getLoggedIn();
+			if( $user != NULL && $user->role == Models_User::ROLE_ADMIN ) {
+				$edituser = Models_Category::fetchById($make_admin);
+				if ( $edituser != NULL ) {
+					$edituser->role = 1;
+					$edituser->save();
+				}
+			}
+		}
+		if( $make_user ) {
+			$user = Helpers_User::getLoggedIn();
+			if( $user != NULL && $user->role == Models_User::ROLE_ADMIN ) {
+				$edituser = Models_Category::fetchById($make_user);
+				if ( $edituser != NULL ) {
+					$edituser->role = 0;
+					$edituser->save();
+				}
+			}
+		}
+		if( $make_block ) {
+			$user = Helpers_User::getLoggedIn();
+			if( $user != NULL && $user->role == Models_User::ROLE_ADMIN ) {
+				$edituser = Models_Category::fetchById($make_block);
+				if ( $edituser != NULL ) {
+					$edituser->role = 0;
+					$edituser->save();
+				}
+			}
+		}
+		
+		//Now we can acuatually fetch all categories and display them.
+		$query = Models_User::getSelect() . "ORDER BY `ts_registered`;";
+		$users = Models_User::fetchByQuery( $query );
+		$this->view->users = $users;
+		
+		$this->display();
+	}
+	
+	
 }

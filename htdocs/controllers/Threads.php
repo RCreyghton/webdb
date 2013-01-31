@@ -212,6 +212,10 @@ class Controllers_Threads extends Controllers_Base {
 		
 		$this->view->replies = $replies;
 		
+		//update the number of views
+		$thread->views++;
+		$thread->save();
+		
 		$this->display();
 	}
 	

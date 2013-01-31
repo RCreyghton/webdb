@@ -301,9 +301,9 @@ a {
 
 .threads_add_thread { height:32px; line-height:32px; display:inline-block; padding:10px 10px 10px 52px; background: url('../images/icons/32x32/add.png') 10px center no-repeat;}
 
-/* Categories Overview */
-.categories_overview_container { border-bottom: 2px solid #3CB6EC; }
-.categories_overview_container:first-of-type { border-top: 2px solid #3CB6EC; }
+/* Categories Overview, Used for Users as well */
+.categories_overview_container { border-bottom: 2px solid #3CB6EC; }
+.categories_overview_container:first-of-type { border-top: 2px solid #3CB6EC; }
 .categories_overview_header { border-bottom:1px solid #3CB6EC; background-color: #eee;}
 .categories_overview_container p { font-size:15px; padding:5px 10px; min-height:25px; }
 

@@ -34,10 +34,10 @@ class Views_Categories_Overview extends Views_Base {
 			echo "						<div class='threads_single_actionbar'>";
 			if ($admin) {
 				if ( $c->status == 1 )
-					echo "<a href='./categories/overview/?restrict_status={$c->id}'><img src='./assets/images/icons/16x16/application_delete.png' width='16' height='16' alt='restrict' title='restrict' /></a>";
+					echo "<a href='./categories/overview/?restrict_status={$c->id}'><img src='./assets/images/icons/16x16/accept.png' width='16' height='16' alt='restrict' title='Huidige status: open. Klik om te restricten.' /></a>";
 				else
-					echo "<a href='./categories/overview/?open_status={$c->id}'><img src='./assets/images/icons/16x16/application_accept.png' width='16' height='16' alt='open' title='open' /></a>";
-				echo "<a href='./categories/categoryform/?id={$c->id}'><img src='./assets/images/icons/16x16/application_edit.png' width='16' height='16' alt='bewerk' title='bewerk' /></a>";
+					echo "<a href='./categories/overview/?open_status={$c->id}'><img src='./assets/images/icons/16x16/delete.png' width='16' height='16' alt='open' title='Huidige status: restricted. Klik om te openen.' /></a>";
+				echo "<a href='./categories/categoryform/?id={$c->id}'><img src='./assets/images/icons/16x16/application_edit.png' width='16' height='16' alt='bewerk' title='Bewerk titel en omsschrijving.' /></a>";
 			}
 			echo "</div>\n";
 			//end actionbar

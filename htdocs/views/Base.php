@@ -82,9 +82,8 @@ abstract class Views_Base {
 		$items = array(
 			"Home" => "threads/unanswered",
 			"Categorieën" => "categories/overview",
-			"Meest gestelde vragen" => "threads/answered",
-			"Zoeken" => "search/new",
-			"Stel een vraag" => "threads/new"
+			"Gebruikers" => "users/overview",
+			"Stel een vraag" => "threads/threadform"
 		);
 
 		$rv = "<ul class='menu'>";

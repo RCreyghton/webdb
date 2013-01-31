@@ -15,6 +15,10 @@ if (!defined("WEBDB_EXEC"))
  */
 class Controllers_Categories extends Controllers_Base {
 
+	/**
+	 * Fetches all categories from the database and assambles a listing.
+	 * Allowes for editing of the Category's status if admin.
+	 */
 	public function overview() {
 		$this->view = new Views_Categories_Overview();
 		
@@ -35,7 +39,7 @@ class Controllers_Categories extends Controllers_Base {
 		if( $open ) {
 			$user = Helpers_User::getLoggedIn();
 			if( $user != NULL && $user->role == Models_User::ROLE_ADMIN ) {
-				$category= Models_Category::fetchById($restrict);
+				$category= Models_Category::fetchById($open);
 				if ( $category != NULL ) {
 					$category->status = 1;
 					$category->save();
@@ -43,14 +47,12 @@ class Controllers_Categories extends Controllers_Base {
 			}
 		}
 		
+		//Now we can acuatually fetch all categories and display them
 		$query = Models_Category::getSelect() . "ORDER BY `name`;";
 		$categories = Models_Category::fetchByQuery( $query );
 		$this->view->categories = $categories;
 		
-		
-		
 		$this->display();
 	}
-	
 	
 }
