@@ -81,6 +81,44 @@ class Controllers_Threads extends Controllers_Base {
 	 * @param string $where The where-clause of the query wich will fetch our threads.
 	 */
 	private function setupView( $where , $defaultorder) {
+		
+		//as this is the base view for mulitple threadlistings, we'll handle thread actions here
+		//only if admin
+		if( Helpers_User::getLoggedIn()->role == Models_User::ROLE_ADMIN) {
+			if( $this->getInt('hide_thread') ) {
+				$t = Models_Thread::fetchById( $this->getInt('hide_thread') );
+				if( $t ) {
+					$t->status = Models_Thread::INVISIBLE;
+					$t->save();
+				}
+			}
+			
+			if( $this->getInt('unhide_thread') ) {
+				$t = Models_Thread::fetchById( $this->getInt('unhide_thread') );
+				if( $t ) {
+					$t->status = Models_Thread::VISIBLE;
+					$t->save();
+				}
+			}
+			
+			if( $this->getInt('open_thread') ) {
+				$t = Models_Thread::fetchById( $this->getInt('open_thread') );
+				if( $t ) {
+					$t->open = Models_Thread::OPEN;
+					$t->save();
+				}
+			}
+			
+			if( $this->getInt('close_thread') ) {
+				$t = Models_Thread::fetchById( $this->getInt('close_thread') );
+				if( $t ) {
+					$t->open = Models_Thread::CLOSED;
+					$t->save();
+				}
+			}
+		}
+		
+		
 		$this->calcPagination($where);
 		
 		//An ordering for these threads could be given as string in many places, or default from the task.

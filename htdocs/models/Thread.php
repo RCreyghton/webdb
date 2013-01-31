@@ -128,6 +128,9 @@ class Models_Thread extends Models_Base {
 	 * Most values of this Models-object are determined with user-input. However, the creation time needs to be set at insert-time.
 	 */
 	protected function insert() {
+		if( ! $this->answer_id ) {
+			$this->answer_id = "NULL";
+		}
 		$this->ts_created = time();
 		return parent::insert();
 	}
@@ -136,6 +139,9 @@ class Models_Thread extends Models_Base {
 	 * Most values of this Models-object are determined with user-input. However, the modification time needs to be set at update-time.
 	 */
 	protected function update() {
+		if( ! $this->answer_id ) {
+			$this->answer_id = "NULL";
+		}
 		$this->ts_modified = time();
 		return parent::update();
 	}
