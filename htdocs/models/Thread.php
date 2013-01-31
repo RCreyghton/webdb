@@ -15,7 +15,11 @@ if (!defined("WEBDB_EXEC"))
  * @author Ramon Creyghton <r.creyghton@gmail.com>
  */
 class Models_Thread extends Models_Base {
+	const INVISIBLE = 0;
+	const VISIBLE	= 1;
 	
+	const CLOSED	= 0;
+	const OPEN		= 1;
 	/**
 	 * The name of the table in the Database associated with this Model.
 	 */
@@ -67,14 +71,22 @@ class Models_Thread extends Models_Base {
 	 * This integer defines status and visibility at once.
 	 * 
 	 * Possible values:
-	 * - -1 - hidden $ close; dus nog niet niet verwijderd.
-	 * - 0 - hidden & open;
-	 * - 1 - visible & open; waarbij open restricted is indien de category dit bepaalt.
-	 * - 2 - is visible & closed; de Thread is door admin beeindigd.
-	 * 
+	 * VISIBLE
+	 * INVISIBLE
 	 * @var int 
 	 */
 	public $status;
+	
+	/**
+	 * This integer defines whether or not replies are allowed
+	 * 
+	 * Possible values:
+	 * OPEN
+	 * CLOSED
+	 * 
+	 * @var int 
+	 */
+	public $open;
 
 	/**
 	 * Relation with the reply that is selected as an answer to this thread. see {@link Models_Reply::$id}.
@@ -105,6 +117,7 @@ class Models_Thread extends Models_Base {
 				"title",
 				"content",
 				"status",
+				"open",
 				"answer_id",
 				"views"
 		);
