@@ -25,7 +25,7 @@ class Controllers_Categories extends Controllers_Base {
 		//Get evantualities: is there some edititing to do on this thread?
 		$restrict = $this->getInt('restrict_status');
 		$open = $this->getInt('open_status');
-		$hid = $this->getInt('hide_status');
+		$hide = $this->getInt('hide_status');
 		
 		if( $restrict ) {
 			$user = Helpers_User::getLoggedIn();
