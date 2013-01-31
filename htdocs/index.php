@@ -83,14 +83,18 @@ function autoloader( $classpath ) {
 }
 
 function shutdown() {
-	
-	include_once( BASE . "helpers/User.php");
-	include_once( BASE . "models/Thread.php");
-	include_once( BASE . "models/User.php");
-	include_once( BASE . "models/Reply.php");
-	include_once( BASE . "controllers/Error.php");
-	include_once( BASE . "views/errors/Internal.php");
-	
-    $controller = new Controllers_Error();
-	$controller->execute( "internal" );
+	$err = error_get_last();
+	$fatal = array(E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR);
+	if ($err && in_array($err['type'], $fatal)) {
+		include_once( BASE . "helpers/User.php");
+		include_once( BASE . "models/Thread.php");
+		include_once( BASE . "models/User.php");
+		include_once( BASE . "models/Reply.php");
+		include_once( BASE . "controllers/Error.php");
+		include_once( BASE . "views/errors/Internal.php");
+
+		$controller = new Controllers_Error();
+		$controller->execute( "internal" );		
+	}
+	exit();
 }
