@@ -15,7 +15,7 @@ class Helpers_User {
 		$subject = "Welkom wij webDBOverflow!";
 		$message = "Beste {$u->firstname} {$u->lastname}, 
 			
-		Wij heten u van harte welkom.... U kunt hier vanalles doen....";
+		Welkom als gebruiker op WebDBOverflow. U kunt nu vragen plaatsen, antwoorden geven en deze beoordelen.";
 		
 		mail("{$u->firstname} {$u->lastname} <{$email}>", $subject, $message, "From: noreply@webdboverflow.nl");
 	}
@@ -23,8 +23,6 @@ class Helpers_User {
 	/**
 	 * 
 	 * @param Models_User $user
-	 * @todo Seed opslaan bij sessie zoals Robert Belleman wil.
-	 * @todo lifetime?
 	 */
 	public static function login($user) {
 		$_SESSION['user'] = $user->id;

@@ -18,7 +18,7 @@ class Views_Threads_Single extends Views_Threads_Base {
 		$t = $this->thread;
 
 		if ($t->status  == Models_Thread::INVISIBLE && $user_role != Models_User::ROLE_ADMIN) {
-			echo "<h1>Deze vraag is niet meer beschikbaar.</h1>";
+			echo "<h2>Deze vraag (nog) niet zichtbaar.</h2><p>Indien u zojuist een vraag heeft gesteld, zal deze zichtbaar worden gemaakt na keuring door een der moderators.</p>";
 			return;
 		}
 

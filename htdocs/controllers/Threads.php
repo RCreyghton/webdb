@@ -172,10 +172,9 @@ class Controllers_Threads extends Controllers_Base {
 	 * @uses setupView()
 	 */
 	public function invisible() {
+		//Alowed for admins only. So we check the login.
 		$u = Helpers_User::getLoggedIn();
-		
-		//only allow admins
-		if( $u->role != Models_User::ROLE_ADMIN ) {
+		if( ( ! $u ) || $u->role != Models_User::ROLE_ADMIN ) {
 			$this->view = new Views_Error_Internal();
 			$this->display();
 			return;
