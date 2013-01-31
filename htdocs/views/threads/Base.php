@@ -13,10 +13,8 @@ if (!defined("WEBDB_EXEC"))
 abstract class Views_Threads_Base extends Views_Base {
 
 	public $threads;
-	
 	public $id;
 	public $order;
-	
 	public $page;
 	public $pagesize;
 	public $nopages;
@@ -30,22 +28,58 @@ abstract class Views_Threads_Base extends Views_Base {
 	 * @author	Ramon Creyghton <r.creyghton@gmail.com>
 	 */
 	public function printThreads() {
-		if ( empty($this->threads) ) {
-			echo "\n					<h3>Er zijn geen threads om weer te geven</h3>\n";
+		$current_user = Helpers_User::getLoggedIn();
+		
+		if (empty($this->threads)) {
+			echo "<h3>Er zijn geen threads om weer te geven</h3>\n";
 		} else {
 			foreach ($this->threads as $thread) {
 				$user = Models_User::fetchById($thread->user_id);
 				$category = Models_Category::fetchById($thread->category_id);
 				$noReplies = $thread->getForeignCount("Models_Reply");
-				echo "\n					<div class='threads_listing_thread_container'>\n						<h3 class='threads_listing_thread_header'><a href='./threads/single/{$thread->id}' class='headerlink'>{$thread->title}</a></h3>\n";
-				echo "						<div class='threads_listing_thread_details'>\n							<p>" . date("d-m-Y H:i", $thread->ts_created) . " in <em><a href=\"./threads/category/{$category->id}\">{$category->name}</a></em></p>\n";
-				echo "							<p><a href=\"./threads/user/{$user->id}\">{$user->firstname} {$user->lastname}</a> | {$noReplies} repl";
-				echo ($noReplies == 1) ? "y" : "ies";
-				echo ".</p>\n						</div>\n						<p>";
+				echo "<div class='threads_listing_thread_container'>";
+				
+				echo "<h3 class='threads_listing_thread_header'>";
+				echo "<a href='./threads/single/{$thread->id}' class='headerlink'>{$thread->title}</a>";
+				echo "</h3>\n";
+				
+				
+				echo "<div class='threads_listing_thread_details'>\n";
+				
+				echo "<div class='threads_listing_thread_actions'>\n";
+				//admin only actions
+				$curl = $this->getURL( "page" );
+				if ($current_user->role == Models_User::ROLE_ADMIN) {
+					if( $thread->status == Models_Thread::VISIBLE ) {
+						echo "<a href='{$curl}?hide_thread=$thread->id'><img src='./assets/images/icons/16x16/eye_close.png' width='16' height='16' alt='verberg vraag' title='verberg vraag' /></a>";
+					} else {
+						echo "<a href='{$curl}?unhide_thread=$thread->id'><img src='./assets/images/icons/16x16/eye.png' width='16' height='16' alt='toon vraag' title='toon vraag' /></a>";
+					}
+					
+					if( $thread->open == Models_Thread::OPEN ) {
+						echo "<a href='{$curl}?close_thread=$thread->id'><img src='./assets/images/icons/16x16/application_delete.png' width='16' height='16' alt='Sluit vraag' title='Sluit vraag' /></a>";
+					} else {
+						echo "<a href='{$curl}?open_thread=$thread->id'><img src='./assets/images/icons/16x16/application_add.png' width='16' height='16' alt='Open vraag' title='Open vraag' /></a>";
+					}
+				}
+				
+				//thread owner actions
+				if( $current_user->id == $thread->user_id || $current_user->role == Models_User::ROLE_ADMIN) {
+					echo "<a href='./threads/threadform/?id={$thread->id}'><img src='./assets/images/icons/16x16/application_edit.png' width='16' height='16' alt='bewerk' title='bewerk' /></a>";
+				}
+				
+				echo "</div>";
+				
+				echo "<p>" . date("d-m-Y H:i", $thread->ts_created) . " in <em><a href=\"./threads/category/{$category->id}\">{$category->name}</a></em></p>\n";
+				echo "<p><a href=\"./threads/user/{$user->id}\">{$user->firstname} {$user->lastname}</a> | {$noReplies} antwoo" . ($noReplies == 1 ? "rd" : "rden") .".</p>";
+				echo "</div>";
+				
+				echo "<p>";
 				echo ( strlen($thread->content) > 250) ?
-								substr($thread->content, 0, 250) . "..." :
-								$thread->content;
-				echo "</p>\n					</div>\n";
+						nl2br ( substr($thread->content, 0, 250) ) . "..." :
+						nl2br ( $thread->content );
+				echo "</p>";
+				echo "</div>\n";
 			}
 		}
 	}
@@ -86,20 +120,20 @@ abstract class Views_Threads_Base extends Views_Base {
 	public function printHead() {
 		echo "					<h2>" . $this->title . ( ($this->nopages > 1) ? " - pagina {$this->page} van {$this->nopages}" : "" ) . "</h2>\n";
 	}
-	
+
 	/**
 	 * Returns the URL for this thread-view with current order and id. Pagination left out (or: to be filled in).
 	 * 
 	 * @return type
 	 */
 	public function getURL($detail = "order") {
-		$url = parent::getURL() . "/" . $this->id ;
+		$url = parent::getURL() . "/" . $this->id;
 		if ($detail == "id")
 			return $url;
 		$url .= "/" . $this->order;
 		if ($detail == "order")
 			return $url;
-		$url .= "/" . $this->page . "/" . $this->pagesize ;
+		$url .= "/" . $this->page . "/" . $this->pagesize;
 		if ($detail == "page")
 			return $url;
 		return parent::getURL();
