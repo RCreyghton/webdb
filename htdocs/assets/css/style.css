@@ -103,7 +103,7 @@ div.searchbar form input.search_input:focus {
 div.searchbar form input.search_submit {
 	position: absolute;
 	right: 0px;
-	top: 2px;
+	top: 5px;
 }
 
 div.searchbar ul {
@@ -112,8 +112,8 @@ div.searchbar ul {
 	position: absolute;
 	width: 338px;
 	min-height: 10px;
-	top: 23px;
-	left: 1px;
+	top: 25px;
+	left: 0px;
 	border: 1px solid #3CB6EC;
 	border-top: none;
 	list-style-type: none;
@@ -129,8 +129,8 @@ div.searchbar ul li {
 
 div.searchbar ul li a {
 	margin: 0;
-	margin-top: -2px;
-	padding: 4px 4px 2px 4px;
+	margin-top: -1px;
+	padding: 3px 4px 2px 4px;
 	text-decoration: none;
 	display: block;
 	width: 330px;
@@ -302,8 +302,10 @@ a {
 .threads_add_thread { height:32px; line-height:32px; display:inline-block; padding:10px 10px 10px 52px; background: url('../images/icons/32x32/add.png') 10px center no-repeat;}
 
 /* Categories Overview */
-.categories_overview_header { border-bottom:4px solid #3CB6EC; }
-.categories_overview_container { border-bottom:1px solid #3CB6EC; }
+.categories_overview_container { border-bottom: 2px solid #3CB6EC; }
+.categories_overview_container:first-of-type { border-top: 2px solid #3CB6EC; }
+.categories_overview_header { border-bottom:1px solid #3CB6EC; background-color: #eee;}
+.categories_overview_container p { font-size:15px; padding:5px 10px; min-height:25px; }
 
 /* Threads Listings */
 .threads_listing_thread_container { border-bottom: 2px solid #3CB6EC; position: relative;}

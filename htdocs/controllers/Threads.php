@@ -177,17 +177,17 @@ class Controllers_Threads extends Controllers_Base {
 		$accept = $this->getInt('accept');
 		$deaccept = $this->getInt('deaccept');
 		
-		if( $accept ) {
+		if( $accept !== NULL ) {
 			$user = Helpers_User::getLoggedIn();
-			if( $thread->user_id == $user->id || $user->role == Models_User::ROLE_ADMIN ) {
+			if( $user !== NULL && ( $thread->user_id == $user->id || $user->role == Models_User::ROLE_ADMIN ) ) {
 				$thread->answer_id = $accept;
 				$thread->save();
 			}
 		}
 		
-		if( $deaccept ) {
+		if( $deaccept !== NULL ) {
 			$user = Helpers_User::getLoggedIn();
-			if( $thread->user_id == $user->id || $user->role == Models_User::ROLE_ADMIN ) {
+			if( $user !== NULL && ( $thread->user_id == $user->id || $user->role == Models_User::ROLE_ADMIN ) ) {
 				$thread->answer_id = 'NULL';
 				$thread->save();
 				$thread->answer_id = NULL; //ugly i know....
