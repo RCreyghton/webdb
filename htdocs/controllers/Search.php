@@ -47,6 +47,8 @@ GROUP BY thread_id
 
 ON ( ordering.thread_id = threads.id )
 
+WHERE ( threads.status = 1 )
+
 ORDER BY ordering.thread_score DESC
 LIMIT 10;";
 		
