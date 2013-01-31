@@ -28,6 +28,9 @@ class Views_Users_Overview extends Views_Base {
 		echo "<h2>Alle gebruikers:</h2>\n";
 		
 		foreach ($this->users as $u) {
+			$noThreads = $u->getForeignCount("Models_Thread");
+			$noReplies = $u->getForeignCount("Models_Reply");
+
 			echo "					<div class=\"categories_overview_container\">\n";
 			
 			//start actionbar, if admin only.
@@ -55,7 +58,7 @@ class Views_Users_Overview extends Views_Base {
 			}
 			
 			echo "						<h3 class='categories_overview_header'><a href=\"./threads/user/{$u->id}\" class='headerlink'>{$u->firstname} {$u->lastname}</a></h3>
-						<p class='categories_overview_content'>Geregistreerd op " . date("d-m-Y H:i", $u->ts_registered) . " met {$u->email}</p>
+						<p class='categories_overview_content'>Geregistreerd op " . date("d-m-Y H:i", $u->ts_registered) . " met {$u->email}. {$noThreads} vra" . ($noThreads == 1 ? "ag" : "gen") ." gesteld, {$noReplies} antwoo" . ($noReplies == 1 ? "rd" : "rden") . " gegeven.</p>
 					</div>\n";
 		}
 	}

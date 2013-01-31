@@ -397,7 +397,8 @@ a:hover.headerlink {
 
 /* Pagination of Threads-views */
 .pagination {
-	text-align: center;
+	margin: 5px 0px 0px 2px;
+	text-align: right;
 }
 
 .pagination a {

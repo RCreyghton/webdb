@@ -30,6 +30,8 @@ class Views_Categories_Overview extends Views_Base {
 		echo "<h2>Alle categorieen:</h2>\n";
 		
 		foreach ($this->categories as $c) {
+			$noThreads = $c->getForeignCount("Models_Thread");
+
 			echo "					<div class=\"categories_overview_container\">\n";
 			
 			//start actionbar, if admin only.
@@ -57,7 +59,7 @@ class Views_Categories_Overview extends Views_Base {
 			}
 			
 			echo "						<h3 class='categories_overview_header'><a href=\"./threads/category/{$c->id}\" class='headerlink'>{$c->name}</a></h3>
-						<p class='categories_overview_content'>{$c->description}</p>
+						<p class='categories_overview_content'>{$c->description} | {$noThreads} vra" . ($noThreads == 1 ? "ag" : "gen") ." in deze categorie.</p>
 					</div>\n";
 		}
 	}
