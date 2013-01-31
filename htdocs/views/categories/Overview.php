@@ -21,8 +21,10 @@ class Views_Categories_Overview extends Views_Base {
 		$user_id = $user ? $user->id : 0;
 		$user_role = $user ? $user->role : 0;
 		$admin = false;
-		if ($user_role == Models_User::ROLE_ADMIN)
+		if ($user_role == Models_User::ROLE_ADMIN) {
 			$admin = true;
+			echo "<a class='threads_add_thread' href='./categories/categoryform'>Nieuwe categorie</a>";	
+		}
 		
 		
 		echo "<h2>Alle categorieen:</h2>\n";
