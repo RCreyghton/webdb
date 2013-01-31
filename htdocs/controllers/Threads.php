@@ -121,7 +121,27 @@ class Controllers_Threads extends Controllers_Base {
 	 */
 	public function unanswered() {
 		$this->view = new Views_Threads_Unanswered();
-		$where = " WHERE ((`status` > 0) AND (`answer_id` IS NULL))";
+		$where = " WHERE ((`status` = " . Models_Thread::VISIBLE . ") AND (`answer_id` IS NULL))";
+		$defaultorder = "date_a";
+		$this->setupView( $where, $defaultorder );
+	}
+	
+	/**
+	 * 
+	 * @uses setupView()
+	 */
+	public function invisible() {
+		$u = Helpers_User::getLoggedIn();
+		
+		//only allow admins
+		if( $u->role != Models_User::ROLE_ADMIN ) {
+			$this->view = new Views_Error_Internal();
+			$this->display();
+			return;
+		}
+		
+		$this->view = new Views_Threads_Invisible();
+		$where = " WHERE `status` = '" . Models_Thread::INVISIBLE . "'";
 		$defaultorder = "date_a";
 		$this->setupView( $where, $defaultorder );
 	}

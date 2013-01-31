@@ -82,9 +82,14 @@ abstract class Views_Base {
 		$items = array(
 			"Home" => "threads/unanswered",
 			"Categorieën" => "categories/overview",
-			"Gebruikers" => "users/overview",
 			"Stel een vraag" => "threads/threadform"
 		);
+		
+		$user = Helpers_User::getLoggedIn();
+		if( $user->role == Models_User::ROLE_ADMIN) {
+			$items[ "Gebruikers" ] = "users/overview";
+			$items[ "Verborgen vragen" ] = "threads/invisible";
+		}
 
 		$rv = "<ul class='menu'>";
 		foreach ($items as $name => $link) {
