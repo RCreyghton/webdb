@@ -172,9 +172,9 @@ class Controllers_Users extends Controllers_Base {
 		//now we know that all is well, finally build the user
 		$u = new Models_User();
 		$u->role		= Models_User::ROLE_USER;
-		$u->email		= $email;
-		$u->firstname	= $firstname;
-		$u->lastname	= $lastname;
+		$u->email		= strip_tags( $email );
+		$u->firstname	= strip_tags( $firstname );
+		$u->lastname	= strip_tags( $lastname );
 		$u->pass		= md5( $salt . $pass1 . $salt );
 		$u->save();
 		

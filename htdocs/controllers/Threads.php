@@ -319,7 +319,7 @@ class Controllers_Threads extends Controllers_Base {
 					$val = $this->getInt( $name );
 					break;
 				default:
-					$val = $this->getString( $name );
+					$val = strip_tags( str_replace("<br/>", "\n", $this->getString($name) ) );
 			}
 			
 			if( empty( $val ) && $name != 'id' ) {
