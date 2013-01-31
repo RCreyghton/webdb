@@ -416,3 +416,26 @@ a:hover.headerlink {
 	font-weight: bold;
 	color: #3CB6EC;
 }
+
+
+/* FORMS */
+input.loginbutton {
+	background-image: url("../images/loginbutton.png");
+}
+
+input.registerbutton {
+	background-image: url("../images/registerbutton.png");
+}
+
+input.bbutton {
+	font-size: 1px;
+	background-position: 0px 0px;
+	background-repeat: no-repeat;
+	width: 100px;
+	height: 37px;
+	border: 0px;
+}
+
+input.bbutton:active {
+	background-position: 0px 3px;
+}

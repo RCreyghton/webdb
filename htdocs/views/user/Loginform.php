@@ -38,7 +38,7 @@ class Views_User_Loginform extends Views_Base {
 		</tr>
 		<tr>
 			<td colspan='2'>
-				<input type='submit' name='login_submit' value='Inloggen' />
+				<input type='submit' name='login_submit' value='.' class='loginbutton bbutton' />
 			</td>
 		</tr>
 	</table> 

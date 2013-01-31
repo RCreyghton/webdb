@@ -38,7 +38,7 @@ class Views_User_Registrationform extends Views_Base {
 			echo "<tr>";
 			
 			echo "<td colspan='2'>";
-			echo "<input type='submit' name='register_submit' value='registreer mij' /> ";
+			echo "<input type='submit' name='register_submit' value='.' class='registerbutton bbutton' /> ";
 			echo "</td>";
 			
 			echo "</tr>";
