@@ -163,7 +163,7 @@ class Controllers_Threads extends Controllers_Base {
 		//We need a dummy id to be able to have uniform pagination and ordering functions
 		$this->setParam("id", 0);
 		$where = " WHERE ((`status` = " . Models_Thread::VISIBLE . ") AND (`answer_id` IS NULL))";
-		$defaultorder = "date_a";
+		$defaultorder = "views_d";
 		$this->setupView( $where, $defaultorder );
 	}
 	
@@ -203,7 +203,7 @@ class Controllers_Threads extends Controllers_Base {
 		$this->setParam("category", $category);
 		
 		$where = " WHERE ((`status` > 0) AND (`category_id` = {$category_id}))";
-		$defaultorder = "views_a";
+		$defaultorder = "views_d";
 		$this->setupView( $where, $defaultorder );
 	}
 
