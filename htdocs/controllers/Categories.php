@@ -22,46 +22,26 @@ class Controllers_Categories extends Controllers_Base {
 	public function overview() {
 		$this->view = new Views_Categories_Overview();
 		
-		//Get evantualities: is there some edititing to do on this thread?
-		$restrict = $this->getInt('restrict_status');
-		$open = $this->getInt('open_status');
-		$hide = $this->getInt('hide_status');
-		
-		if( $restrict ) {
-			$user = Helpers_User::getLoggedIn();
-			if( $user != NULL && $user->role == Models_User::ROLE_ADMIN ) {
-				$category= Models_Category::fetchById($restrict);
-				if ( $category != NULL ) {
-					$category->status = 0;
-					$category->save();
-				}
-			}
-		}
-		if( $open ) {
-			$user = Helpers_User::getLoggedIn();
-			if( $user != NULL && $user->role == Models_User::ROLE_ADMIN ) {
-				$category= Models_Category::fetchById($open);
-				if ( $category != NULL ) {
-					$category->status = 1;
-					$category->save();
-				}
-			}
-		}
-		if( $hide ) {
-			$user = Helpers_User::getLoggedIn();
-			if( $user != NULL && $user->role == Models_User::ROLE_ADMIN ) {
-				$category= Models_Category::fetchById($hide);
-				if ( $category != NULL ) {
-					$category->status = -1;
-					$category->save();
-				}
-			}
-		}
-		
+		//When not logged in as admin, you cannot see hidden items.
 		$where = "WHERE `status` > '-1' ";
+		
+		//Get evantualities: is there some edititing to do on this user?
+		//This is relevant for a logged-in admin only.
 		$user = Helpers_User::getLoggedIn();
-		if( $user != NULL && $user->role == Models_User::ROLE_ADMIN )
+		if( $user != NULL && $user->role == Models_User::ROLE_ADMIN ) {
+			$status = $this->getInt('status');
+			$cat = $this->getInt('cat');
+			//If both parameters are set, than we can fetch the Category and try to change it.
+			if ( $status != NULL && $cat != NULL ) {
+				$category = Models_Category::fetchById($cat);
+				if ( $category ) {
+					$category->status = $status;
+					$category->save();
+				}
+			}
+			//Also, admins must be able to view ALL categories.
 			$where = "";
+		}
 		
 		//Now we can acuatually fetch all categories and display them
 		$query = Models_Category::getSelect() . $where . "ORDER BY `name`;";
