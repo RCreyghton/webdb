@@ -30,19 +30,26 @@ class Views_Users_Overview extends Views_Base {
 		foreach ($this->users as $u) {
 			echo "					<div class=\"categories_overview_container\">\n";
 			
-			//start actionbar, has contents if admin only.
-			echo "						<div class='threads_single_actionbar'>";
+			//start actionbar, if admin only.
 			if ($admin) {
-				if ( $u->role== 1 )
+				$status = "categories_overview_statusopen";
+				if ( $u->role < 0 )
+					$status = "categories_overview_statusblocked";
+				if ( $u->role == 0 )
+					$status = "categories_overview_statusrestricted";
+				
+				echo "						<div class='threads_single_actionbar {$status}'>";
+				
+				if ( $u->role == 1 )
 					echo "<a href='./users/overview/?make_user={$u->id}'><img src='./assets/images/icons/16x16/accept.png' width='16' height='16' alt='make_user' title='Huidige status: admin. Klik om user te maken.' /></a>";
 				else
 					echo "<a href='./users/overview/?make_admin={$u->id}'><img src='./assets/images/icons/16x16/delete.png' width='16' height='16' alt='make_admin' title='Huidige status: user. Klik om admin te maken.' /></a>";
 				echo "<a href='./users/overview/?make_block={$u->id}'><img src='./assets/images/icons/16x16/delete.png' width='16' height='16' alt='make_block' title='Block deze user.' /></a>";
 				echo "<a href='./users/Registrationform/?id={$u->id}'><img src='./assets/images/icons/16x16/application_edit.png' width='16' height='16' alt='bewerk' title='Bewerk deze user' /></a>";
-			}
-			echo "</div>\n";
-			//end actionbar
 			
+				echo "</div>\n";
+			//end actionbar
+			}
 			
 			echo "						<h3 class='categories_overview_header'><a href=\"./threads/user/{$u->id}\" class='headerlink'>{$u->firstname} {$u->lastname}</a></h3>
 						<p class='categories_overview_content'>Geregistreerd op " . date("d-m-Y H:i", $u->ts_registered) . " met {$u->email}</p>

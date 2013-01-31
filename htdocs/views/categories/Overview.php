@@ -30,21 +30,28 @@ class Views_Categories_Overview extends Views_Base {
 		foreach ($this->categories as $c) {
 			echo "					<div class=\"categories_overview_container\">\n";
 			
-			//start actionbar, has contents if admin only.
-			echo "						<div class='threads_single_actionbar'>";
+			//start actionbar, if admin only.
 			if ($admin) {
+				$status = "categories_overview_statusopen";
+				if ( $c->status < 0 )
+					$status = "categories_overview_statusblocked";
+				if ( $c->status == 0 )
+					$status = "categories_overview_statusrestricted";
+				
+				echo "						<div class='threads_single_actionbar {$status}'>";
+				
 				if ( $c->status == 1 )
 					echo "<a href='./categories/overview/?restrict_status={$c->id}'><img src='./assets/images/icons/16x16/accept.png' width='16' height='16' alt='restrict' title='Huidige status: open. Klik om te restricten.' /></a>";
 				else
 					echo "<a href='./categories/overview/?open_status={$c->id}'><img src='./assets/images/icons/16x16/delete.png' width='16' height='16' alt='open' title='Huidige status: restricted. Klik om te openen.' /></a>";
-				echo "<a href='./users/overview/?hide_status={$c->id}'><img src='./assets/images/icons/16x16/delete.png' width='16' height='16' alt='hide' title='Verberg deze categorie' /></a>";
+				echo "<a href='./categories/overview/?hide_status={$c->id}'><img src='./assets/images/icons/16x16/delete.png' width='16' height='16' alt='hide' title='Verberg deze categorie' /></a>";
 				echo "<a href='./categories/categoryform/?id={$c->id}'><img src='./assets/images/icons/16x16/application_edit.png' width='16' height='16' alt='bewerk' title='Bewerk titel en omsschrijving.' /></a>";
-			}
-			echo "</div>\n";
+			
+				echo "</div>\n";
 			//end actionbar
+			}
 			
-			
-			echo "						<h3 class='categories_overview_header'><a href=\"./threads/category/{$c->id}\" class='headerlink'>{$c->name}</a></h3>
+			echo "						<h3 class='categories_overview_header {$status}'><a href=\"./threads/category/{$c->id}\" class='headerlink'>{$c->name}</a></h3>
 						<p class='categories_overview_content'>{$c->description}</p>
 					</div>\n";
 		}
