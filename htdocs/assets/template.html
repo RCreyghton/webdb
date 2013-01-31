@@ -23,10 +23,13 @@
 						<div class='column2'>
 							<div class="searchbar">
 								<form action="./search/full" method="get">
+									<div>
 									<input type="text" name="search" class="search_input" id="search_input" onkeyup="getThreadTitles(this.value)" />
 									<input type="submit" id="search_submit" class="search_submit" value="Zoek!" />
+									</div>
 								</form>
 								<ul id="quickThreads">
+									<li style="display: none"> </li>
 								</ul>
 							</div> 
 						</div>

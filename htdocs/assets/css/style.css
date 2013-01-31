@@ -117,7 +117,7 @@ div.searchbar ul {
 	border: 1px solid #3CB6EC;
 	border-top: none;
 	list-style-type: none;
-
+	z-index: 99;
 }
 
 div.searchbar ul li {
