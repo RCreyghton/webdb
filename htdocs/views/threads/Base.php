@@ -64,7 +64,7 @@ abstract class Views_Threads_Base extends Views_Base {
 				}
 				
 				//thread owner actions
-				if( $current_user && $current_user->id == $thread->user_id || $current_user->role == Models_User::ROLE_ADMIN) {
+				if( $current_user && ( $current_user->id == $thread->user_id || $current_user->role == Models_User::ROLE_ADMIN ) ) {
 					echo "<a href='./threads/threadform/?id={$thread->id}'><img src='./assets/images/icons/16x16/application_edit.png' width='16' height='16' alt='bewerk' title='bewerk' /></a>";
 				}
 				
