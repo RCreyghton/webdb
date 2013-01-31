@@ -45,6 +45,7 @@ class Models_Category extends Models_Base {
 	 * {@link Models_Reply}-objects are to inherit this setting at their making in {@link Models_Reply::$visibility}.
 	 * 
 	 * Possible values:
+	 * - -1 - hidden. Categoies are not displayed except for admins.
 	 * - 0 - restricted, replies to threads are hidden by default, to be opened by admins.
 	 * - 1 - open, replies to threads are visible by default.
 	 * 

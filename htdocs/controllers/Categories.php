@@ -25,6 +25,7 @@ class Controllers_Categories extends Controllers_Base {
 		//Get evantualities: is there some edititing to do on this thread?
 		$restrict = $this->getInt('restrict_status');
 		$open = $this->getInt('open_status');
+		$hid = $this->getInt('hide_status');
 		
 		if( $restrict ) {
 			$user = Helpers_User::getLoggedIn();
@@ -46,9 +47,24 @@ class Controllers_Categories extends Controllers_Base {
 				}
 			}
 		}
+		if( $hide ) {
+			$user = Helpers_User::getLoggedIn();
+			if( $user != NULL && $user->role == Models_User::ROLE_ADMIN ) {
+				$category= Models_Category::fetchById($hide);
+				if ( $category != NULL ) {
+					$category->status = -1;
+					$category->save();
+				}
+			}
+		}
+		
+		$where = "";
+		$user = Helpers_User::getLoggedIn();
+		if( $user != NULL && $user->role == Models_User::ROLE_ADMIN )
+			$where = "WHERE `status` > '-1' ";
 		
 		//Now we can acuatually fetch all categories and display them
-		$query = Models_Category::getSelect() . "ORDER BY `name`;";
+		$query = Models_Category::getSelect() . $where . "ORDER BY `name`;";
 		$categories = Models_Category::fetchByQuery( $query );
 		$this->view->categories = $categories;
 		

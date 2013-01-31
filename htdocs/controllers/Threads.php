@@ -291,8 +291,11 @@ class Controllers_Threads extends Controllers_Base {
 		$t->category_id = $form ['category'] ['value'];
 		$t->content		.= $form ['content'] ['value'];
 		$t->ts_created	= time();
-		$t->status		= 1; //visibility on
 		$t->answer_id	= "NULL";
+		
+		//A new or edited threads inherits its status from its category, of 0 if something wrong with status.
+		$cat = Models_Category::fetchById($t->category_id);
+		$t->status = ( $cat->status ) ? $cat->status : 0;
 		
 		if( $t->save() ) {
 			return $t->id;
@@ -319,7 +322,7 @@ class Controllers_Threads extends Controllers_Base {
 			'description'	=>	'Categorie'
 		);
 		
-		$query = Models_Category::getSelect() . " WHERE `status` = '1'";
+		$query = Models_Category::getSelect() . " WHERE `status` > '-1'";
 		$cats = Models_Category::fetchByQuery($query);
 		foreach( $cats as $c ) { 
 			$elements[ 'category' ] [ 'values' ] [ $c->id ] = $c->name;
