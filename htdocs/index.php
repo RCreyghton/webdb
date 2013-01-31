@@ -10,6 +10,10 @@ define("BASE", getcwd() . DS );
  */
 spl_autoload_register('autoloader');
 
+//error handling:
+ini_set('display_errors', 'Off');
+register_shutdown_function('shutdown');
+
 //start the session
 if (! session_start() )
 	throw new Exception("Unable to start a session");
@@ -76,4 +80,17 @@ function autoloader( $classpath ) {
 	} else {
 		throw new RuntimeException( "Could not locate classfile: " . $path );
 	}
+}
+
+function shutdown() {
+	
+	include_once( BASE . "helpers/User.php");
+	include_once( BASE . "models/Thread.php");
+	include_once( BASE . "models/User.php");
+	include_once( BASE . "models/Reply.php");
+	include_once( BASE . "controllers/Error.php");
+	include_once( BASE . "views/errors/Internal.php");
+	
+    $controller = new Controllers_Error();
+	$controller->execute( "internal" );
 }
