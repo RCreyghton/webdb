@@ -84,7 +84,8 @@ class Controllers_Threads extends Controllers_Base {
 		
 		//as this is the base view for mulitple threadlistings, we'll handle thread actions here
 		//only if admin
-		if( Helpers_User::getLoggedIn()->role == Models_User::ROLE_ADMIN) {
+		$user = Helpers_User::getLoggedIn();
+		if( $user && $user->role == Models_User::ROLE_ADMIN) {
 			if( $this->getInt('hide_thread') ) {
 				$t = Models_Thread::fetchById( $this->getInt('hide_thread') );
 				if( $t ) {

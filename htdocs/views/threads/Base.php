@@ -49,7 +49,7 @@ abstract class Views_Threads_Base extends Views_Base {
 				echo "<div class='threads_listing_thread_actions'>\n";
 				//admin only actions
 				$curl = $this->getURL( "page" );
-				if ($current_user->role == Models_User::ROLE_ADMIN) {
+				if ($current_user && $current_user->role == Models_User::ROLE_ADMIN) {
 					if( $thread->status == Models_Thread::VISIBLE ) {
 						echo "<a href='{$curl}?hide_thread=$thread->id'><img src='./assets/images/icons/16x16/eye_close.png' width='16' height='16' alt='verberg vraag' title='verberg vraag' /></a>";
 					} else {
@@ -64,7 +64,7 @@ abstract class Views_Threads_Base extends Views_Base {
 				}
 				
 				//thread owner actions
-				if( $current_user->id == $thread->user_id || $current_user->role == Models_User::ROLE_ADMIN) {
+				if( $current_user && $current_user->id == $thread->user_id || $current_user->role == Models_User::ROLE_ADMIN) {
 					echo "<a href='./threads/threadform/?id={$thread->id}'><img src='./assets/images/icons/16x16/application_edit.png' width='16' height='16' alt='bewerk' title='bewerk' /></a>";
 				}
 				
