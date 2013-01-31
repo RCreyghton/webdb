@@ -86,7 +86,7 @@ abstract class Views_Base {
 		);
 		
 		$user = Helpers_User::getLoggedIn();
-		if( $user->role == Models_User::ROLE_ADMIN) {
+		if( $user && $user->role == Models_User::ROLE_ADMIN) {
 			$items[ "Gebruikers" ] = "users/overview";
 			$items[ "Verborgen vragen" ] = "threads/invisible";
 		}
