@@ -17,7 +17,7 @@ class Views_Threads_Single extends Views_Threads_Base {
 
 		$t = $this->thread;
 
-		if ($t->status < 1 && $user_role != Models_User::ROLE_ADMIN) {
+		if ($t->status  == Models_Thread::INVISIBLE && $user_role != Models_User::ROLE_ADMIN) {
 			echo "<h1>Deze vraag is niet meer beschikbaar.</h1>";
 			return;
 		}
@@ -48,8 +48,7 @@ class Views_Threads_Single extends Views_Threads_Base {
 		echo "<div class='threads_single_thread_details_container'>";
 		echo "<div class='threads_single_thread_credits'>";
 		echo "<p>";
-		echo "Credits ";
-		echo "45";
+		echo "<i>Status: " . ( $t->open == Models_Thread::OPEN ? "open":"gesloten" ) . "</i> ";
 		echo "</p>";
 		echo "</div>";
 
@@ -121,22 +120,25 @@ class Views_Threads_Single extends Views_Threads_Base {
 				echo "</div>";
 			} //end foreach
 			
-			
-			if ( Helpers_User::isLoggedIn() ) {
-				echo "<a class='threads_add_thread' href='./replies/replyform/?tid={$t->id}'>Geef een beter antwoord!</a>";
-			} else {
-				echo "<a href='./users/login/'>Login om te antwoorden</a>";
+			if( $t->open == Models_Thread::OPEN ) {
+				if ( Helpers_User::isLoggedIn() ) {
+					echo "<a class='threads_add_thread' href='./replies/replyform/?tid={$t->id}'>Geef een beter antwoord!</a>";
+				} else {
+					echo "<a href='./users/login/'>Login om te antwoorden</a>";
+				}
 			}
 			
 		} else {
-			echo "<div class='threads_single_notanswered'>";
-			echo "Deze vraag is nog niet beantwoord. Kunt u helpen? <br/>";
-			if ( Helpers_User::isLoggedIn() ) {
-				echo "<a class='threads_add_thread' href='./replies/replyform/?tid={$t->id}'>Beantwoord deze vraag!</a>";
-			} else {
-				echo "<a href='./users/login/'>Login om te reageren</a>";
+			if( $t->open == Models_Thread::OPEN ) {
+				echo "<div class='threads_single_notanswered'>";
+				echo "Deze vraag is nog niet beantwoord. Kunt u helpen? <br/>";
+				if ( Helpers_User::isLoggedIn() ) {
+					echo "<a class='threads_add_thread' href='./replies/replyform/?tid={$t->id}'>Beantwoord deze vraag!</a>";
+				} else {
+					echo "<a href='./users/login/'>Login om te reageren</a>";
+				}
+				echo "</div>";
 			}
-			echo "</div>";
 		}
 	}
 
