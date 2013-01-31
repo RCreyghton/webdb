@@ -22,22 +22,22 @@ class Controllers_Categories extends Controllers_Base {
 		$restrict = $this->getInt('restrict_status');
 		$open = $this->getInt('open_status');
 		
-		if( $restrict !== NULL ) {
+		if( $restrict ) {
 			$user = Helpers_User::getLoggedIn();
-			if( $user !== NULL && $user->role == Models_User::ROLE_ADMIN ) {
+			if( $user != NULL && $user->role == Models_User::ROLE_ADMIN ) {
 				$category= Models_Category::fetchById($restrict);
-				if ( $category !== NULL ) {
+				if ( $category != NULL ) {
 					$category->status = 0;
 					$category->save();
 				}
 			}
 		}
-		if( $open !== NULL ) {
+		if( $open ) {
 			$user = Helpers_User::getLoggedIn();
-			if( $user !== NULL && $user->role == Models_User::ROLE_ADMIN ) {
+			if( $user != NULL && $user->role == Models_User::ROLE_ADMIN ) {
 				$category= Models_Category::fetchById($restrict);
 				if ( $category != NULL ) {
-					$category->status = 0;
+					$category->status = 1;
 					$category->save();
 				}
 			}
