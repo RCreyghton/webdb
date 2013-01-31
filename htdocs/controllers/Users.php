@@ -194,46 +194,26 @@ class Controllers_Users extends Controllers_Base {
 	public function overview() {
 		$this->view = new Views_Users_Overview();
 		
-		//Get evantualities: is there some edititing to do on this user?
-		$make_admin = $this->getInt('make_admin');
-		$make_user = $this->getInt('make_user');
-		$make_block = $this->getInt('make_block');
-		
-		if( $make_admin ) {
-			$user = Helpers_User::getLoggedIn();
-			if( $user != NULL && $user->role == Models_User::ROLE_ADMIN ) {
-				$edituser = Models_User::fetchById($make_admin);
-				if ( $edituser != NULL ) {
-					$edituser->role = 1;
-					$edituser->save();
-				}
-			}
-		}
-		if( $make_user ) {
-			$user = Helpers_User::getLoggedIn();
-			if( $user != NULL && $user->role == Models_User::ROLE_ADMIN ) {
-				$edituser = Models_User::fetchById($make_user);
-				if ( $edituser != NULL ) {
-					$edituser->role = 0;
-					$edituser->save();
-				}
-			}
-		}
-		if( $make_block ) {
-			$user = Helpers_User::getLoggedIn();
-			if( $user != NULL && $user->role == Models_User::ROLE_ADMIN ) {
-				$edituser = Models_User::fetchById($make_block);
-				if ( $edituser != NULL ) {
-					$edituser->role = -1;
-					$edituser->save();
-				}
-			}
-		}
-
+		//When not logged in as admin, you cannot see hidden items.
 		$where = "WHERE `role` > '-1' ";
+		
+		//Get evantualities: is there some edititing to do on this user?
+		//This is relevant for a logged-in admin only.
 		$user = Helpers_User::getLoggedIn();
-		if( $user != NULL && $user->role == Models_User::ROLE_ADMIN )
+		if( $user != NULL && $user->role == Models_User::ROLE_ADMIN ) {
+			$role = $this->getInt('role');
+			$edituser = $this->getInt('user');
+			//If both parameters are set, than we can fetch the user and try to change it.
+			if ( $role != NULL && $edituser != NULL) {
+				$edituser = Models_User::fetchById($edituser);
+				if ( $edituser ) {
+					$edituser->role = $role;
+					$edituser->save();
+				}
+			}
+			//Also, admins must be able to view ALL items.
 			$where = "";
+		}
 		
 		//Now we can acuatually fetch all categories and display them.
 		$query = Models_User::getSelect() . $where . "ORDER BY `ts_registered`;";

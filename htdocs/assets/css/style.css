@@ -305,7 +305,7 @@ a {
 .categories_overview_container { border-bottom: 2px solid #3CB6EC; }
 .categories_overview_container:first-of-type { border-top: 2px solid #3CB6EC; }
 .categories_overview_header { border-bottom:1px solid #3CB6EC; background-color: #eee;}
-.categories_overview_actionbar { float:right; height:20px; padding:25px 10px 0 0;}
+.categories_overview_actionbar { border-bottom:1px solid #3CB6EC; float:right; height:20px; padding:14px 10px 10px 0;}
 .categories_overview_actionbar a { margin-left:15px; }
 .categories_overview_statusopen { background: #e1fce1; }
 .categories_overview_statusrestricted { background: #e1e1fc; }

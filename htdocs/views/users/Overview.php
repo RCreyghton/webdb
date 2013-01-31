@@ -38,13 +38,16 @@ class Views_Users_Overview extends Views_Base {
 				if ( $u->role == 0 )
 					$status = "categories_overview_statusrestricted";
 				
-				echo "						<div class='threads_single_actionbar {$status}'>";
+				echo "						<div class='categories_overview_actionbar {$status}'>";
 				
 				if ( $u->role == 1 )
-					echo "<a href='./users/overview/?make_user={$u->id}'><img src='./assets/images/icons/16x16/accept.png' width='16' height='16' alt='make_user' title='Huidige status: admin. Klik om user te maken.' /></a>";
+					echo "<a href='./users/overview/?role=0&user={$u->id}'><img src='./assets/images/icons/16x16/accept.png' width='16' height='16' alt='make_user' title='Huidige status: admin. Klik om user te maken.' /></a>";
 				else
-					echo "<a href='./users/overview/?make_admin={$u->id}'><img src='./assets/images/icons/16x16/delete.png' width='16' height='16' alt='make_admin' title='Huidige status: user. Klik om admin te maken.' /></a>";
-				echo "<a href='./users/overview/?make_block={$u->id}'><img src='./assets/images/icons/16x16/delete.png' width='16' height='16' alt='make_block' title='Block deze user.' /></a>";
+					echo "<a href='./users/overview/?role=1&user={$u->id}'><img src='./assets/images/icons/16x16/delete.png' width='16' height='16' alt='make_admin' title='Huidige status: user. Klik om admin te maken.' /></a>";
+				if ( $u->role == -1 )
+					echo "<a href='./users/overview/?role=0&user={$u->id}'><img src='./assets/images/icons/16x16/delete.png' width='16' height='16' alt='hide' title='Gebruiker nu open. Klik hier om te unblocken.' /></a>";
+				else
+					echo "<a href='./users/overview/?role=-1&user={$u->id}'><img src='./assets/images/icons/16x16/accept.png' width='16' height='16' alt='hide' title='Gebruiker nu open. Klik hier om te blocken.' /></a>";
 				echo "<a href='./users/Registrationform/?id={$u->id}'><img src='./assets/images/icons/16x16/application_edit.png' width='16' height='16' alt='bewerk' title='Bewerk deze user' /></a>";
 			
 				echo "</div>\n";

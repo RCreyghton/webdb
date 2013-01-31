@@ -38,13 +38,16 @@ class Views_Categories_Overview extends Views_Base {
 				if ( $c->status == 0 )
 					$status = "categories_overview_statusrestricted";
 				
-				echo "						<div class='threads_single_actionbar {$status}'>";
+				echo "						<div class='categories_overview_actionbar {$status}'>";
 				
 				if ( $c->status == 1 )
-					echo "<a href='./categories/overview/?restrict_status={$c->id}'><img src='./assets/images/icons/16x16/accept.png' width='16' height='16' alt='restrict' title='Huidige status: open. Klik om te restricten.' /></a>";
+					echo "<a href='./categories/overview/?status=0&cat={$c->id}'><img src='./assets/images/icons/16x16/accept.png' width='16' height='16' alt='restrict' title='Huidige status: open. Klik om te restricten.' /></a>";
 				else
-					echo "<a href='./categories/overview/?open_status={$c->id}'><img src='./assets/images/icons/16x16/delete.png' width='16' height='16' alt='open' title='Huidige status: restricted. Klik om te openen.' /></a>";
-				echo "<a href='./categories/overview/?hide_status={$c->id}'><img src='./assets/images/icons/16x16/delete.png' width='16' height='16' alt='hide' title='Verberg deze categorie' /></a>";
+					echo "<a href='./categories/overview/?status=1&cat={$c->id}'><img src='./assets/images/icons/16x16/delete.png' width='16' height='16' alt='open' title='Huidige status: restricted. Klik om te openen.' /></a>";
+				if ( $c->status == -1 )
+					echo "<a href='./categories/overview/?status=0&cat={$c->id}'><img src='./assets/images/icons/16x16/delete.png' width='16' height='16' alt='hide' title='Categorie nu verborgen. Klik hier om zichtbaar te maken.' /></a>";
+				else
+					echo "<a href='./categories/overview/?status=-1&cat={$c->id}'><img src='./assets/images/icons/16x16/accept.png' width='16' height='16' alt='hide' title='Categorie nu zichtbaar. Klik hier om te verbergen.' /></a>";
 				echo "<a href='./categories/categoryform/?id={$c->id}'><img src='./assets/images/icons/16x16/application_edit.png' width='16' height='16' alt='bewerk' title='Bewerk titel en omsschrijving.' /></a>";
 			
 				echo "</div>\n";
