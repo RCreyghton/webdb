@@ -45,7 +45,7 @@ class Views_Categories_Overview extends Views_Base {
 				else
 					echo "<a href='./categories/overview/?status=1&cat={$c->id}'><img src='./assets/images/icons/16x16/delete.png' width='16' height='16' alt='open' title='Huidige status: restricted. Klik om te openen.' /></a>";
 				if ( $c->status == -1 )
-					echo "<a href='./categories/overview/?status=0&cat={$c->id}'><img src='./assets/images/icons/16x16/delete.png' width='16' height='16' alt='hide' title='Categorie nu verborgen. Klik hier om zichtbaar te maken.' /></a>";
+					echo "<a href='./categories/overview/?status=0&cat={$c->id}'><img src='./assets/images/icons/16x16/block.png' width='16' height='16' alt='hide' title='Categorie nu verborgen. Klik hier om zichtbaar te maken.' /></a>";
 				else
 					echo "<a href='./categories/overview/?status=-1&cat={$c->id}'><img src='./assets/images/icons/16x16/accept.png' width='16' height='16' alt='hide' title='Categorie nu zichtbaar. Klik hier om te verbergen.' /></a>";
 				echo "<a href='./categories/categoryform/?id={$c->id}'><img src='./assets/images/icons/16x16/application_edit.png' width='16' height='16' alt='bewerk' title='Bewerk titel en omsschrijving.' /></a>";

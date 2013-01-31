@@ -45,7 +45,7 @@ class Views_Users_Overview extends Views_Base {
 				else
 					echo "<a href='./users/overview/?role=1&user={$u->id}'><img src='./assets/images/icons/16x16/delete.png' width='16' height='16' alt='make_admin' title='Huidige status: user. Klik om admin te maken.' /></a>";
 				if ( $u->role == -1 )
-					echo "<a href='./users/overview/?role=0&user={$u->id}'><img src='./assets/images/icons/16x16/delete.png' width='16' height='16' alt='hide' title='Gebruiker nu open. Klik hier om te unblocken.' /></a>";
+					echo "<a href='./users/overview/?role=0&user={$u->id}'><img src='./assets/images/icons/16x16/block.png' width='16' height='16' alt='hide' title='Gebruiker nu open. Klik hier om te unblocken.' /></a>";
 				else
 					echo "<a href='./users/overview/?role=-1&user={$u->id}'><img src='./assets/images/icons/16x16/accept.png' width='16' height='16' alt='hide' title='Gebruiker nu open. Klik hier om te blocken.' /></a>";
 				echo "<a href='./users/Registrationform/?id={$u->id}'><img src='./assets/images/icons/16x16/application_edit.png' width='16' height='16' alt='bewerk' title='Bewerk deze user' /></a>";
