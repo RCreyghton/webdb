@@ -125,6 +125,13 @@ ORDER BY thread_score DESC, score DESC;";
 			throw new Exception( Helpers_Db::getError() );
 		}
 		
+		//If the current user is not an admin, we will now filter the invisible results from the resultslist.
+		$user = Helpers_User::getLoggedIn();
+		$inv = false;
+		if( $user && $user->role == Models_User::ROLE_ADMIN)
+			$inv = true;
+		
+		//The array with posts and threads-object we're going to assamble.
 		$posts = array();
 		
 		$threadid = 0;
@@ -132,9 +139,12 @@ ORDER BY thread_score DESC, score DESC;";
 			if ( $row['thread_id'] != $threadid ) {
 				$threadid = $row['thread_id'];
 				$thread = Models_Thread::fetchById($threadid);
-				$posts[] = $thread;
+				//If the thread is invisible and we ought to hide it, skip saving.
+				if ( $inv || $thread->status == 1 )
+					$posts[] = $thread;
 			}
-			$posts[] = $row;
+			if ( $inv || $thread->status == 1 )
+				$posts[] = $row;
 		}
 		
 		$this->view->posts = $posts;
