@@ -159,7 +159,7 @@ abstract class Views_Base {
 	 * @return string A base URL for the site, depending on the current server and PHP_SELF location.
 	 */
 	public function getBaseURL() {
-		return "<base href=\"" . substr($_SERVER["PHP_SELF"], 0, strlen($_SERVER["PHP_SELF"]) - 9) . "\" />";
+		return "<base href=\"https://" . $_SERVER["SERVER_NAME"] . substr($_SERVER["PHP_SELF"], 0, strlen($_SERVER["PHP_SELF"]) - 9) . "\" />";
 	}
 
 }
