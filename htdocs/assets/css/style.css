@@ -458,3 +458,19 @@ form.postedit input.input {
 	width: 500px;
 }
 
+form table { width:600px; margin:0 auto;}
+form table tbody tr td { vertical-align:top; position: relative; width:300px; font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;}
+form .errormessage { 
+	font-size:12px;
+	padding:5px;
+    float: left;
+    left: 150px;
+    margin-top: -22px;
+    position: relative;
+	background: #FFB2B2;
+	border: 1px solid #FF4D4D;
+}
+
+form .inputerror {
+	background: #FFB2B2;
+}

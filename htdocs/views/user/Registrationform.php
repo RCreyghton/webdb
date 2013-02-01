@@ -32,7 +32,7 @@ class Views_User_Registrationform extends Views_Base {
 					class='" . ( empty( $e['errormessage'] ) ? "":"inputerror") . "'
 			/>";
 			echo !empty( $e['errormessage'] ) ? 
-				"<span class='errormessage'>" . $e['errormessage'] . "</span>"
+				"<div class='errormessage'>" . $e['errormessage'] . "</div>"
 				: '';
 			echo "</td>";
 			
