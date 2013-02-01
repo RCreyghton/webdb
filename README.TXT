@@ -23,7 +23,13 @@ BRONCODE
 Alle code is te vinden in de map htdocs/
 maar ook, code-colored en in een vriendelijke opmaak, IN de PHPdoc (zie hieronder).
 
-Een dump van de MySQL-database is 
+Er zijn twee MySQL-dumps beschikbaar:
+- Een volledige, met structuur én gegevens van de test-omgeving: documentation/mysqldump-webdb13AD3.sql.gz
+Hierin staan enkele test-users, -categories, -threads en -posts, zodat de werking van de site getest kan worden.
+
+- Een met  uitsluitende de structuur, ten behoeve van een schone installatie van de site: documentation/mysqldump-webdb13AD3-structuur.sql.gz
+Hierin is slechts een record: een admin-user met dezelfde gegevens als hierboven. Zodoende kunnen nieuwe categorieen worden aangemaakt.
+Deze login is wel afhankelijk de salt die zich in mysqlconfig.xml bevindt. (zie ook de technische documentatie).
 
 
 

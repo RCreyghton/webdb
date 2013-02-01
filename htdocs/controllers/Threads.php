@@ -384,6 +384,7 @@ class Controllers_Threads extends Controllers_Base {
 		$t->content .= $form ['content'] ['value'];
 		$t->ts_created = time();
 		$t->answer_id = "NULL";
+		$t->open = Models_Thread::OPEN;
 
 		//A new or edited threads inherits its status from its category, of 0 if something wrong with status.
 		$cat = Models_Category::fetchById($t->category_id);
