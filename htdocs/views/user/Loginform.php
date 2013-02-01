@@ -7,6 +7,11 @@
 if (!defined("WEBDB_EXEC"))
 	die("No direct access!");
 
+/**
+ * Renders the login-form
+ * 
+ * @author Shafiq Ahmadi <s.ah@live.nl>
+ */
 class Views_User_Loginform extends Views_Base {
 	
 	public $errormessage = "";

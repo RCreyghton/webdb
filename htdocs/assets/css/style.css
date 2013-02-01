@@ -442,3 +442,19 @@ input.bbutton {
 input.bbutton:active {
 	background-position: 0px 3px;
 }
+
+form.postedit {
+	padding: 5px;
+	margin-left: 10px;
+	border: 1px solid #3CB6EC;
+}
+
+form.postedit textarea {
+	width: 500px;
+	height: 300px;
+}
+
+form.postedit input.input {
+	width: 500px;
+}
+

@@ -1,14 +1,24 @@
 <?php
 
+/*
+ * All classes and scripts must be loaded via index.php, where WEBDB_EXEC is set,
+ * and stop executing immediatly if otherwise.
+ */
+if (!defined("WEBDB_EXEC"))
+	die("No direct access!");
+
+/**
+ * Renders the Threads_Single view. Displays a thread with its replies, adding admin-buttons if asked for.
+ */
 class Views_Threads_Single extends Views_Threads_Base {
 
 	public $thread;
 	public $replies;
 
 	/**
-	 * Renders the contents of this view, by parsing the $threads-array made by Controllers_Threads->unanswered().
+	 * Renders the contents of this view.
 	 * 
-	 * @author	Ramon Creyghton <r.creyghton@gmail.com>
+	 * @author	Frank van Luijn <frank@accode.nl>
 	 */
 	public function render() {
 		$user = Helpers_User::getLoggedIn();
@@ -17,7 +27,7 @@ class Views_Threads_Single extends Views_Threads_Base {
 
 		$t = $this->thread;
 
-		if ($t->status  == Models_Thread::INVISIBLE && $user_role != Models_User::ROLE_ADMIN) {
+		if ($t->status == Models_Thread::INVISIBLE && $user_role != Models_User::ROLE_ADMIN) {
 			echo "<h2>Deze vraag (nog) niet zichtbaar.</h2><p>Indien u zojuist een vraag heeft gesteld, zal deze zichtbaar worden gemaakt na keuring door een der moderators.</p>";
 			return;
 		}
@@ -40,7 +50,7 @@ class Views_Threads_Single extends Views_Threads_Base {
 
 		echo "<h1 class='threads_single_thread_header'>{$t->title}</h1>";
 		echo "<p class='threads_single_thread_content'>";
-		echo nl2br( $t->content );
+		echo nl2br($t->content);
 		echo "</p>";
 		echo "</div>";
 
@@ -48,7 +58,7 @@ class Views_Threads_Single extends Views_Threads_Base {
 		echo "<div class='threads_single_thread_details_container'>";
 		echo "<div class='threads_single_thread_credits'>";
 		echo "<p>";
-		echo "<i>Status: " . ( $t->open == Models_Thread::OPEN ? "open":"gesloten" ) . "</i> ";
+		echo "<i>Status: " . ( $t->open == Models_Thread::OPEN ? "open" : "gesloten" ) . "</i> ";
 		echo "</p>";
 		echo "</div>";
 
@@ -71,14 +81,14 @@ class Views_Threads_Single extends Views_Threads_Base {
 				}
 				$user = Models_User::fetchById($r->user_id);
 				$accepted = "";
-				if( $t->answer_id == $r->id ) 
+				if ($t->answer_id == $r->id)
 					$accepted = ' threads_single_reply_accepted';
 				echo "<div class='threads_single_reply_container{$accepted}'>";
-				
-				if( !empty( $accepted ) ) {
+
+				if (!empty($accepted)) {
 					echo "<img class='accepted_hover' src='./assets/images/icons/32x32/accept.png' alt='Goedgekeurd door vraagsteller' title='Goedgekeurd door vraagsteller' />";
 				}
-				
+
 				##### start actionbar
 				echo "<div class='threads_single_actionbar_reply'>";
 
@@ -89,26 +99,26 @@ class Views_Threads_Single extends Views_Threads_Base {
 				if ($user_role == Models_User::ROLE_ADMIN || $r->user_id == $user_id) {
 					echo "<a href='./replies/replyform/?id={$r->id}&tid={$t->id}'><img src='./assets/images/icons/16x16/application_edit.png' width='16' height='16' alt='bewerk' title='bewerk' /></a>";
 				}
-				
-				if ( 
-					( $user_id == $t->user_id || $user_role == Models_User::ROLE_ADMIN )
-					&& $t->answer_id == "NULL"			
+
+				if (
+								( $user_id == $t->user_id || $user_role == Models_User::ROLE_ADMIN )
+								&& $t->answer_id == "NULL"
 				) {
 					echo "<a href='./threads/single/{$t->id}?accept=$r->id'><img src='./assets/images/icons/16x16/accept.png' width='16' height='16' alt='Accepteer antwoord' title='Accpeteer antwoord' /></a>";
 				}
-				
-				if ( 
-					( $user_id == $t->user_id || $user_role == Models_User::ROLE_ADMIN )
-					&& $t->answer_id == $r->id			
+
+				if (
+								( $user_id == $t->user_id || $user_role == Models_User::ROLE_ADMIN )
+								&& $t->answer_id == $r->id
 				) {
 					echo "<a href='./threads/single/{$t->id}?deaccept=$r->id'><img src='./assets/images/icons/16x16/delete.png' width='16' height='16' alt='Verwijder acceptatie' title='Verwijder acceptatie' /></a>";
 				}
-				
+
 				echo "</div>";
 				##### end actionbar
 
 				echo "<h3 class='threads_single_reply_header'>{$r->title}</h3>";
-				echo "<p class='threads_single_reply_content'>" . nl2br( $r->content ) . "</p>";
+				echo "<p class='threads_single_reply_content'>" . nl2br($r->content) . "</p>";
 
 				//details
 				echo "<div class='threads_single_reply_details'>";
@@ -119,20 +129,19 @@ class Views_Threads_Single extends Views_Threads_Base {
 				echo "</div>";
 				echo "</div>";
 			} //end foreach
-			
-			if( $t->open == Models_Thread::OPEN ) {
-				if ( Helpers_User::isLoggedIn() ) {
+
+			if ($t->open == Models_Thread::OPEN) {
+				if (Helpers_User::isLoggedIn()) {
 					echo "<a class='threads_add_thread' href='./replies/replyform/?tid={$t->id}'>Geef een beter antwoord!</a>";
 				} else {
 					echo "<a href='./users/login/'>Login om te antwoorden</a>";
 				}
 			}
-			
 		} else {
-			if( $t->open == Models_Thread::OPEN ) {
+			if ($t->open == Models_Thread::OPEN) {
 				echo "<div class='threads_single_notanswered'>";
 				echo "Deze vraag is nog niet beantwoord. Kunt u helpen? <br/>";
-				if ( Helpers_User::isLoggedIn() ) {
+				if (Helpers_User::isLoggedIn()) {
 					echo "<a class='threads_add_thread' href='./replies/replyform/?tid={$t->id}'>Beantwoord deze vraag!</a>";
 				} else {
 					echo "<a href='./users/login/'>Login om te reageren</a>";

@@ -10,6 +10,7 @@ if (!defined("WEBDB_EXEC"))
 /**
  * Credit-class with fiels en methods to make and display Credits and to determine credit-possibilities
  * 
+ * @todo Implementation of credits accros controllers and views.
  * @author Frank van Luijn <frank@accode.nl>
  * @author Ramon Creyghton <r.creyghton@gmail.com>
  */
