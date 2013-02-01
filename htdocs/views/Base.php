@@ -136,7 +136,6 @@ abstract class Views_Base {
 	/**
 	 * Assembles html for the login / register or logout / dashboard block any pages' header.
 	 * 
-	 * @todo Sessie-afhankelijk maken.
 	 * @return string Correctly indented xhtml in the context of assets/template.html
 	 */
 	public function getLogin() {

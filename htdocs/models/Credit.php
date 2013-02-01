@@ -74,7 +74,7 @@ class Models_Credit extends Models_Base {
 	 * @param int $changeAsked
 	 * @return Models_Credit|boolean	Either the existing Credit-Object if you'r allowed to change it in this way; or a boolean indicating (true) you're allowed to make a new Credit-object of (false) you are denied to update your credit.
 	 * @author Ramon Creyghton <r.creyghton@gmail.com>
-	 * @todo Check this stuff. Dubbelop met andere creditsmethodes?
+	 * @todo Implementatie. (Dubbelop met andere creditsmethodes?)
 	 */
 	public static function howToCredit($callingUser, $checkReply, $changeAsked) {
 		$oldCredit = $checkReply->getYourCredit($callingUser);

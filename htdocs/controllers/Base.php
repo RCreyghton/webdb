@@ -67,7 +67,6 @@ abstract class Controllers_Base {
 	 * @param	string	$task	Name of the method asked to execute.
 	 * @return	boolean|mixed	Return value of the method called or false.
 	 * @author	Ramon Creyghton <r.creyghton@gmail.com>
-	 * @todo De task mee als argument bij deze methode? oF zelf ophalen uit params[]?
 	 */
 	public function execute($task) {
 		if ($task == NULL)
