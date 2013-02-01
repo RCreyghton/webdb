@@ -89,13 +89,20 @@ function shutdown() {
 	$err = error_get_last();
 	$fatal = array(E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR);
 	if ($err && in_array($err['type'], $fatal)) {
-		include_once( BASE . "helpers/User.php");
-		include_once( BASE . "models/Thread.php");
-		include_once( BASE . "models/User.php");
-		include_once( BASE . "models/Reply.php");
-		include_once( BASE . "controllers/Error.php");
-		include_once( BASE . "views/errors/Internal.php");
-
+		
+		$models = glob( BASE . "models/*.php");
+		$controllers = glob( BASE . "controllers/*.php");
+		$helpers = glob( BASE . "helpers/*.php");
+		$views = array();
+		$views[] = BASE . "views/Base.php";
+		$views[] = BASE . "views/threads/Base.php";
+		$views = array_merge( $views, glob( BASE . "views/*/*.php") );
+		
+		$files = array_merge( $models, $controllers, $helpers, $views );
+		foreach( $files as $file ) {
+			include_once $file;
+		}
+		
 		$controller = new Controllers_Error();
 		$controller->execute( "internal" );		
 	}
