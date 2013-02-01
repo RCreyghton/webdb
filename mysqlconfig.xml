@@ -4,4 +4,5 @@
 	<db>webdb13AD3</db>
 	<user>webdb13AD3</user>
 	<pass>justafio</pass>
+	<salt>fd7ds5v45rt231er98t7s436df4gw9</salt>
 </mysql>
