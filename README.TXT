@@ -5,7 +5,7 @@ PROJECT
 Project door groep webdb13AD3
 Shafiq Ahmadi - 10242740
 Ramon Creijghton - 5952948
-Frank van Luijn - 
+Frank van Luijn - 6117015
 Ingeleverd op 1 februari 2013
 
 Resultaat zichtbaar op:
@@ -83,9 +83,11 @@ Shafiq Ahmadi heeft bijdrages gelevert aan Model, Control en View van Users. Zo 
 
 Bovendien melden de deelnemers nog de volgende persoonlijke ervaring.
 Shafiq:
-Ik vond het erg leuk om een keer een duscussiefom te schrijven in een team. 
+Ik vond het erg leuk om een keer een duscussiefom te schrijven in een team.
+
 Ramon: 
 Ik heb mijn vaardigheid in het bouwen van websites aardig opgefrist en uitebreid, niet in de laatste plaatst met dank aan Frank's expertise. Ik heb nu meer oog voor structuur en veiligheid van een webapplicatie.
-Horizontaal samenwerken leidt soms tot rare keuzes. Zo is het (on) zichtbaar maken van vragen door Frank qua User Interface net tegengesteld geimplementeerd aan hoe ik Categorie en Gebruikers-beheer heb uitgevoerd.
+Horizontaal samenwerken leidt soms wel tot rare keuzes. Zo is het (on) zichtbaar maken van vragen door Frank qua User Interface net tegengesteld geimplementeerd aan hoe ik Categorie en Gebruikers-beheer heb uitgevoerd.
+
 Frank:
-Het was toch leuker dan ik dacht. Zo in vier weken even iets neerzetten. Goed geluk!
+Voor het begin van dit vak zag ik er wat tegenop om veel tijd te steken in een project zoals deze. Dit omdat ik mijn werk dagelijks dergelijke sites/applicaties bouw en hiermee niets zou leren. Echter tot mijn eigen verbazing vond ik het een zeer leuk vak, niet vanwege het project zelf, alhoewel deze wel heel goed is gelukt, maar vanwege de samenwerking. Het is voor mij verfrissend en leerzaam om in dergelijke teamverband te werken, gezien dit in de praktijk wat meer ontbreekt. Graag ik Shafiq en Ramon dan ook bedanken voor de goede samenwerking en hun inzet.
