@@ -42,6 +42,8 @@ p {
 	vertical-align:	baseline;
 }
 
+img { border: none; }
+
 /* Header css */
 div.header_wrapper {
     background-color: #3CB6EC;
@@ -117,7 +119,7 @@ div.searchbar ul {
 	border: 1px solid #3CB6EC;
 	border-top: none;
 	list-style-type: none;
-
+	z-index: 99;
 }
 
 div.searchbar ul li {
@@ -295,7 +297,7 @@ a {
 .threads_single_reply_header { border-bottom:1px solid #3CB6EC; }
 .threads_single_actionbar { float:right; height:20px; padding:25px 10px 0 0;}
 .threads_single_actionbar_reply { float:right; height:20px; padding:15px 10px 0 0;}
-.threads_single_actionbar a, .threads_single_actionbar_reply a { margin-left:15px; }
+.threads_single_actionbar a, .threads_single_actionbar_reply a { margin-left:15px; border: none;}
 .threads_single_reply_accepted {background: #E1FCE3; position:relative; }
 .accepted_hover { position:absolute; top: 50%; margin-top:-16px; left:-46px;}
 
@@ -304,9 +306,9 @@ a {
 /* Categories Overview, Used for Users as well */
 .categories_overview_container { border-bottom: 2px solid #3CB6EC; }
 .categories_overview_container:first-of-type { border-top: 2px solid #3CB6EC; }
-.categories_overview_header { border-bottom:1px solid #3CB6EC; background-color: #eee;}
-.categories_overview_actionbar { border-bottom:1px solid #3CB6EC; float:right; height:20px; padding:14px 10px 10px 0;}
-.categories_overview_actionbar a { margin-left:15px; }
+.categories_overview_header { border-bottom:1px solid #3CB6EC; background-color: #eee; height: 25px;}
+.categories_overview_actionbar { border-bottom:1px solid #3CB6EC; float:right; height: 18px; padding:15px 10px 12px 0;}
+.categories_overview_actionbar a { margin-left:15px; border: none;}
 .categories_overview_statusopen { background: #e1fce1; }
 .categories_overview_statusrestricted { background: #e1e1fc; }
 .categories_overview_statusblocked { background: #fce1e1; }
@@ -397,7 +399,8 @@ a:hover.headerlink {
 
 /* Pagination of Threads-views */
 .pagination {
-	text-align: center;
+	margin: 5px 0px 0px 2px;
+	text-align: right;
 }
 
 .pagination a {
@@ -416,3 +419,42 @@ a:hover.headerlink {
 	font-weight: bold;
 	color: #3CB6EC;
 }
+
+
+/* FORMS */
+input.loginbutton {
+	background-image: url("../images/loginbutton.png");
+}
+
+input.registerbutton {
+	background-image: url("../images/registerbutton.png");
+}
+
+input.bbutton {
+	font-size: 1px;
+	background-position: 0px 0px;
+	background-repeat: no-repeat;
+	width: 100px;
+	height: 37px;
+	border: 0px;
+}
+
+input.bbutton:active {
+	background-position: 0px 3px;
+}
+
+form.postedit {
+	padding: 5px;
+	margin-left: 10px;
+	border: 1px solid #3CB6EC;
+}
+
+form.postedit textarea {
+	width: 500px;
+	height: 300px;
+}
+
+form.postedit input.input {
+	width: 500px;
+}
+

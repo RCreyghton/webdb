@@ -17,8 +17,6 @@ if (!defined("WEBDB_EXEC"))
  * @author Frank van Luijn <frank@accode.nl>
  * @author Ramon Creyghton <r.creyghton@gmail.com>
  * @author Shafiq Ahmadi <s.ah@live.nl>
- * @todo	Maybe drop the declareFields()-method altogher, since it is implemented not-static in the Childs: inefficient. Use get_class_vars() instead?.
- * @todo	Check whether get_called_class() en static:: references indeed work as intended.
  */
 abstract class Models_Base {
 	
@@ -139,7 +137,6 @@ abstract class Models_Base {
 	 * Ramon: ik begrijp niet precies wanneer dit nuttig is?
 	 * 
 	 * @return boolean true if this object has a corresponding database record?
-	 * @todo everything
 	 */
 	public static function exists( $id ) {
 		$query = self::getSelect()."WHERE `id` = '{$id}' ";

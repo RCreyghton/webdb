@@ -49,6 +49,8 @@ abstract class Controllers_Base {
 
 	/**
 	 * Parses the parts of the ?q= given by index.php into params().
+	 * This way, these can be used easily later on in the controller-classes.
+	 * 
 	 * We can assume that [0] and [1] exists since this validity is checked by index.php
 	 * 
 	 * @param string[] $parts
@@ -65,7 +67,6 @@ abstract class Controllers_Base {
 	 * @param	string	$task	Name of the method asked to execute.
 	 * @return	boolean|mixed	Return value of the method called or false.
 	 * @author	Ramon Creyghton <r.creyghton@gmail.com>
-	 * @todo De task mee als argument bij deze methode? oF zelf ophalen uit params[]?
 	 */
 	public function execute($task) {
 		if ($task == NULL)

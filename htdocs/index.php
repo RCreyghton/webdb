@@ -82,6 +82,9 @@ function autoloader( $classpath ) {
 	}
 }
 
+/**
+ * Catch any exceptions and load error view.
+ */
 function shutdown() {
 	$err = error_get_last();
 	$fatal = array(E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR);

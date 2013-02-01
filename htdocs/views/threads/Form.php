@@ -1,5 +1,17 @@
 <?php
 
+/*
+ * All classes and scripts must be loaded via index.php, where WEBDB_EXEC is set,
+ * and stop executing immediatly if otherwise.
+ */
+if (!defined("WEBDB_EXEC"))
+	die("No direct access!");
+
+/**
+ * Displays a thread-input form, based on the field required by the controller.
+ * 
+ * @author Frank van Luijn <frank@accode.nl>
+ */
 class Views_Threads_Form extends Views_Threads_Base {
 
 	public $thread;
@@ -11,7 +23,7 @@ class Views_Threads_Form extends Views_Threads_Base {
 			return;
 		}
 		
-		echo "<form method='post' action='./threads/threadform'>";
+		echo "<form method='post' action='./threads/threadform' class='postedit' >";
 		echo "<table>";
 		foreach ( $this->form as $name => $e ) {
 			echo "<tr>";
@@ -37,7 +49,7 @@ class Views_Threads_Form extends Views_Threads_Base {
 					break;
 				
 				default:
-					echo "<input type='" . $e['type'] . "' name='" . $name . "' value='" . $e['value'] . "' />";
+					echo "<input type='" . $e['type'] . "' name='" . $name . "' value='" . $e['value'] . "' class='input' />";
 					break;
 					
 			}

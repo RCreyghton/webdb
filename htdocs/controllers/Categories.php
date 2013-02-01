@@ -51,6 +51,11 @@ class Controllers_Categories extends Controllers_Base {
 		$this->display();
 	}
 
+	/**
+	 * Controls the category-form. Lets the either make a new one, or edit the existing one.
+	 * 
+	 * @author Frank van Luijn <frank@accode.nl>
+	 */
 	public function categoryform() {
 		$user = Helpers_User::getLoggedIn();
 		if (!$user || $user->role != Models_User::ROLE_ADMIN) {
@@ -84,6 +89,11 @@ class Controllers_Categories extends Controllers_Base {
 		$this->display();
 	}
 
+	/**
+	 * Tries to save a new or edited category, based on the form-input, that is checked for consitency.
+	 * 
+	 * @author Frank van Luijn <frank@accode.nl>
+	 */
 	private function saveCategory() {
 		$user = Helpers_User::getLoggedIn();
 
@@ -132,6 +142,13 @@ class Controllers_Categories extends Controllers_Base {
 		}
 	}
 
+	/**
+	 * Assambles all the proporties needed to make {@link Views_Categories_Form} display the form needed.
+	 * Here input fields an their defaults are defined.
+	 * 
+	 * @return string[]	Array with fields and values of input-types.
+	 * @author Frank van Luijn <frank@accode.nl>
+	 */
 	private function getCategoryForm() {
 		$elements = array();
 

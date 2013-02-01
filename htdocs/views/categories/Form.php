@@ -1,5 +1,17 @@
 <?php
 
+/*
+ * All classes and scripts must be loaded via index.php, where WEBDB_EXEC is set,
+ * and stop executing immediatly if otherwise.
+ */
+if (!defined("WEBDB_EXEC"))
+	die("No direct access!");
+
+/**
+ * Displays a category-input form, based on the field required by the controller.
+ * 
+ * @author Frank van Luijn <frank@accode.nl>
+ */
 class Views_Categories_Form extends Views_Threads_Base {
 
 	public $thread;
@@ -7,7 +19,7 @@ class Views_Categories_Form extends Views_Threads_Base {
 	
 	public function render() {
 		if( ! Helpers_User::isLoggedIn() ) {
-			echo "Om een nieuwe vraag te stellen moet u ingelogd zijn!";
+			echo "Om een nieuwe categorie te maken moet u ingelogd zijn!";
 			return;
 		}
 		
