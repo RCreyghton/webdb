@@ -30,6 +30,8 @@ Hierin staan enkele test-users, -categories, -threads en -posts, zodat de werkin
 - Een met  uitsluitende de structuur, ten behoeve van een schone installatie van de site: documentation/mysqldump-webdb13AD3-structuur.sql.gz
 Hierin is slechts een record: een admin-user met dezelfde gegevens als hierboven. Zodoende kunnen nieuwe categorieen worden aangemaakt.
 Deze login is wel afhankelijk de salt die zich in mysqlconfig.xml bevindt. (zie ook de technische documentatie).
+WAARSCHUWING:
+Het is raadzaam uiteindelijk zelf een andere salt te kiezen en een eigen nieuwe admin-gebruiker te maken, aangezien deze MySQL-dump, alsook de mysqlconfig, alsmede de salt daarin op de openbare code-repository GitHub (hebben ge-)staan. Dit ongewijzigd laten zou een enorm beveiliginsriciso inhouden.
 
 
 
@@ -84,5 +86,6 @@ Shafiq:
 Ik vond het erg leuk om een keer een duscussiefom te schrijven in een team. 
 Ramon: 
 Ik heb mijn vaardigheid in het bouwen van websites aardig opgefrist en uitebreid, niet in de laatste plaatst met dank aan Frank's expertise. Ik heb nu meer oog voor structuur en veiligheid van een webapplicatie.
+Horizontaal samenwerken leidt soms tot rare keuzes. Zo is het (on) zichtbaar maken van vragen door Frank qua User Interface net tegengesteld geimplementeerd aan hoe ik Categorie en Gebruikers-beheer heb uitgevoerd.
 Frank:
-
+Het was toch leuker dan ik dacht. Zo in vier weken even iets neerzetten. Goed geluk!
