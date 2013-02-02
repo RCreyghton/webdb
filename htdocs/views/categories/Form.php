@@ -8,22 +8,22 @@ if (!defined("WEBDB_EXEC"))
 	die("No direct access!");
 
 /**
- * Displays a reply-input form, based on the field required by the controller.
+ * Displays a category-input form, based on the field required by the controller.
  * 
  * @author Frank van Luijn <frank@accode.nl>
  */
-class Views_Replies_Form extends Views_Threads_Base {
+class Views_Categories_Form extends Views_Threads_Base {
 
 	public $thread;
 	public $form;
 	
 	public function render() {
 		if( ! Helpers_User::isLoggedIn() ) {
-			echo "Om een een vraag te benatwoorden moet u ingelogd zijn!";
+			echo "Om een nieuwe categorie te maken moet u ingelogd zijn!";
 			return;
 		}
 		
-		echo "<form method='post' action='./replies/replyform' class='postedit' >";
+		echo "<form method='post' action='./categories/categoryform'>";
 		echo "<table>";
 		foreach ( $this->form as $name => $e ) {
 			echo "<tr>";
@@ -49,7 +49,7 @@ class Views_Replies_Form extends Views_Threads_Base {
 					break;
 				
 				default:
-					echo "<input type='" . $e['type'] . "' name='" . $name . "' value='" . $e['value'] . "' class='input' />";
+					echo "<input type='" . $e['type'] . "' name='" . $name . "' value='" . $e['value'] . "' />";
 					break;
 					
 			}
@@ -59,7 +59,7 @@ class Views_Replies_Form extends Views_Threads_Base {
 			echo "</tr>";
 		}
 		
-		echo "<tr><td colspan='2'><input type='submit' name='replyform_submit' value='Beantwoord deze vraag!' /></td></td>";
+		echo "<tr><td colspan='2'><input type='submit' name='categoryform_submit' value='Opslaan' /></td></td>";
 		echo "</table>";
 		echo "</form>";
 	}

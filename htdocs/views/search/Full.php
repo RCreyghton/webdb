@@ -7,12 +7,25 @@
 if (!defined("WEBDB_EXEC"))
 	die("No direct access!");
 
+/**
+ * Displays the full search result. In the
+ * 
+ * In the $posts-array, all threads are represented as a {@link Models_Thread}-object, and the actual search-matches follow as some string-arrays.
+ * This parses them all and groups threads and its contents in a div. Grabs the user and category for each thread as well.
+ * 
+ * @uses Models_Base::fetchById()
+ * @author Ramon Creyghton <r.creyghton@gmail.com>
+ */
 class Views_Search_Full extends Views_Base {
 
 	public $posts;
 	
 	public function render() {
-		$this->title = "Zoeken op " . $this->title;
+		$this->title = "Zoeken op: {$this->title}";
+		echo "					<h2>{$this->title}</h2>\n";
+		if ( empty( $this->posts ) )
+			echo "						<p>Helaas, geen resultaten.</p>";
+		
 		$i = 0;
 		while ( isset( $this->posts[$i] ) ) {
 			$thread = $this->posts[$i];

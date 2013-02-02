@@ -8,11 +8,10 @@ class Controllers_Error extends Controllers_Base {
 	    $this->display();
 	}
 	
-	//public function categorythreads()
-	//public function userthreads()
-	
-	//new
-	//edit
-	//save
+	public function internal() {
+		//maybe log something here...
+		$this->view = new Views_Errors_Internal();
+		$this->display();
+	}
 	
 }

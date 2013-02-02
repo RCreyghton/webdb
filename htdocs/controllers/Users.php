@@ -172,9 +172,9 @@ class Controllers_Users extends Controllers_Base {
 		//now we know that all is well, finally build the user
 		$u = new Models_User();
 		$u->role		= Models_User::ROLE_USER;
-		$u->email		= $email;
-		$u->firstname	= $firstname;
-		$u->lastname	= $lastname;
+		$u->email		= strip_tags( $email );
+		$u->firstname	= strip_tags( $firstname );
+		$u->lastname	= strip_tags( $lastname );
 		$u->pass		= md5( $salt . $pass1 . $salt );
 		$u->save();
 		
@@ -192,6 +192,14 @@ class Controllers_Users extends Controllers_Base {
 	 * Allowes for editing of the Users's role if admin is logged in.
 	 */
 	public function overview() {
+		//Alowed for admins only. So we check the login.
+		$u = Helpers_User::getLoggedIn();
+		if( ( ! $u ) || $u->role != Models_User::ROLE_ADMIN ) {
+			$this->view = new Views_Error_Internal();
+			$this->display();
+			return;
+		}
+		
 		$this->view = new Views_Users_Overview();
 		
 		//When not logged in as admin, you cannot see hidden items.

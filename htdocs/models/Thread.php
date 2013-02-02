@@ -152,7 +152,6 @@ class Models_Thread extends Models_Base {
 	 * @return Models_Reply|boolean Description The selected Reply-object or false.
 	 * @uses Models_Base::fetchByQuery()	
 	 * @uses Models_Base::getSelect()	
-	 * @todo The Reply that is selected as the Answer to this Thread is still somewhere amidst the other Replies. Controller needs to exclude this Reply from the array of other replies!
 	 * @author Ramon Creyghton <r.creyghton@gmail.com>
 	 */
 	public function getAnswer() {

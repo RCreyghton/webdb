@@ -136,7 +136,6 @@ abstract class Views_Base {
 	/**
 	 * Assembles html for the login / register or logout / dashboard block any pages' header.
 	 * 
-	 * @todo Sessie-afhankelijk maken.
 	 * @return string Correctly indented xhtml in the context of assets/template.html
 	 */
 	public function getLogin() {
@@ -159,7 +158,7 @@ abstract class Views_Base {
 	 * @return string A base URL for the site, depending on the current server and PHP_SELF location.
 	 */
 	public function getBaseURL() {
-		return "<base href=\"" . substr($_SERVER["PHP_SELF"], 0, strlen($_SERVER["PHP_SELF"]) - 9) . "\" />";
+		return "<base href=\"" . ( ( $_SERVER["SERVER_NAME"] == "localhost" ) ? "" : "https://" . $_SERVER["SERVER_NAME"] ). substr($_SERVER["PHP_SELF"], 0, strlen($_SERVER["PHP_SELF"]) - 9) . "\" />";
 	}
 
 }

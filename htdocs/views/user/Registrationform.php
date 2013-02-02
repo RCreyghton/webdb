@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * All classes and scripts must be loaded via index.php, where WEBDB_EXEC is set,
+ * and stop executing immediatly if otherwise.
+ */
 if (!defined("WEBDB_EXEC"))
 	die("No direct access!");
 
@@ -28,7 +32,7 @@ class Views_User_Registrationform extends Views_Base {
 					class='" . ( empty( $e['errormessage'] ) ? "":"inputerror") . "'
 			/>";
 			echo !empty( $e['errormessage'] ) ? 
-				"<span class='errormessage'>" . $e['errormessage'] . "</span>"
+				"<div class='errormessage'>" . $e['errormessage'] . "</div>"
 				: '';
 			echo "</td>";
 			
@@ -38,7 +42,7 @@ class Views_User_Registrationform extends Views_Base {
 			echo "<tr>";
 			
 			echo "<td colspan='2'>";
-			echo "<input type='submit' name='register_submit' value='registreer mij' /> ";
+			echo "<input type='submit' name='register_submit' value='.' class='registerbutton bbutton' /> ";
 			echo "</td>";
 			
 			echo "</tr>";

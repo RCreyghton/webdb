@@ -75,13 +75,10 @@ class Models_Category extends Models_Base {
 	 * @return Models_Thread[] array of Thread-objects.
 	 * @uses Models_Base::fetchByQuery()	
 	 * @uses Models_Base::getSelect()	
-	 * @todo checking whether is Models_Trhead::... actually works.
 	 */
 	public function getThreads() {
 		$query = Models_Thread::getSelect() . " WHERE category_id=" . $this->id . ";";
 		return Models_Thread::fetchByQuery($query);
 	}
-
+	
 }
-
-?>

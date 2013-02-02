@@ -55,7 +55,7 @@ function clearSearch() {
 		searchbox.value = searchdefault;
 		
 		if ( document.getElementById( "quickThreads" ).innerHTML != "" ) {
-			document.getElementById( "quickThreads" ).innerHTML = "";
+			document.getElementById( "quickThreads" ).innerHTML = "<li style=\"display: none\"> </li>"; /* Valid XHTML again */
 			searchbox.removeAttribute( "autocomplete" );
 		}
 	}
