@@ -10,7 +10,6 @@ $time_check=$time-600; //SET TIME 10 Minute
 $count=mysql_num_rows($result);
 if($count=="0"){
 
-$sql1="INSERT INTO $tbl_name(session, time)VALUES('$session', '$time')";
 $result1=mysql_query($sql1);
 }
 
