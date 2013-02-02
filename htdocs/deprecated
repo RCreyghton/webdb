@@ -8,7 +8,6 @@
 <tr>
 <td width="14%"><strong>Topic</strong></td>
 <td width="2%">:</td>
-<td width="84%"><input name="topic" type="text" id="topic" size="50" /></td>
 </tr>
 <td colspan="3" bgcolor="#E6E6E6"><strong>Create New Topic</strong> </td>
 
