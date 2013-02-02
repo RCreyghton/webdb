@@ -25,7 +25,6 @@ echo "User online : $count_user_online ";
 
 // if over 10 minute, delete session 
 $sql4="DELETE FROM $tbl_name WHERE time<$time_check";
-$result4=mysql_query($sql4);
 
 // Open multiple browser page for result
 
