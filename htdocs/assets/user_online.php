@@ -16,7 +16,6 @@ $result3=mysql_query($sql3);
 
 else {
 }
-$result3=mysql_query($sql3);
 
 
 $sql3="SELECT * FROM $tbl_name";
