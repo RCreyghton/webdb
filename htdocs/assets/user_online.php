@@ -14,7 +14,6 @@ $result1=mysql_query($sql1);
 }
 
 else {
-"$sql2=UPDATE $tbl_name SET time='$time' WHERE session = '$session'";
 $result2=mysql_query($sql2);
 }
 
