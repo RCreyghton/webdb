@@ -10,6 +10,7 @@ $count=mysql_num_rows($result);
 
 $result3=mysql_query($sql3);
 
+
 $sql3="SELECT * FROM $tbl_name";
 $count_user_online=mysql_num_rows($result3);
 echo "User online : $count_user_online ";
@@ -20,6 +21,15 @@ $sql4="DELETE FROM $tbl_name WHERE time<$time_check";
 
 // Open multiple browser page for result
 
+$count=mysql_num_rows($result);
+
+if($count=="0"){
+
+$result1=mysql_query($sql1);
+}
+
+else {
+}
 
 
 // Close connection
