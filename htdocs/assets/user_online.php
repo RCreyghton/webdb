@@ -5,17 +5,7 @@ $session=session_id();
 $time=time();
 $time_check=$time-600; //SET TIME 10 Minute
 
-$host="localhost"; // Host name
-$username=""; // Mysql username
-$password=""; // Mysql password
-$db_name="test"; // Database name
-$tbl_name="user_online"; // Table name
 
-// Connect to server and select databse
-mysql_connect("$host", "$username", "$password")or die("cannot connect to server");
-mysql_select_db("$db_name")or die("cannot select DB");
-$sql="SELECT * FROM $tbl_name WHERE session='$session'";
-$result=mysql_query($sql);
 
 $count=mysql_num_rows($result);
 if($count=="0"){
@@ -39,6 +29,7 @@ $sql4="DELETE FROM $tbl_name WHERE time<$time_check";
 $result4=mysql_query($sql4);
 
 // Open multiple browser page for result
+
 
 
 // Close connection
