@@ -17,7 +17,6 @@ else {
 }
 
 $sql3="SELECT * FROM $tbl_name";
-$result3=mysql_query($sql3);
 $count_user_online=mysql_num_rows($result3);
 echo "User online : $count_user_online ";
 
