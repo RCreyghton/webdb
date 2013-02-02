@@ -14,7 +14,6 @@ $result1=mysql_query($sql1);
 }
 
 else {
-$result2=mysql_query($sql2);
 }
 
 $sql3="SELECT * FROM $tbl_name";
