@@ -7,7 +7,6 @@ $time_check=$time-600; //SET TIME 10 Minute
 
 
 
-$count=mysql_num_rows($result);
 if($count=="0"){
 
 $result1=mysql_query($sql1);
