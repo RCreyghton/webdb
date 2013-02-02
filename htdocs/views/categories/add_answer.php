@@ -37,9 +37,6 @@ $datetime=date("d/m/y H:i:s"); // create date and time
 $sql2="INSERT INTO $tbl_name(question_id, a_id, a_name, a_email, a_answer, a_datetime)VALUES('$id', '$Max_id', '$a_name', '$a_email', '$a_answer', '$datetime')";
 $result2=mysql_query($sql2);
 
-if($result2){
-echo "Successful<BR>";
-echo "<a href='view_topic.php?id=".$id."'>View your answer</a>";
 
 // If added new answer, add value +1 in reply column 
 $tbl_name2="forum_question";
