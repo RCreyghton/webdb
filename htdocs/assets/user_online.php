@@ -1,4 +1,10 @@
 <?php
+session_start();
+$session=session_id();
+$time=time();
+$time_check=$time-600; //SET TIME 10 Minute
+
+$host="localhost"; // Host name
 
 session_start();
 $session=session_id();
@@ -23,6 +29,10 @@ echo "User online : $count_user_online ";
 // Open multiple browser page for result
 
 $count=mysql_num_rows($result);
+
+<?php
+
+
 
 if($count=="0"){
 
