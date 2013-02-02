@@ -10,11 +10,14 @@
 <tr>
 <td width="16%">Subject</td>
 <td width="2%">:</td>
-<td width="82%"><input name="subject" type="text" id="subject" size="50"></td>
-</tr>
+
 <tr>
-<td>Detail</td>
-<td>:</td>
-<td><textarea name="detail" cols="50" rows="4" id="detail"></textarea></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><input type="submit" name="Submit" value="Submit"> <input type="reset" name="Submit2" value="Reset"></td>
 </tr>
-<tr>
+</table>
+</form>
+</td>
+</tr>
+</table>
