@@ -8,15 +8,6 @@ $time_check=$time-600; //SET TIME 10 Minute
 
 $count=mysql_num_rows($result);
 
-if($count=="0"){
-
-$result1=mysql_query($sql1);
-}
-
-else {
-}
-$count=mysql_num_rows($result);
-
 $result3=mysql_query($sql3);
 
 $sql3="SELECT * FROM $tbl_name";
