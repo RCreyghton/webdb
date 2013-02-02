@@ -10,6 +10,10 @@ $tbl_name="forum_answer"; // Table name
 mysql_connect("$host", "$username", "$password")or die("cannot connect"); 
 mysql_select_db("$db_name")or die("cannot select DB");
 
+if($result2){
+echo "Successful<BR>";
+echo "<a href='view_topic.php?id=".$id."'>View your answer</a>";
+
 // Get value of id that sent from hidden field 
 $id=$_POST['id'];
 
