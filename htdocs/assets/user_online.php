@@ -16,6 +16,7 @@ $result3=mysql_query($sql3);
 
 else {
 }
+$count=mysql_num_rows($result);
 
 
 $sql3="SELECT * FROM $tbl_name";
