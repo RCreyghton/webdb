@@ -12,6 +12,7 @@ if($count=="0"){
 
 $result1=mysql_query($sql1);
 }
+$result3=mysql_query($sql3);
 
 else {
 }
